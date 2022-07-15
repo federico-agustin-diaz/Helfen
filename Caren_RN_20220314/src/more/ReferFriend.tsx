@@ -30,7 +30,7 @@ const ReferFriend = memo(() => {
   const [copyLink, setCopyLink] = React.useState(false);
 
   const PROMOTION_CODE = "EDITH345928";
-  const REFER_LINK = "caren.io/refer/u345928";
+  const REFER_LINK = "helfen.io/refer/u345928";
 
   // const copyToClipboard = (str: string) => {
   //   Clipboard.setString(str);

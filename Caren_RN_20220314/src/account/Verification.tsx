@@ -27,7 +27,7 @@ const Verification = memo(() => {
   const handleVerify = React.useCallback(() => {
     navigate("SuccessScr", {
       successScr: {
-        title: t("welcomeToCaren"),
+        title: t("welcomeToHelfen"),
         logo: true,
         description: t("welcomeTitle"),
         children: [

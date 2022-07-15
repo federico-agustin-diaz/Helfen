@@ -48,7 +48,7 @@ const MoreSrc = memo(() => {
       navigateSrc: "MyJobProfile",
     },
     {
-      title: t("aboutCaren"),
+      title: t("aboutHelfen"),
       icon: "stats",
       status: "basic",
       navigateSrc: "MyJobProfile",

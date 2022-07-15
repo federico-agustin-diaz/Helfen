@@ -152,9 +152,6 @@ const Login = memo(() => {
         >
           {t("login").toString()}
         </Button>
-        <Text category="h8-s" status={"placeholder"} mt={40} mb={38} center>
-          {t("or")}
-        </Text>
       </KeyboardAwareScrollView>
       <Flex center mb={bottom + 16} style={styles.bottom}>
         <Text category="h8-s">{t("dontHaveAcc")}</Text>

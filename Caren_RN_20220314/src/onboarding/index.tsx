@@ -38,7 +38,7 @@ const Onboarding = memo(() => {
   const DATA = [
     {id: 0, title: t('intro1'), img: Images.art1},
     {id: 1, title: t('intro2'), img: Images.art2},
-    {id: 2, title: t('intro3'), img: Images.art3},
+    //{id: 2, title: t('intro3'), img: Images.art3},
   ];
 
   const onLogin = React.useCallback(
@@ -76,7 +76,7 @@ const Onboarding = memo(() => {
               const translateX = interpolate(
                 translationX.value,
                 input,
-                [-width / 3, 0, width / 3],
+                [-width / 2, 0, width / 2],
                 Extrapolate.CLAMP,
               );
               const scale = interpolate(
@@ -124,12 +124,6 @@ const Onboarding = memo(() => {
           </Button>
         </Flex>
       </Content>
-      <Flex center mb={16}>
-        <Text status={'placeholder'}>{t('findACaregiver')}</Text>
-        <TouchableOpacity onPress={onGetHere} activeOpacity={0.54}>
-          <Text status={'link'}> {t('getHere')}</Text>
-        </TouchableOpacity>
-      </Flex>
     </Container>
   );
 });
