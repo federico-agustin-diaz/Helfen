@@ -33,12 +33,6 @@ const MoreSrc = memo(() => {
       status: "warning",
       navigateSrc: "MyStats",
     },
-    {
-      title: t("paymentMethod"),
-      icon: "payment",
-      status: "success",
-      navigateSrc: "PaymentMethod",
-    },
   ];
   const DATA_APPLICATION: ButtonOptionalProps[] = [
     {
@@ -74,7 +68,6 @@ const MoreSrc = memo(() => {
           name={"Edith Johnson"}
           avatar={Images.avatar2}
           email={"lehieuds@gmail.com"}
-          notification={3}
         />
         <View style={styles.details}>
           <Text category="h6">{t("myDetails")}</Text>
@@ -120,12 +113,6 @@ const MoreSrc = memo(() => {
             checked={darkMode}
             onPress={setDarkMode}
             navigateSrc={undefined}
-          />
-          <ButtonOptional
-            title={t("referFriend")}
-            icon={"share"}
-            status={"twitter"}
-            navigateSrc={"ReferFriend"}
           />
         </View>
       </Content>

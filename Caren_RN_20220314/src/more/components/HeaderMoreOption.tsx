@@ -28,7 +28,6 @@ const HeaderMoreOption = memo(
           <Flex onPress={_onProfile}>
             <Avatar
               source={avatar}
-              /* @ts-ignore */
               style={styles.avatar}
               shape="rounded"
             />
@@ -47,11 +46,6 @@ const HeaderMoreOption = memo(
             onPress={() => null}
             disabled
           />
-          <Flex style={styles.notification} itemsCenter border={24}>
-            <Text category="h9" status={"primary"}>
-              {notification}
-            </Text>
-          </Flex>
         </Flex>
       </Flex>
     );

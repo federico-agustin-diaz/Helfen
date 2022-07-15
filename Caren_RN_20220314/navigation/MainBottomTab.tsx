@@ -110,19 +110,6 @@ const MainBottomTab = memo(() => {
           }}
         />
         <BottomTab.Screen
-          name="Messages"
-          component={MessagesSrc}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <ButtonTab
-                focused={focused}
-                icon="comment"
-                numberNotification={1}
-              />
-            ),
-          }}
-        />
-        <BottomTab.Screen
           name="Requests"
           component={RequestsBottomNavigator}
           options={{
@@ -153,7 +140,7 @@ const MainBottomTab = memo(() => {
           component={MoreNavigator}
           options={{
             tabBarIcon: ({ focused }) => (
-              <ButtonTab focused={focused} icon="more" numberNotification={3} />
+              <ButtonTab focused={focused} icon="more" />
             ),
           }}
         />

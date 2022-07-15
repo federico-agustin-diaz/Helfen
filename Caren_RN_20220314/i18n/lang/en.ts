@@ -94,7 +94,7 @@ export default {
     purchaseBg: "Purchase a Background Check",
     bgChecks: "Background Checks",
     purchaseBgTitle:
-      "Buying a background check dose more than provide peace of mind for parents. It makes your profile easier to find, which increase your chances of landing a job. Get start by selecting one of the option below",
+      "Buying a background check dose more than provide peace of mind for parents. It makes your profile easier to Buscar, which increase your chances of landing a job. Get start by selecting one of the option below",
     whatsIncluded: "What’s included ",
     inEachBackgroundCheck: "in each background check",
     trustedCare: "Trusted Care",
@@ -111,7 +111,7 @@ export default {
     introduceYourself: "Introduce Yourself",
     gender: "Gender",
     homeAddress: "Home Address",
-    homeAddressCaption: "Add your home address to find jobs near you",
+    homeAddressCaption: "Add your home address to Buscar jobs near you",
     phoneNumber: "Phone Number",
     phoneNumberCaption:
       "In case we need to contact you. We won't display this to other members",
@@ -125,7 +125,7 @@ export default {
     welcomeToHelfen: "Welcome to Helfen!",
     welcomeTitle:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.",
-    findJobs: "Find Jobs",
+    findJobs: "Buscar Jobs",
   },
   approvalChecklist: {
     title: "Approval Checklist",
@@ -167,7 +167,7 @@ export default {
       "Thank you for your paying quickly!\nWe will contact you soon to complete Background Check and Motor Record Check..",
   },
   find: {
-    title: "Find",
+    title: "Buscar",
     recommended: "Recommended",
     newJobs: "New Jobs",
     nearbyYou: "Nearby You",
@@ -188,7 +188,7 @@ export default {
       "Become the go-to sitter for families whenever they might need child care",
     oneTime: "One Time",
     oneTimeTitle:
-      "Find a one-time sitting job when parents have an event or date night",
+      "Buscar a one-time sitting job when parents have an event or date night",
     needASAP: "Need ASAP",
     keyword: "Keyword",
     sortBy: "Sort by",
@@ -211,7 +211,7 @@ export default {
     title: "Messages",
     emptyTitle: "No messages yet.",
     emptyDescription:
-      "Eager to work? Be sure to express interest in jobs, add lots of availability to you calendar and finish you profiles.",
+      "Eager to work? Be sure to express interest in jobs, add lots of availability to you calendario and finish you profiles.",
     placeholderInput: "Search message, name...",
   },
   requests: {
@@ -228,7 +228,7 @@ export default {
     applicationInPass: "Application in Past",
     requestDetails: "Request Details",
     when: "When",
-    addToCalendar: "Add to Calendar",
+    addToCalendar: "Add to Calendario",
     sendMessage: "Send a Message",
     interviewWith: "Interview With",
     additional: "Additional",
@@ -253,11 +253,8 @@ export default {
     bookingWith: "Booking with",
   },
   calendar: {
-    title: "Calendar",
-    suggestTitle: "Add availabilities on your schedule",
-    suggestDescription1: "Add real-time availability each week",
-    suggestDescription2: "Appear more often in family searches",
-    suggestDescription3: "Get relevant requests directly from parents",
+    title: "Calendario",
+    suggestTitle: "Agregar eventos al calendario",
     availableDate: "Available Date",
     repeatThisTimeBlock: "Repeat this time block",
     weeklyOnMon: "Weekly on Mon",
@@ -295,7 +292,7 @@ export default {
     title: "Notification",
     noApplicationsTitle:
       "Your full list of notifications live here. Try searching for job.",
-    findJob: "Find Jobs",
+    findJob: "Buscar Jobs",
   },
   invitedFriend: {
     getRefer: "Get $10 for You",

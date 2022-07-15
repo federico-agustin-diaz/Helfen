@@ -43,7 +43,7 @@ const CalendarSrc = memo(() => {
             styles.img,
             {
               width: width - 48,
-              height: 216 * (height / 812),
+              height: 130 * (height / 812),
             },
           ]}
           imageStyle={{}}
@@ -51,21 +51,6 @@ const CalendarSrc = memo(() => {
           <Text category="h2" mt={20} status="primary" mb={12}>
             {t("suggestTitle")}
           </Text>
-          {DATA_SUGGESTION.map((item, i) => {
-            return (
-              <Flex key={i} mv={i === 1 ? 10 : 0} justify="flex-start">
-                <Layout style={styles.dot} />
-                <Text
-                  category="h8-s"
-                  status={"primary"}
-                  numberOfLines={2}
-                  mr={8}
-                  ml={8}
-                  children={item.title}
-                />
-              </Flex>
-            );
-          })}
         </ImageBackground>
         <Text category="h6" mb={24}>
           {t("October 2019")}
