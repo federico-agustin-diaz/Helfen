@@ -73,7 +73,7 @@ const Signup = memo(() => {
         </Flex>
         <Controller
           control={control}
-          name="email"
+          name="Email"
           rules={RuleEmail}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
@@ -92,7 +92,7 @@ const Signup = memo(() => {
         />
         <Controller
           control={control}
-          name="password"
+          name="Password"
           rules={RulePassword}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
@@ -119,6 +119,102 @@ const Signup = memo(() => {
             />
           )}
         />
+        <Controller
+          control={control}
+          name="primerNombre"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Primer Nombre").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="segundoNombre"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Segundo Nombre").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="fechaNacimiento"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Fecha Nacimiento").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="dni"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Numero DNI").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="direccion"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Direccion").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="numtelefono"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Numero Telefono").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              value={value}
+              onChangeText={onChange}
+              onTouchStart={handleSubmit(() => {})}
+              onTouchEnd={handleSubmit(() => {})}
+              onBlur={onBlur}
+            />
+          )}
+        />
         <Select
           selectedIndex={selectedIndex}
           onSelect={(index) => setSelectedIndex(index)}
@@ -126,21 +222,14 @@ const Signup = memo(() => {
           style={styles.consider}
           label={`${t("considerMyself")}`}
         >
-          <SelectItem title="Option 1" />
-          <SelectItem title="Option 2" />
-          <SelectItem title="Option 3" />
+          <SelectItem title="Profesional" />
+          <SelectItem title="Familiar" />
         </Select>
-        <Text category="h9" mt={8} mb={26} status="placeholder">
-          {t("selectCaption")}
-        </Text>
         <Button
           children={t("signup").toString()}
           onPress={onSignup}
           style={globalStyle.shadowBtn}
         />
-        <Text category="h8-s" status={"placeholder"} mt={24} mb={30} center>
-          {t("otherWaySignup")}
-        </Text>
       </Content>
       <Text category="h8-s" status={"placeholder"} center mt={8}>
         {t("agreeTerm")}
