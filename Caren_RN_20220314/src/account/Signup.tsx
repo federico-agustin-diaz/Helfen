@@ -231,22 +231,6 @@ const Signup = memo(() => {
           style={globalStyle.shadowBtn}
         />
       </Content>
-      <Text category="h8-s" status={"placeholder"} center mt={8}>
-        {t("agreeTerm")}
-      </Text>
-      <Flex justify="flex-start" padder center mb={20}>
-        <Text category="h8-s" status={"link"}>
-          {t("termOfService")}
-        </Text>
-        <Text
-          children={` ${t("and")} `}
-          category="h8-s"
-          status={"placeholder"}
-        />
-        <Text category="h8-s" status={"link"}>
-          {t("privacyPolicy")}
-        </Text>
-      </Flex>
     </Container>
   );
 });

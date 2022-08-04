@@ -97,7 +97,7 @@ const ApplicationDetails = memo(() => {
         title={
           <Animated.View style={styleHeader}>
             <Text status={"primary"} center category="h6">
-              Marian Ramsey
+              Marcela Lopez
             </Text>
           </Animated.View>
         }
@@ -129,7 +129,7 @@ const ApplicationDetails = memo(() => {
           />
         </View>
         <Personal
-          name={"Marian Ramsey"}
+          name={"Marcela Lopez"}
           trustedFamily
           carePro
           mt={72}

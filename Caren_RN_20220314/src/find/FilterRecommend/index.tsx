@@ -7,10 +7,11 @@ import {
   Input,
   Button,
   Layout,
+  CheckBox
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 import { useTranslation } from "react-i18next";
-
+import Flex from "components/Flex";
 import Text from "components/Text";
 import Content from "components/Content";
 import Container from "components/Container";
@@ -39,19 +40,14 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
   const [occasional, setOccasional] = React.useState(false);
   const [oneTime, setOneTime] = React.useState(false);
   const [needASAP, setNeedASAP] = React.useState(false);
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      location: "Manhattan, NY",
-      keyword: "",
-    },
-  });
+  const [male, setMale] = React.useState(false);
+  const onChange = React.useCallback((next) => {
+    setMale(next);
+  }, []);
+
   return (
     <Container
-      style={[styles.container, { width: width, paddingBottom: bottom + 80 }]}
+      style={[styles.container, { width: width, paddingTop: bottom + 20 }]}
     >
       <TopNavigation
         title={t("filter").toString()}
@@ -60,45 +56,8 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
             <Icon pack="assets" name="close" />
           </TouchableOpacity>
         }
-        accessoryRight={
-          <Text category="h7" status={"link"}>
-            {t("common:clear")}
-          </Text>
-        }
       />
       <Content contentContainerStyle={styles.content} padder>
-        <Text category="h2" mb={16}>
-          {t("general")}
-        </Text>
-        <Text category="h7" mb={24}>
-          {t("jobType")}
-        </Text>
-        <TabBar
-          selectedIndex={babysitter}
-          onChange={setBabysitter}
-          tabs={[t("babysitter"), t("nanny")]}
-        />
-        <Controller
-          control={control}
-          name="location"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t("location").toString()}
-              status={errors.location ? "warning" : "basic"}
-              style={styles.location}
-              value={value}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              keyboardType="email-address"
-              caption={errors.location?.message}
-              accessoryRight={() => (
-                <Icon pack="assets" name="map" style={styles.iconMap} />
-              )}
-            />
-          )}
-        />
         <Text category="h7" mb={24}>
           {t("distance")}
         </Text>
@@ -107,75 +66,26 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
           {t("overThisAmountPerHour")}
         </Text>
         <FilterHour valueSlider={hour} setValueSlider={setHour} mb={40} />
+        <Input
+          label={t("Buscar por Primer Nombre").toString()}
+          style={styles.email}
+          value={value}
+        />
+        <Input
+          label={t("Buscar por Segundo Nombre").toString()}
+          style={styles.email}
+          value={value}
+        />
         <Text category="h7" mb={24}>
-          {t("timing")}
+          {t("Genero")}
         </Text>
-        <RegularlySchedule
-          title={t("regularlySchedule")}
-          des={t("regularlyScheduleTitle")}
-          checked={regularly}
-          onChange={() => setRegularly(!regularly)}
-        />
-        <RegularlySchedule
-          title={t("occasional")}
-          des={t("occasionalTitle")}
-          checked={occasional}
-          onChange={() => setOccasional(!occasional)}
-        />
-        <RegularlySchedule
-          title={t("oneTime")}
-          des={t("oneTimeTitle")}
-          checked={oneTime}
-          onChange={() => setOneTime(!oneTime)}
-        />
-        <RegularlySchedule
-          title={t("needASAP")}
-          checked={needASAP}
-          onChange={() => setNeedASAP(!needASAP)}
-        />
-        <Text mt={32} category="h2" mb={24}>
-          {t("common:other")}
-        </Text>
-        <Text category="para-m" mb={8}>
-          {t("keyword")}
-        </Text>
-        <Controller
-          control={control}
-          name="keyword"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              style={styles.keyword}
-              value={value}
-              status="info"
-              size={"large"}
-              placeholder="Enter something..."
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              keyboardType="email-address"
-              accessoryLeft={<Icon pack="assets" name="search" />}
-            />
-          )}
-        />
-        <Text category="h7" mb={26}>
-          {t("sortBy")}
-        </Text>
-        <TabBar
-          selectedIndex={sortBy}
-          onChange={setSortBy}
-          tabs={[t("soonest"), t("closest"), t("highestRate")]}
-        />
+        <Flex mb={32}>
+          <CheckBox children={"Hombre"} checked={male} onChange={onChange} />
+          <CheckBox children={"Mujer"} checked={!male} onChange={onChange} />
+</Flex>
+        <Button styles={styles.button} children={t("buttonFilter").toString()}/>
       </Content>
-      <Layout
-        level={"2"}
-        style={[
-          styles.see,
-          { paddingBottom: bottom + 8, paddingHorizontal: 24 },
-        ]}
-      >
-        <Button children={t("buttonFilter").toString()} />
-      </Layout>
+
     </Container>
   );
 });
@@ -188,7 +98,7 @@ const themedStyles = StyleService.create({
   },
   content: {
     paddingTop: 32,
-    paddingBottom: 120,
+    paddingBottom: 60,
   },
   location: {
     marginVertical: 32,
@@ -208,4 +118,7 @@ const themedStyles = StyleService.create({
     right: 0,
     bottom: 0,
   },
+  button: {
+    paddingTop: 150,
+  }
 });

@@ -140,7 +140,7 @@ const Chat = memo(() => {
   return (
     <Container style={[styles.container, { marginBottom: -bottom }]}>
       <TopNavigation
-        title={"Marian Ramsey"}
+        title={"Marcela Lopez"}
         accessoryLeft={<NavigationAction />}
         accessoryRight={<NavigationAction icon="option" />}
       />

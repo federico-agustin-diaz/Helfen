@@ -110,7 +110,7 @@ export enum Request_Status_Type_Enum {
   Canceled = "Canceled",
 }
 export enum Request_Type_Enum {
-  Interview = "Interview",
+  Interview = "Turno Profesional",
   Booking = "Booking",
   Application = "Application",
 }
@@ -188,4 +188,3 @@ export type LibraryProps = {
   fonts?: Fonts
   overrides?: Overrides
 }
-

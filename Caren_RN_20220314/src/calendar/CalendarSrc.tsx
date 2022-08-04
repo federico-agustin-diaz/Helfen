@@ -53,7 +53,7 @@ const CalendarSrc = memo(() => {
           </Text>
         </ImageBackground>
         <Text category="h6" mb={24}>
-          {t("October 2019")}
+          {t("28 Julio 2022")}
         </Text>
         {ABILITY_DATA.map((item, i) => {
           return (
@@ -115,7 +115,7 @@ const DATA_CALENDAR = [
     list: [
       {
         weekend: "SEPTEMBER 30 - OCTOBER 6",
-        title: "Christine Bradley",
+        title: "Cristina Gomez",
         meeting_time: "17:00 - 17:30",
       },
       {

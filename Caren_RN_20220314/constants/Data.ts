@@ -10,7 +10,7 @@ import {
 export const RECOMMEND_DATA = [
   {
     id: 0,
-    name: "Marian Ramsey",
+    name: "Marcela Lopez",
     title: "Regular afterschool child caregiver needed.",
     children: 1,
     online: true,
@@ -177,7 +177,7 @@ export const DATA_CHAT: IMessage[] = [
 export const DATA_MESSAGES: MessagesItemProps[] = [
   {
     id: 0,
-    name: "Marian Ramsey",
+    name: "Marcela Lopez",
     title: "Yup! I love it!",
     readed: false,
     time: "09:40",
@@ -258,7 +258,7 @@ export const DATA_PAST_INTERVIEW = [
   },
   {
     id: 1,
-    name: "Marian Ramsey",
+    name: "Marcela Lopez",
     time: 1569718625000,
     dateIn: "18:00 - 18:30",
     type: Request_Status_Type_Enum.Accepted,
@@ -305,7 +305,7 @@ export const DATA_PAST_INTERVIEW = [
 export const DATA_CURRENT_INTERVIEW = [
   {
     id: 0,
-    name: "Christine Bradley",
+    name: "Cristina Gomez",
     time: new Date(),
     dateIn: "17:00 - 17:30",
     type: Request_Status_Type_Enum.Accepted,
@@ -333,7 +333,7 @@ export const DATA_CURRENT_INTERVIEW = [
 ];
 export const DATA_CURRENT_BOOKING = [
   {
-    user: { id: 1, name: "Christine Bradley", avatar: Images.avatar1 },
+    user: { id: 1, name: "Cristina Gomez", avatar: Images.avatar1 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Unconfirmed,
     children: 1,
@@ -463,7 +463,7 @@ export const DATA_PASS_BOOKING = [
 ];
 export const DATA_CURRENT_APPLICATION = [
   {
-    user: { id: 1, name: "Christine Bradley", avatar: Images.avatar1 },
+    user: { id: 1, name: "Cristina Gomez", avatar: Images.avatar1 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Unconfirmed,
     children: 1,
@@ -598,17 +598,17 @@ export const ABILITY_DATA = [
   {
     id: 0,
     date: 1648647101000,
-    title: "March 30 - April 6 ",
+    title: "22 Julio - 6 Agosto ",
   },
   {
     id: 1,
     type: Request_Type_Enum.Interview,
     date: 1649338301000,
     meeting_time: "17:00 - 17:30",
-    title: "April 7 - 13",
+    title: "7 Agosto - 13",
     user: {
       id: 1,
-      name: "Christine Bradley",
+      name: "Cristina Gomez",
       avatar: Images.avatar1,
       onlineState: Onl_State_Types_Enum.Online,
     },
@@ -618,7 +618,7 @@ export const ABILITY_DATA = [
     type: Request_Type_Enum.Interview,
     date: 1649943101000,
     meeting_time: "12:00 - 12:30",
-    title: "April 14 - 20",
+    title: "14 Agosto - 20",
     user: {
       id: 1,
       name: "Lela Ramos",

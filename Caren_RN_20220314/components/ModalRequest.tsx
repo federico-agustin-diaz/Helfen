@@ -96,7 +96,7 @@ function ModalRequest(
               category="para-m"
               ml={4}
               fontFamily="GothamPro-Medium"
-              children={` sent you a job request.`}
+              children={` te ha enviado una solicitud.`}
             />
           </Text>
         </Flex>
@@ -118,7 +118,7 @@ function ModalRequest(
               mt={16}
               mb={10}
             >
-              OK, Thanks!
+              OK, gracias!
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -126,7 +126,7 @@ function ModalRequest(
             onPress={onDetails !== undefined ? onDetails : hide}
           >
             <Text category="h7" status={"link"} center mt={16} mb={20}>
-              View Job Details
+              Ver Detalles Solicitud
             </Text>
           </TouchableOpacity>
         </View>

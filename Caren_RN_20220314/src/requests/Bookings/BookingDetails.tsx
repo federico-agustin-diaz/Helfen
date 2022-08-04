@@ -76,7 +76,7 @@ const BookingDetails = memo(() => {
         </Text>
         <UserField
           avatar={Images.avatar2}
-          name={"Marian Ramsey"}
+          name={"Marcela Lopez"}
           location={"Rochester, NY"}
           miles={2}
         />

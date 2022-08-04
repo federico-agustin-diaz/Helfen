@@ -97,7 +97,7 @@ const MainBottomTab = memo(() => {
         }}
       >
         <BottomTab.Screen
-          name="Find"
+          name="Buscar"
           component={FindSrc}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -110,7 +110,7 @@ const MainBottomTab = memo(() => {
           }}
         />
         <BottomTab.Screen
-          name="Requests"
+          name="Solicitudes"
           component={RequestsBottomNavigator}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -123,7 +123,7 @@ const MainBottomTab = memo(() => {
           }}
         />
         <BottomTab.Screen
-          name="Calendar"
+          name="Calendario"
           component={CalendarNavigator}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -136,7 +136,7 @@ const MainBottomTab = memo(() => {
           }}
         />
         <BottomTab.Screen
-          name="More"
+          name="Mas"
           component={MoreNavigator}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -147,7 +147,7 @@ const MainBottomTab = memo(() => {
       </BottomTab.Navigator>
       {/* Modal request job notification*/}
       <ModalRequest
-        name={"Marian Ramsey"}
+        name={"Marcela Lopez"}
         ref={modalRef}
         avatar={Images.avatar3}
         isOnl={true}

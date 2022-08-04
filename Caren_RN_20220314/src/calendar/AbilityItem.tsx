@@ -99,13 +99,7 @@ const AbilityItem = ({
                 status={light ? "completed" : "placeholder"}
                 mb={4}
               >
-                No availability added
-              </Text>
-              <Text
-                category="h8-s"
-                status={light ? "completed" : "placeholder"}
-              >
-                Use + button to add
+                Disponible
               </Text>
             </Layout>
           </TouchableOpacity>

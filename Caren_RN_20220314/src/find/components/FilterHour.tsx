@@ -39,8 +39,8 @@ const FilterDistance = ({
     <View style={{ marginBottom: mb }}>
       <Slider
         value={valueSlider}
-        minimumValue={0}
-        maximumValue={50}
+        minimumValue={5}
+        maximumValue={95}
         onValueChange={(value) => setValueSlider(value)}
         containerStyle={styles.slider}
         minimumTrackTintColor={theme["color-primary-100"]}
@@ -108,4 +108,4 @@ const themedStyles = StyleService.create({
     top: 4,
   },
 });
-const DATA = [0, 10, 25, 40, 50];
+const DATA = [5, 20, 35, 50, 65, 80, 95];
