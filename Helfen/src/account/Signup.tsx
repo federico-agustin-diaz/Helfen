@@ -49,9 +49,14 @@ const Signup = memo(() => {
   });
 
   const onLogin = React.useCallback(() => navigate("Login"), []);
-  const onSignup = React.useCallback(() => {
-    navigate("IntroduceYourself");
-  }, []);
+  const onSignup = () => {
+    console.log(DATA_SELECT_1[selectedIndex - 1])
+    if ((DATA_SELECT_1[selectedIndex - 1]) == "Cuidador") {
+      navigate("IntroduceYourself");
+    } else if ((DATA_SELECT_1[selectedIndex - 1]) == "Familiar") {
+    //navigate("IntroduceYourself");
+    }
+  };
   const onFacebook = React.useCallback(() => {}, []);
   const onTwitter = React.useCallback(() => {}, []);
     const [birthday, setBirthday] = React.useState(new Date());
@@ -106,7 +111,6 @@ const Signup = memo(() => {
               onTouchEnd={handleSubmit(() => {})}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="email-address"
               caption={errors.password?.message}
               secureTextEntry={invisible}
               accessoryRight={(props) => (
@@ -224,12 +228,15 @@ const Signup = memo(() => {
         <Select
           selectedIndex={selectedIndex}
           onSelect={(index) => setSelectedIndex(index)}
-          placeholder="Select one"
+          placeholder="Seleccione"
           style={styles.consider}
           label={`${t("considerMyself")}`}
+          /* @ts-ignore */
+          value={DATA_SELECT_1[selectedIndex - 1]}
         >
-          <SelectItem title="Profesional" />
-          <SelectItem title="Familiar" />
+          {DATA_SELECT_1.map((item, i) => {
+            return <SelectItem title={item} key={i} />;
+          })}
         </Select>
         <Button
           children={t("Continuar").toString()}
@@ -271,3 +278,4 @@ const themedStyles = StyleService.create({
     flex: 1,
   },
 });
+const DATA_SELECT_1 = ["Familiar", "Cuidador"];
