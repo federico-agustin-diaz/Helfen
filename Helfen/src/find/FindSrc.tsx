@@ -49,11 +49,11 @@ const FindSrc = memo(() => {
     item => {
       return (
         <Layout style={styles.tabBar}>
-          <BasicTabBar
+          {/* <BasicTabBar
             activeIndex={activeIndex}
             onChange={setActiveIndex}
             tabs={[t('recommended'), t('newJobs'), t('nearbyYou')]}
-          />
+          /> */}
         </Layout>
       );
     },
@@ -102,8 +102,8 @@ const themedStyles = StyleService.create({
     flex: 1,
   },
   tabBar: {
-    paddingBottom: 8,
-    paddingTop: 24,
+    // paddingBottom: 8,
+    // paddingTop: 24,
     backgroundColor: 'background-basic-color-1',
   },
   content: {

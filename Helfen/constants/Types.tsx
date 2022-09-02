@@ -39,7 +39,8 @@ export interface JobItemProps {
   id: number;
   title: string;
   avatar: ImageRequireSource;
-  children: number;
+  services: string[];
+  valoration: number;
   ageType: string;
   name: string;
   location: string;
@@ -110,9 +111,8 @@ export enum Request_Status_Type_Enum {
   Canceled = "Canceled",
 }
 export enum Request_Type_Enum {
-  Interview = "Turno Profesional",
-  Booking = "Booking",
-  Application = "Application",
+  Interview = "Pendiente",
+  Booking = "Confirmado",
 }
 // Credit Card type
 export interface FormModel {

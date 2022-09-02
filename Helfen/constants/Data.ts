@@ -11,8 +11,8 @@ export const RECOMMEND_DATA = [
   {
     id: 0,
     name: "Marcela Lopez",
-    title: "Regular afterschool child caregiver needed.",
-    children: 1,
+    title: "",
+    services: ["Tecnicas RCP", "Tecnicas Hemlich", "Higiene y confort", "Primeros Auxilios", "Acompañamiento en rehabilitación"],
     online: true,
     avatar: Images.avatar1,
     ageType: "Toddler, Junior-High",
@@ -24,31 +24,31 @@ export const RECOMMEND_DATA = [
     howOften: "Regularly",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -62,7 +62,7 @@ export const RECOMMEND_DATA = [
     id: 1,
     name: "Emily Clark",
     title: "Babysitting for a few hours",
-    children: 2,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     online: false,
     avatar: Images.avatar2,
     ageType: "Toddler",
@@ -82,7 +82,7 @@ export const RECOMMEND_DATA = [
     id: 2,
     name: "Mattie Harper",
     title: "Babysitting for two hours",
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     online: true,
     avatar: Images.avatar3,
     ageType: "Toddler",
@@ -102,7 +102,7 @@ export const RECOMMEND_DATA = [
     id: 3,
     name: "Nina McGuire",
     title: "Babysitting for two hours",
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     online: true,
     avatar: Images.avatar4,
     ageType: "Toddler",
@@ -336,7 +336,7 @@ export const DATA_CURRENT_BOOKING = [
     user: { id: 1, name: "Cristina Gomez", avatar: Images.avatar1 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Unconfirmed,
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -344,31 +344,31 @@ export const DATA_CURRENT_BOOKING = [
     location: "Rochester, NY",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -380,7 +380,7 @@ export const DATA_PASS_BOOKING = [
     user: { id: 1, name: "Ernest Park", avatar: Images.avatar8 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Completed,
-    children: 2,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -388,31 +388,31 @@ export const DATA_PASS_BOOKING = [
     location: "Rochester, NY",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -422,7 +422,7 @@ export const DATA_PASS_BOOKING = [
     user: { id: 1, name: "Lenora Collins", avatar: Images.avatar3 },
     onlineState: Onl_State_Types_Enum.Online,
     type: Request_Status_Type_Enum.Accepted,
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -430,31 +430,31 @@ export const DATA_PASS_BOOKING = [
     location: "Rochester, NY",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
+        isActive: false,
+      },
+      {
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Tue",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Thu",
-        isActive: true,
+        title: "Viernes",
+        isActive: false,
       },
       {
-        title: "Fri",
-        isActive: true,
-      },
-      {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -466,7 +466,7 @@ export const DATA_CURRENT_APPLICATION = [
     user: { id: 1, name: "Cristina Gomez", avatar: Images.avatar1 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Unconfirmed,
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -475,31 +475,31 @@ export const DATA_CURRENT_APPLICATION = [
     jobDescription: "Regular afterschool child caregiver needed.",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -511,7 +511,7 @@ export const DATA_PASS_APPLICATION = [
     user: { id: 1, name: "Dollie Haynes", avatar: Images.avatar4 },
     onlineState: Onl_State_Types_Enum.JustLeave,
     type: Request_Status_Type_Enum.Unconfirmed,
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -520,31 +520,31 @@ export const DATA_PASS_APPLICATION = [
     jobDescription: "Babysitting for a few hours in weekdays.",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],
@@ -554,7 +554,7 @@ export const DATA_PASS_APPLICATION = [
     user: { id: 2, name: "Ernest Park", avatar: Images.avatar6 },
     onlineState: Onl_State_Types_Enum.Online,
     type: Request_Status_Type_Enum.Completed,
-    children: 1,
+    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
     mile: 2,
     ageType: "Toddler",
     startTime: new Date(),
@@ -563,31 +563,31 @@ export const DATA_PASS_APPLICATION = [
     jobDescription: "Babysitting for a few hours in weekdays.",
     dayInWeek: [
       {
-        title: "Sun",
+        title: "Domingo",
         isActive: false,
       },
       {
-        title: "Mon",
+        title: "Lunes",
         isActive: false,
       },
       {
-        title: "Tue",
+        title: "Martes",
         isActive: true,
       },
       {
-        title: "Wed",
+        title: "Miercoles",
         isActive: true,
       },
       {
-        title: "Thu",
+        title: "Jueves",
         isActive: true,
       },
       {
-        title: "Fri",
+        title: "Viernes",
         isActive: false,
       },
       {
-        title: "Sat",
+        title: "Sabado",
         isActive: false,
       },
     ],

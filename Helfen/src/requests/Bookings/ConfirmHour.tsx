@@ -232,31 +232,31 @@ const themedStyles = StyleService.create({
 });
 const DATA = [
   {
-    title: "Sun",
+    title: "Domingo",
     isActive: false,
   },
   {
-    title: "Mon",
+    title: "Lunes",
     isActive: false,
   },
   {
-    title: "Tue",
+    title: "Martes",
     isActive: true,
   },
   {
-    title: "Wed",
+    title: "Miercoles",
     isActive: true,
   },
   {
-    title: "Thu",
+    title: "Jueves",
     isActive: true,
   },
   {
-    title: "Fri",
+    title: "Viernes",
     isActive: false,
   },
   {
-    title: "Sat",
+    title: "Sabado",
     isActive: false,
   },
 ];

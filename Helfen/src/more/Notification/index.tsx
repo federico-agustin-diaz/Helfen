@@ -28,7 +28,7 @@ const Notification = memo(() => {
     return (
       <Layout level={"1"}>
         <BasicTabBar
-          tabs={[t("applications"), t("interview"), t("bookings")]}
+          tabs={[t("applications"), t("interview")]}
           activeIndex={activeTab}
           onChange={setActiveTab}
           style={styles.tabBar}

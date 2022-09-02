@@ -30,6 +30,16 @@ const CalendarSrc = memo(() => {
     { title: t("suggestDescription2"), id: 1 },
     { title: t("suggestDescription3"), id: 2 },
   ];
+  const getCurrentDate=()=>{
+ 
+    var date = new Date().getDate();
+    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    let monthName = months[new Date().getMonth()];
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    return ('El dia de hoy es ' + date + ' ' + monthName + ' ' + year).toString()
+}
   const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
   const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
   const onPressAddAbility = () => navigate("AvailabilitySrc", { type: "Add" });
@@ -37,7 +47,7 @@ const CalendarSrc = memo(() => {
     <Container style={styles.container}>
       <TopNavigation title={t("title").toString()} />
       <Content padder contentContainerStyle={styles.content}>
-        <ImageBackground
+        {/* <ImageBackground
           source={Images.bgSuggestion}
           style={[
             styles.img,
@@ -51,9 +61,9 @@ const CalendarSrc = memo(() => {
           <Text category="h2" mt={20} status="primary" mb={12}>
             {t("suggestTitle")}
           </Text>
-        </ImageBackground>
+        </ImageBackground> */}
         <Text category="h6" mb={24}>
-          {t("28 Julio 2022")}
+          {(getCurrentDate())}
         </Text>
         {ABILITY_DATA.map((item, i) => {
           return (
@@ -67,12 +77,12 @@ const CalendarSrc = memo(() => {
           );
         })}
       </Content>
-      <ButtonFill
+      {/* <ButtonFill
         icon="plusImg"
         status="warning"
         size="large"
         style={[styles.addButton, { bottom: bottom + 32 }]}
-      />
+      /> */}
     </Container>
   );
 });
@@ -84,7 +94,7 @@ const themedStyles = StyleService.create({
     flex: 1,
   },
   content: {
-    paddingTop: 32,
+    //paddingTop: 32,
     paddingBottom: 80,
   },
   img: {

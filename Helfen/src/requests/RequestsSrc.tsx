@@ -66,7 +66,7 @@ const RequestsSrc = memo(() => {
           style={styles.tabBar}
           activeIndex={activeIndex}
           onChange={setActiveIndex}
-          tabs={[t("interview"), t("bookings"), t("applications")]}
+          tabs={[t("interview"), t("applications")]}
         />
       </Layout>
     );

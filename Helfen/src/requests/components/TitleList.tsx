@@ -30,14 +30,14 @@ const TitleList = ({
           {dataLength > 0 ? dataLength : null}
         </Text>
       </Flex>
-      {current === false ? (
+      {/* {current === false ? (
         <Flex itemsCenter mb={24}>
           <Text category="h8" status={"link"} mr={4} onPress={onSeeAll}>
             {t("common:seeAll")}
           </Text>
           <Icon pack="assets" name="arrowRight" style={globalStyle.icon16} />
         </Flex>
-      ) : null}
+      ) : null} */}
     </Flex>
   );
 };
