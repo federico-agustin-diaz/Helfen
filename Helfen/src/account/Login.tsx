@@ -58,8 +58,8 @@ const Login = memo(() => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "lehieuds@gmail.com",
-      password: "123456Aa",
+      email: "feded.94@gmail.com",
+      password: "Fede123",
     },
   });
   const [canContinue, setCanContinue] = React.useState(false);
@@ -121,7 +121,6 @@ const Login = memo(() => {
               onTouchEnd={handleSubmit(() => {})}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="email-address"
               caption={errors.password?.message}
               secureTextEntry={invisible}
               accessoryRight={(props) => (

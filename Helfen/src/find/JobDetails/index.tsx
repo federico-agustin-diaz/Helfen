@@ -1,4 +1,6 @@
 import React, { memo } from "react";
+import { RECOMMEND_DATA } from "constants/Data";
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
 import {
   useTheme,
@@ -17,6 +19,7 @@ import {
 import useLayout from "hooks/useLayout";
 import { useTranslation } from "react-i18next";
 
+import ModalContact from "components/ModalContact";
 import Text from "components/Text";
 import Container from "components/Container";
 import {
@@ -37,6 +40,7 @@ import Animated, {
 import Personal from "./Personal";
 import Weekdays from "../components/Weekdays";
 import Description from "./Description";
+import useModal from "hooks/useModal";
 
 const JobDetails = memo(() => {
   const { navigate, goBack } =
@@ -46,8 +50,10 @@ const JobDetails = memo(() => {
   const styles = useStyleSheet(themedStyles);
   const { t } = useTranslation(["find", "common"]);
   const route = useRoute<JobDetailsScreenNavigationProp>();
+  const { modalRef, show, hide } = useModal();
 
   let NAME = route.params.name;
+  const items = RECOMMEND_DATA.filter(item => item.name == NAME);
   const translationY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translationY.value = event.contentOffset.y;
@@ -92,15 +98,20 @@ const JobDetails = memo(() => {
 
   const _onOption = React.useCallback(() => {}, []);
   const _onApply = React.useCallback(() => {
-    navigate("MainBottomTab");
+    //pedir turno
+    modalRef.current?.show();
+    setTimeout(() => {
+      navigate("MainBottomTab");
+    }, 1800);
+    
   }, []);
 
   return (
     <Container style={styles.container} useSafeArea={false} level="2">
-      <FocusAwareStatusBar barStyle="light-content" />
-      <Animated.Image source={Images.cover} style={styleCover} />
-      <Flex style={styles.topNav} mh={24} mt={top + 8}>
-        <TouchableOpacity activeOpacity={0.54} onPress={goBack}>
+      {/* <FocusAwareStatusBar barStyle="light-content" /> */}
+      {/* <Animated.Image source={Images.cover} style={styleCover} /> */}
+      <Flex>
+        {/* <TouchableOpacity activeOpacity={0.54} onPress={goBack}>
           <ImageBackground
             source={Images.fill}
             imageStyle={{ tintColor: theme["color-basic-700"] }}
@@ -117,8 +128,8 @@ const JobDetails = memo(() => {
           <Text status={"basic"} center category="h6" mt={4}>
             {NAME}
           </Text>
-        </Animated.View>
-        <TouchableOpacity activeOpacity={0.54} onPress={_onOption}>
+        </Animated.View> */}
+        {/* <TouchableOpacity activeOpacity={0.54} onPress={_onOption}>
           <ImageBackground
             source={Images.fill}
             imageStyle={{ tintColor: theme["color-basic-700"] }}
@@ -130,7 +141,7 @@ const JobDetails = memo(() => {
               style={{ tintColor: theme["text-primary-color"] }}
             />
           </ImageBackground>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Flex>
       <Animated.ScrollView
         scrollEventThrottle={16}
@@ -138,29 +149,11 @@ const JobDetails = memo(() => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.content,
-          {
-            paddingBottom: 240 + top * (height / 812),
-          },
-        ]}
-        style={[
-          {
-            paddingTop: 196 + top * (height / 812),
-          },
         ]}
       >
-        <Avatar
-          source={Images.avatar8}
-          size="giant"
-          shape="rounded"
-          /* @ts-ignore */
-          style={styles.avatar}
-        />
-        <Personal name={NAME} trustedFamily carePro mt={72} mb={32} />
-        <Text category="h2" mb={16}>
-          Regular afterschool child caregiver needed.
-        </Text>
-        <Text category="para-m" mb={16}>
-          1 Children - John - Dogs
+        <Personal name={NAME} rating={items[0].rating} mt={72} mb={32} />
+        {/* <Text category="para-m" mb={16}>
+          Soy una persona muy capa
         </Text>
         <Flex mr={36} mb={24}>
           <View>
@@ -197,28 +190,26 @@ const JobDetails = memo(() => {
             height: 200 * (height / 812),
             marginBottom: 56,
           }}
-        />
+        /> */}
         <Description
-          tagQualifications={TAG_QUALIFICATIONS}
-          tagResponsibilities={TAG_RESPONSIBILITIES}
+          tagResponsibilities={items[0].services}
         />
       </Animated.ScrollView>
       <Layout
-        level={"2"}
-        style={[styles.bottom, { paddingBottom: bottom + 8 }]}
+        style={[styles.bottom]}
       >
-        <View>
-          <Text category="h3">$15-$20/hr</Text>
-          <Text category="h8-s" status={"placeholder"}>
-            2 Applicants
-          </Text>
-        </View>
         <Button
-          children={t("apply").toString()}
+          children={t("Contactar").toString()}
           style={styles.apply}
           onPress={_onApply}
         />
       </Layout>
+      <ModalContact
+        name={NAME}
+        ref={modalRef}
+        isOnl={true}
+        onDetails={hide}
+      />
     </Container>
   );
 });
@@ -231,14 +222,13 @@ const themedStyles = StyleService.create({
   },
   bottom: {
     ...globalStyle.topBorder16,
-    paddingTop: 16,
-    paddingHorizontal: 24,
-    flexDirection: "row",
+    paddingBottom: 16,
+    alignItems: "center",
     justifyContent: "space-between",
     ...globalStyle.shadow,
   },
   apply: {
-    paddingHorizontal: 52,
+    alignItems: "center",
   },
   topNav: {
     paddingBottom: 8,

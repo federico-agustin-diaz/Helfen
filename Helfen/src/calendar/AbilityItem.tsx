@@ -58,26 +58,6 @@ const AbilityItem = ({
                 </Text>
                 <Text category="h8-s">{item.meeting_time}</Text>
               </View>
-              <Avatar
-                source={item.user?.avatar}
-                size="medium"
-                shape="rounded"
-              />
-              {item.user?.onlineState === Onl_State_Types_Enum.Online ? (
-                <ButtonFill
-                  icon="callSmall"
-                  status="basic"
-                  size="tiny"
-                  style={styles.onlState}
-                />
-              ) : (
-                <ButtonFill
-                  icon="messageSmall"
-                  status="success"
-                  size="tiny"
-                  style={styles.onlState}
-                />
-              )}
             </Layout>
           </TouchableOpacity>
         ) : (

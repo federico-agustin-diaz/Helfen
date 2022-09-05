@@ -8,12 +8,11 @@ import Flex from "components/Flex";
 import { globalStyle } from "styles/globalStyle";
 
 interface DescriptionProps {
-  tagQualifications: string[];
   tagResponsibilities: string[];
 }
 
 const Description = memo(
-  ({ tagQualifications, tagResponsibilities }: DescriptionProps) => {
+  ({ tagResponsibilities }: DescriptionProps) => {
     const styles = useStyleSheet(themedStyles);
     const { t } = useTranslation(["find", "common"]);
     return (
@@ -25,27 +24,10 @@ const Description = memo(
           <Text category="para-m" mb={32}>
             {t("description1")}
           </Text>
-          <Text category="para-m" mb={32}>
-            {t("description2")}
-          </Text>
         </View>
         <View>
           <Text category="h3" mb={24}>
-            {t("qualifications")}
-          </Text>
-          {tagQualifications.map((item, i) => {
-            return (
-              <Flex key={i} justify="flex-start" itemsCenter mb={12}>
-                <Layout style={globalStyle.dot} level="6" />
-                <Text category="para-m">{item}</Text>
-              </Flex>
-            );
-          })}
-        </View>
-        <Layout style={styles.line} level="3" />
-        <View>
-          <Text category="h3" mb={24}>
-            {t("qualifications")}
+            {t("Servicios Proporcionados")}
           </Text>
           {tagResponsibilities.map((item, i) => {
             return (
@@ -56,9 +38,6 @@ const Description = memo(
             );
           })}
         </View>
-        <Text status={"placeholder"} category="h8-s" mt={56}>
-          Posted by Marian on August 6, 2019
-        </Text>
       </View>
     );
   }

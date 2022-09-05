@@ -68,7 +68,6 @@ const BookingItem = ({ item }: BookingProps) => {
           mh={16}
           style={globalStyle.shadow}
         >
-          <Avatar source={item.user.avatar} size="medium" shape="square" />
           <View
             style={[
               styles.onlineIcon,

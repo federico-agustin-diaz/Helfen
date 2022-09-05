@@ -4,16 +4,18 @@ import Text from "components/Text";
 import { Icon, StyleService, useStyleSheet } from "@ui-kitten/components";
 import { useTranslation } from "react-i18next";
 import Flex from "components/Flex";
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 interface PersonalProps {
   name: string;
+  rating: number;
   trustedFamily: boolean;
   carePro: boolean;
   mt?: number;
   mb?: number;
 }
 const Personal = memo(
-  ({ name, trustedFamily, carePro, mt, mb }: PersonalProps) => {
+  ({ name, rating, trustedFamily, carePro, mt, mb }: PersonalProps) => {
     const { t } = useTranslation(["find", "common"]);
     const styles = useStyleSheet(themedStyles);
     return (
@@ -21,6 +23,14 @@ const Personal = memo(
         <Text category="h3" center mb={24}>
           {name}
         </Text>
+        <Rating
+            readonly
+            //aca tenes que poner lo que te devuelve backend
+            startingValue={rating}
+            type='star'
+            ratingCount={10}
+            imageSize={20}
+          />
         <Flex center mb={24}>
           {trustedFamily ? (
             <View style={styles.trusted}>

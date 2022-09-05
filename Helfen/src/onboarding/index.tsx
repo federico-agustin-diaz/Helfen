@@ -112,7 +112,7 @@ const Onboarding = memo(() => {
           })}
         </Animated.ScrollView>
         <Dots translationValue={translationX} data={DATA} />
-        <Flex padder pv={48}>
+        <Flex padder pv={28}>
           <Button style={styles.login} status="outline" onPress={onLogin}>
             {t('common:login').toString()}
           </Button>
@@ -132,7 +132,7 @@ export default Onboarding;
 
 const themedStyles = StyleService.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   content: {
     marginTop: 56,

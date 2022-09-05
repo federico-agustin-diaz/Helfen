@@ -29,7 +29,6 @@ const CaregiverCard = ({ item }: ItemProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.avatar} activeOpacity={0.54} onPress={_onProfile}>
-        <Avatar shape="rounded" size={"large"} source={item.avatar} />
         <View
           style={[
             styles.onlineIcon,

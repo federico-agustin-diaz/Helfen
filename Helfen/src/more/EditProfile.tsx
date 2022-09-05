@@ -63,23 +63,6 @@ const EditProfile = memo(() => {
         }
       />
       <Content padder>
-        {photo ? (
-          <Avatar
-            source={{ uri: photo }}
-            size="giant"
-            shape="rounded"
-            /* @ts-ignore */
-            style={styles.avatar}
-          />
-        ) : (
-          <Avatar
-            shape="rounded"
-            source={Images.avatar2}
-            size="giant"
-            /* @ts-ignore */
-            style={styles.avatar}
-          />
-        )}
         <Text
           category="h8-s"
           status={"link"}

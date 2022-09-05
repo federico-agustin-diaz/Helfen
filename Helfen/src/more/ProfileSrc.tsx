@@ -30,13 +30,6 @@ const ProfileSrc = memo(() => {
         accessoryRight={<NavigationAction icon="edit" onPress={_onEdit} />}
       />
       <Content contentContainerStyle={styles.content} padder>
-        <Avatar
-          source={Images.avatar2}
-          shape="rounded"
-          size={"giant"}
-          /* @ts-ignore */
-          style={styles.avatar}
-        />
         <ProfileTag label={t("fullName")} title="Edith Johnson" />
         <ProfileTag label={t("common:email")} title="lehieuds@gmail.com" />
         <ProfileTag

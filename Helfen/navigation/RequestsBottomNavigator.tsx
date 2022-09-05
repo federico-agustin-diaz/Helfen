@@ -12,8 +12,8 @@ const RequestsBottomNavigator = memo(() => {
       screenOptions={{ headerShown: false }}
       initialRouteName="RequestsSrc"
     >
-      <Stack.Screen name="RequestsSrc" component={RequestsSrc} />
-      <Stack.Screen name="RequestsInPast" component={RequestsInPast} />
+      <Stack.Screen name="SIN CONFIRMAR" component={RequestsSrc} />
+      <Stack.Screen name="CONFIRMADO" component={RequestsInPast} />
     </Stack.Navigator>
   );
 });

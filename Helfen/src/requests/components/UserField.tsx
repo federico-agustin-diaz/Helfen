@@ -21,7 +21,6 @@ const UserField = ({ avatar, name, miles, location }: UserFieldProps) => {
   const styles = useStyleSheet(themedStyles);
   return (
     <Flex style={styles.personal} level="2" justify="flex-start" itemsCenter>
-      <Avatar shape="rounded" source={avatar} size="medium" />
       <View>
         <Text category="h7" status={"basic"} ml={16}>
           {name}

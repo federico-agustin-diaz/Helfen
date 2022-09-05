@@ -199,10 +199,10 @@ export default {
     viewOnMap: "View on Map",
     trustedFamily: "Trusted Family",
     carePro: "Care Pro",
-    description: "Description",
+    description: "Descripcion",
     qualifications: "Qualifications",
     description1:
-      "I am looking for a great babysitter for 1 children in Rochester. I would prefer someone who could help out with meal preparation occasionally.",
+      "Me destaco en conocer tecnicas de Hemlich y RCP. Soy Profesional hace 5 años habiendo trabajado en hospitales, geriatricos, etc.",
     description2:
       "I would prefer a babysitter who has their own car and who is comfortable with pets. This would be occasional weekends only with one possible overnight a month.",
     apply: "Apply",

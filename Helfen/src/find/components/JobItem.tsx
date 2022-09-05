@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Text from "components/Text";
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 import {
   Avatar,
@@ -24,7 +25,7 @@ const JobItem = memo(({ item }: ItemProps) => {
   const {
     services,
     name,
-    valoration,
+    rating,
   } = item;
   const styles = useStyleSheet(themedStyles);
   const theme = useTheme();
@@ -60,11 +61,14 @@ const JobItem = memo(({ item }: ItemProps) => {
             Servicios Proporcionados: {services.join(",  ")}
           </Text>
         </Flex>
-        <Flex mt={12} mr={16}>
-          <Text category="h8" ml={8}>
-            Valoracion:
-          </Text>
-        </Flex>
+          <Rating
+            readonly
+            //aca tenes que poner lo que te devuelve backend
+            startingValue={rating}
+            type='star'
+            ratingCount={10}
+            imageSize={20}
+          />
       </Layout>
     </Layout>
   );

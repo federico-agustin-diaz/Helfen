@@ -120,13 +120,6 @@ const ApplicationDetails = memo(() => {
         ]}
       >
         <View>
-          <Avatar
-            source={Images.avatar8}
-            size="giant"
-            shape="rounded"
-            /* @ts-ignore */
-            style={styles.avatar}
-          />
         </View>
         <Personal
           name={"Marcela Lopez"}
@@ -178,7 +171,6 @@ const ApplicationDetails = memo(() => {
           }}
         />
         <Description
-          tagQualifications={TAG_QUALIFICATIONS}
           tagResponsibilities={TAG_RESPONSIBILITIES}
         />
       </Animated.ScrollView>

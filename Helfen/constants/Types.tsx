@@ -53,6 +53,7 @@ export interface JobItemProps {
   online: boolean;
   mile: number;
   coordinate?: LatLng | AnimatedRegion;
+  rating: number;
 }
 
 export interface MessagesItemProps {

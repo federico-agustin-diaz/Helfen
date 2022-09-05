@@ -58,7 +58,6 @@ const RequestInterviewItem = ({
             {item.type}
           </Text>
         </View>
-        <Avatar source={item.avatar} size="medium" shape="rounded" />
       </Flex>
       <View style={styles.fillIcon}>
         <ButtonFill

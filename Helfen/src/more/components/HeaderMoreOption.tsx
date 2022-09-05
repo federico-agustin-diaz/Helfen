@@ -25,13 +25,6 @@ const HeaderMoreOption = memo(
     return (
       <Flex itemsCenter mb={48}>
         <Flex itemsCenter justify="flex-start">
-          <Flex onPress={_onProfile}>
-            <Avatar
-              source={avatar}
-              style={styles.avatar}
-              shape="rounded"
-            />
-          </Flex>
           <View>
             <Text category="h6">{name}</Text>
             <Text category="h8-s" status={"placeholder"} mt={4}>

@@ -47,7 +47,7 @@ export type AuthStackParamList = {
 export type FindStackParamList = {
   FindSrc: undefined;
   ViewOnMap: undefined;
-  JobDetails: { name: string };
+  JobDetails: { name: string, rating: number };
 };
 export type MessagesStackParamList = {
   Chat: undefined;

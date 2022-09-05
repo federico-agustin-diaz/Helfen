@@ -30,25 +30,6 @@ const MessagesItem = memo(({ item, _onPress }: ItemProps) => {
           },
         ]}
       />
-      <View style={styles.viewAvatar}>
-        <Avatar source={item.avatar} size="medium" shape="rounded" />
-        <View
-          style={[
-            styles.onlineIcon,
-            {
-              backgroundColor:
-                item.onlineState === 0
-                  ? theme["color-success-100"]
-                  : item.onlineState === 1
-                  ? theme["color-basic-400"]
-                  : item.onlineState === 2
-                  ? theme["color-danger-100"]
-                  : theme["color-warning-100"],
-              borderColor: theme["background-basic-color-2"],
-            },
-          ]}
-        />
-      </View>
       <View>
         <Text category="h7">{item.name}</Text>
         <Flex itemsCenter>

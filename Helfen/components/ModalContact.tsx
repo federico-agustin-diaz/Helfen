@@ -22,7 +22,7 @@ interface ModalConfirmProps {
   isOnl: boolean;
 }
 
-function ModalRequest(
+function ModalContact(
   { name, onDetails, avatar, style, isOnl }: ModalConfirmProps,
   ref: React.ForwardedRef<{ show: () => void; hide: () => void }>
 ) {
@@ -77,12 +77,12 @@ function ModalRequest(
               category="para-m"
               ml={4}
               fontFamily="GothamPro-Medium"
-              children={` te ha enviado una solicitud.`}
+              children={` ha recibido tu solicitud.`}
             />
           </Text>
         </Flex>
         <View style={styles.buttonView}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.54}
             onPress={hide}
             style={[
@@ -101,26 +101,18 @@ function ModalRequest(
             >
               OK, gracias!
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.54}
-            onPress={onDetails !== undefined ? onDetails : hide}
-          >
-            <Text category="h7" status={"link"} center mt={16} mb={20}>
-              Ver Detalles Solicitud
-            </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Layout>
     </Modal>
   );
 }
 
-export default React.forwardRef(ModalRequest) as (
+export default React.forwardRef(ModalContact) as (
   props: ModalConfirmProps & {
     ref?: React.ForwardedRef<{ show: () => void; hide: () => void }>;
   }
-) => ReturnType<typeof ModalRequest>;
+) => ReturnType<typeof ModalContact>;
 
 const styles = StyleSheet.create({
   container: {
