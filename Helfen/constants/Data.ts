@@ -306,6 +306,17 @@ export const DATA_PAST_INTERVIEW = [
     status: Onl_State_Types_Enum.Online,
   },
 ];
+export const DATA_TODAY_INTERVIEW = [
+  {
+    id: 0,
+    name: "Federico Diaz",
+    time: new Date(),
+    dateIn: "17:00 - 17:30",
+    type: Request_Status_Type_Enum.Accepted,
+    avatar: Images.avatar2,
+    status: Onl_State_Types_Enum.Online,
+  },
+];
 export const DATA_CURRENT_INTERVIEW = [
   {
     id: 0,

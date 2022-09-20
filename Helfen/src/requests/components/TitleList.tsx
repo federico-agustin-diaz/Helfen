@@ -8,7 +8,7 @@ import { globalStyle } from "styles/globalStyle";
 import { Icon } from "@ui-kitten/components";
 
 interface TitleListProps extends FlexProps {
-  current: boolean;
+  current: string;
   dataLength: number;
   style?: StyleProp<ViewProps>;
   onSeeAll?(): void;
@@ -25,7 +25,7 @@ const TitleList = ({
   return (
     <Flex style={[style]} {...props}>
       <Flex justify="flex-start" mb={24}>
-        <Text category="h6">{current ? t("current") : t("past")}</Text>
+        <Text category="h6">{current == "actuales" ? t("Empleos de Hoy") : (current == "futuros" ? t("past") : t("current"))}</Text>
         <Text category="para-m" mt={4} ml={8} status="placeholder">
           {dataLength > 0 ? dataLength : null}
         </Text>

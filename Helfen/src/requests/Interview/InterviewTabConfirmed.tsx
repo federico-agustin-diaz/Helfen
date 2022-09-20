@@ -18,8 +18,8 @@ interface InterviewProps {
   dataPassRequest: RequestInterviewItemProps[];
 }
 
-const InterviewTab = memo(
-  ({ dataCurrentRequest, dataPassRequest }: InterviewProps) => {
+const InterviewTabConfirmed = memo(
+  ({ dataTodayRequest, dataCurrentRequest, dataPassRequest }: InterviewProps) => {
     const { t } = useTranslation(["requests", "common"]);
     const { navigate } =
       useNavigation<NavigationProp<MainBottomTabStackParamList>>();
@@ -42,8 +42,22 @@ const InterviewTab = memo(
           />
         ) : (
           <View>
+            <TitleList current={"actuales"} />
+            {dataTodayRequest.map((item, i) => {
+              return <RequestInterviewItemConfirmed item={item} key={i} />;
+            })}
+            <TitleList current={"realizados"} />
             {dataCurrentRequest.map((item, i) => {
-              return <RequestInterviewItem item={item} key={i} />;
+              return <RequestInterviewItemConfirmed item={item} key={i} />;
+            })}
+            <TitleList
+              current={"futuros"}
+              //dataLength={dataPassRequest.length}
+              mt={20}
+              onSeeAll={onSeeAllPast}
+            />
+            {dataPassRequest.map((item, i) => {
+              return <RequestInterviewItemConfirmed item={item} key={i} />;
             })}
           </View>
         )}
@@ -52,7 +66,7 @@ const InterviewTab = memo(
   }
 );
 
-export default InterviewTab;
+export default InterviewTabConfirmed;
 
 const themedStyles = StyleService.create({
   container: {

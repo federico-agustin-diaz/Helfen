@@ -24,7 +24,7 @@ export interface InterviewItemProps {
   contentStyle?: StyleProp<ViewStyle>;
 }
 
-const RequestInterviewItem = ({
+const RequestInterviewItemConfirmed = ({
   item,
   containerStyle,
   contentStyle,
@@ -45,13 +45,22 @@ const RequestInterviewItem = ({
       <Flex style={[contentStyle, styles.content]}>
         <View>
           <Text category="h7">{item.name}</Text>
+          <Flex itemsCenter mv={8}>
+            <Text category="h8-s" status={"placeholder"}>
+              {convertTime(item.time)}
+            </Text>
+            <Layout style={styles.dot} level="5" />
+            <Text category="h8-s" status={"placeholder"}>
+              {item.dateIn}
+            </Text>
+          </Flex>
         </View>
       </Flex>
     </TouchableOpacity>
   );
 };
 
-export default RequestInterviewItem;
+export default RequestInterviewItemConfirmed;
 
 const themedStyles = StyleService.create({
   container: {

@@ -19,9 +19,12 @@ import {
   DATA_CURRENT_INTERVIEW,
   DATA_PASS_BOOKING,
   DATA_PAST_INTERVIEW,
+  DATA_TODAY_INTERVIEW
 } from "constants/Data";
 import { RequestsStackParamList } from "navigation/types";
 import InterviewTab from "./Interview/InterviewTab";
+import InterviewTabConfirmed from "./Interview/InterviewTabConfirmed";
+
 import BookingsTab from "./Bookings/BookingsTab";
 import ApplicationsTab from "./Applications/ApplicationsTab";
 
@@ -33,6 +36,7 @@ const RequestsSrc = memo(() => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const shouldLoadComponent = (index: number) => index === activeIndex;
 
+  const [dataToday, setToday] = React.useState(DATA_TODAY_INTERVIEW);
   const [dataCurrent, setCurrent] = React.useState(DATA_CURRENT_INTERVIEW);
   const [dataPast, setPast] = React.useState(DATA_PAST_INTERVIEW);
 
@@ -50,9 +54,10 @@ const RequestsSrc = memo(() => {
             dataCurrentRequest={dataCurrent}
             dataPassRequest={dataPast}
           />
-          <BookingsTab
-            currentData={DATA_CURRENT_BOOKING}
-            passData={DATA_PASS_BOOKING}
+          <InterviewTabConfirmed
+            dataTodayRequest = {dataToday}
+            dataCurrentRequest={dataCurrent}
+            dataPassRequest={dataPast}
           />
           <ApplicationsTab />
         </ViewPager>
