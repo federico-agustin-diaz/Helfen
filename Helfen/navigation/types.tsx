@@ -32,7 +32,20 @@ export type AuthStackParamList = {
   ForgetPassword: undefined;
   NewPassword: undefined;
   JobPreferences: undefined;
-  IntroduceYourself: undefined;
+  IntroduceYourself: { userType: number,
+    name: string,
+    lastName: string,
+    dateOfBirth: string,
+    dniNumber: string,
+    localAddress: string,
+    postalCode: string,
+    province: string,
+    mail: string,
+    phoneNumber: string,
+    password: string,
+    latitude: string,
+    longitude: string,
+    gender: string };
   PurchaseBg: undefined;
   PurchaseBgConfirm: {
     trustedCare: boolean;
@@ -108,4 +121,8 @@ export type JobDetailsScreenNavigationProp = RouteProp<
 export type PurchaseBgConfirmNavigationProp = RouteProp<
   AuthStackParamList,
   "PurchaseBgConfirm"
+>;
+export type IntroduceYourselfNavigationProp = RouteProp<
+  AuthStackParamList,
+  "IntroduceYourself"
 >;

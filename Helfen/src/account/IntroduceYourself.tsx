@@ -10,10 +10,12 @@ import {
   Datepicker,
   Button,
 } from "@ui-kitten/components";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 import { useTranslation } from "react-i18next";
-
+import {
+  IntroduceYourselfNavigationProp
+} from "navigation/types";
 import Text from "components/Text";
 import Container from "components/Container";
 import SignupHeader from "./components/StepTitle";
@@ -25,20 +27,67 @@ import dayjs from "dayjs";
 import { globalStyle } from "styles/globalStyle";
 import { AuthStackParamList } from "navigation/types";
 import useToggle from "hooks/useToggle";
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 
-const IntroduceYourself = memo(() => {
+interface PersonalProps {
+  userType: number,
+  name: string,
+  lastName: string,
+  dateOfBirth: string,
+  dniNumber: string,
+  localAddress: string,
+  postalCode: string,
+  province: string,
+  mail: string,
+  phoneNumber: string,
+  password: string,
+  latitude: string,
+  longitude: string,
+  gender: string
+}
+
+const IntroduceYourself = memo(
+  ({})  => {
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
   const { bottom } = useLayout();
   const styles = useStyleSheet(themedStyles);
+  const route = useRoute<IntroduceYourselfNavigationProp>();
+  const form1 = new FormData();
+  const form2 = new FormData();
+  let userType = route.params.userType;
+  let name = route.params.name;
+  let lastName = route.params.lastName;
+  let dateOfBirth = route.params.dateOfBirth;
+  let dniNumber = route.params.dniNumber;
+  let localAddress = route.params.localAddress;
+  let province = route.params.province;
+  let mail = route.params.mail;
+  let phoneNumber = route.params.phoneNumber;
+  let password = route.params.password;
+  let latitude = route.params.latitude;
+  let longitude = route.params.longitude;
+  let gender = route.params.gender;
+  let postalCode = route.params.postalCode;
   const { t } = useTranslation(["auth", "common"]);
   const handleVerify = React.useCallback(() => {
     navigate("SuccessScr", {
       successScr: {
-        title: t("Bienvenido a Helfen!"),
+        title: "Solo queda un paso mas!",
+        description: t("A continuacion, requerimos que adjunte fotos del frente y dorso de su DNI"),
         children: [
           {
+            title: t("Adjuntar Foto Frente"),
+            onPress: () => selectFileDNI1(),
+            status: "outline",
+          },
+          {
+            title: t("Adjuntar Foto Detras"),
+            onPress: () => selectFileDNI2(),
+            status: "outline",
+          },
+          {
             title: t("Continuar"),
-            onPress: () => navigate("MainBottomTab"),
+            onPress: () => onSubirFotelli(),
             status: "outline",
           },
         ],
@@ -46,6 +95,223 @@ const IntroduceYourself = memo(() => {
       },
     });
   }, []);
+
+  const handleVerifyCompleto = React.useCallback(() => {
+    navigate("SuccessScr", {
+      successScr: {
+        title: t("Felicitaciones, se ha Registrado con Exito"),
+        children: [
+          {
+            title: t("Continuar"),
+            onPress: () => navigate('AuthStack', {screen: 'Login'}),
+            status: "outline",
+          }
+        ],
+        buttonsViewStyle: { marginHorizontal: 68 },
+      },
+    });
+  }, []);
+
+  const onSubirFotelli = () => {
+    console.log("entrosubirFotelli")
+    console.log(form1)
+      return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/saveimage', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        file: form1,
+        file1: form2
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      var url = 'https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user/checkid/' + dniNumber
+      return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.user != true) {
+        console.log(data)
+        console.log("se registro con foto");
+        handleVerifyCompleto();
+      } else if (data.login != true) {
+        console.log("error");
+      }
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
+  };
+
+  const selectFileDNI1 = () => {
+    console.log("entro foto")
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchCamera(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log('response', JSON.stringify(response));
+        
+        
+        form1.append("Files", {
+          name: "DNI-1", // Whatever your filename is
+          //data: response.assets[0].data,
+          uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
+          //type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
+        }); 
+        console.log(form1);
+      }
+    });
+  }
+
+  const selectFileDNI2 = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchCamera(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log('response', JSON.stringify(response));
+        console.log(response.assets[0].uri);
+        form2.append("Files", {
+          name: "DNI-2", // Whatever your filename is
+          //data: response.assets[0].data,
+          uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
+          type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
+        }); 
+      }
+    });
+  }
+  
+  const onSignup = () => {
+    let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompañante" : "Ambos")
+    console.log(speciality)
+    let higieneString = higiene ? "Higiene y confort, " : ""
+    let banoString = bañocon ? "Baño con movilidad, " : ""
+    let banoSinString = bañosin ? "Baño sin movilidad, " : ""
+    let controlesString = controles ? "Controles (Presión, glucosa, temperatura)" : ""
+    let curacionesString = curaciones ? "Curaciones, " : ""
+    let sueroString = bañocon ? "Cambio de suero, " : ""
+    let aseoString = bañosin ? "Aseo del espacio, " : ""
+    let alimString = alim ? "Alimentación, " : ""
+    let asistString = asist ? "Asistencia en traslados" : ""
+    let paseosString = paseos ? "Paseos de rutina, " : ""
+    let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación, " : ""
+    let rcpString = rcp ? "Primeros Auxilios, " : ""
+    let hemString = hem ? "Maniobra de heimlich" : ""
+    let arrayServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
+      console.log(arrayServices)
+    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userType: userType,
+        name: name,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth,
+        dniNumber: dniNumber,
+        localAddress: localAddress,
+        postalCode: postalCode,
+        province: province,
+        mail: mail,
+        phoneNumber: phoneNumber,
+        password: password,
+        latitude: "1",
+        longitude: "1",
+        gender: gender,
+        specialty: speciality,
+        isNurse: enfermero,
+        price: 200,
+        //experience: experience
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log("llego aca");
+      console.log(userType);
+      console.log(data);
+      if (data.user != true) {
+        console.log(data)
+        console.log("termino la parte de registro");
+        return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/service', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        carer: data.user.id,
+        description: arrayServices
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.user != true) {
+        console.log(data)
+        console.log("se registro con los services");
+        handleVerify();
+      } else if (data.login != true) {
+        console.log("error");
+      }
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
+        handleVerify();
+      } else if (data.login != true) {
+        console.log("error");
+      }
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
+    };
   const {
     control,
     handleSubmit,
@@ -57,8 +323,14 @@ const IntroduceYourself = memo(() => {
       phoneNumber: "",
     },
   });
+
+  const [experience, setExperience] = React.useState("")
   const [male, female, setMale, setFemale] = React.useState(false);
+  const [cuidador, setcuidador] = useToggle(false);
+  const [acompañante, setacompañante] = useToggle(false);
+  const [both, setboth] =useToggle(false);
   const [higiene, sethigiene] = useToggle(false);
+  const [enfermero, setEnfermero] = useToggle(false);
   const [bañocon, setbañocon] = useToggle(false);
   const [bañosin, setbañosin] = useToggle(false);
   const [controles, setcontroles] = useToggle(false);
@@ -73,9 +345,6 @@ const IntroduceYourself = memo(() => {
   const [aux, setaux] = useToggle(false);
   const [hem, sethem] = useToggle(false);
   const [birthday, setBirthday] = React.useState(new Date());
-  const onChange = React.useCallback((next) => {
-    setMale(next);
-  }, []);
   const onVerify = React.useCallback(() => {
     navigate("Verification");
   }, []);
@@ -95,8 +364,10 @@ const IntroduceYourself = memo(() => {
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               label={t("Experiencia laboral").toString()}
-              value={value}
-              onChangeText={onChange}
+              onChangeText={(value) => setExperience(value)}
+              value={experience}
+              //
+              //onTouchStart={handleSubmit(() => {})}
               onTouchStart={handleSubmit(() => {})}
               onTouchEnd={handleSubmit(() => {})}
               onBlur={onBlur}
@@ -105,28 +376,28 @@ const IntroduceYourself = memo(() => {
             />
           )}
         />
-        <Text category="h7" mb={24}>
+        {/* <Text category="h7" mb={24}>
           {t("Genero al que se dedica")}
         </Text>
         <Flex mb={32}>
-          <CheckBox children={"Masculino"} checked={male & !female} onChange={onChange} />
-          <CheckBox children={"Femenino"} checked={!male & female} onChange={onChange} />
-          <CheckBox children={"Ambos"} checked={male & female} onChange={onChange} />
-        </Flex>
+          <CheckBox children={"Masculino"} checked={male && !female} onChange={setMale} />
+          <CheckBox children={"Femenino"} checked={!male && female} onChange={setFemale} />
+          <CheckBox children={"Ambos"} checked={male && female} onChange={setMale && setFemale} />
+        </Flex> */}
         <Text category="h7" mb={24}>
           {t("A que te dedicas")}
         </Text>
         <Flex mb={32}>
-          <CheckBox children={"Cuidador"} checked={male & !female} onChange={onChange} />
-          <CheckBox children={"Acompañante"} checked={!male & female} onChange={onChange} />
-          <CheckBox children={"Ambas"} checked={!male & female} onChange={onChange} />
+          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setcuidador} />
+          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañante} />
+          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setboth} />
         </Flex>
         <Text category="h7" mb={24}>
           {t("Soy Enfermero")}
         </Text>
         <Flex mb={32}>
-          <CheckBox children={"Si"} checked={male} onChange={onChange} />
-          <CheckBox children={"No"} checked={!male} onChange={onChange} />
+          <CheckBox children={"Si"} checked={enfermero} onChange={setEnfermero} />
+          <CheckBox children={"No"} checked={!enfermero} onChange={setEnfermero} />
         </Flex>
         <Controller
           control={control}
@@ -167,7 +438,7 @@ const IntroduceYourself = memo(() => {
         <Button
           children={t("Terminar Registro").toString()}
           style={globalStyle.shadowBtn}
-          onPress={handleVerify}
+          onPress={onSignup}
         />
       </View>
     </Container>

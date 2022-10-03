@@ -28,7 +28,7 @@ const NotificationScreen = memo(
             <Image
               style={{
                 width: width,
-                marginTop: 36,
+                marginTop: 0,
                 height: 294 * (height / 812),
               }}
               source={Images.successBg}

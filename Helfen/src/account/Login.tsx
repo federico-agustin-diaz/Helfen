@@ -25,6 +25,7 @@ import useToggle from "hooks/useToggle";
 import Flex from "components/Flex";
 import { RootStackParamList } from "navigation/types";
 import useAuth from "hooks/useAuth";
+import Globales from "src/Globales";
 import { globalStyle } from "styles/globalStyle";
 
 const Login = memo(() => {
@@ -48,9 +49,40 @@ const Login = memo(() => {
   }, []);
 
   const onLogin = () => {
-    signIn();
-    nextScreen("MainBottomTab");
+    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/login', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        mail: username,
+        password: password
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.user != true) {
+        console.log(data)
+        //chequear si es cuidador o no. 1 es Familiar 2 Cuidador
+        Globales.set_variableGlobalTipo(data.user.user.userType)
+        Globales.set_variableGlobalNombre(data.user.user.lastName)
+        Globales.set_variableGlobalEmail(data.user.user.mail)
+        console.log(Globales.variableGlobalTipo);
+        console.log(Globales.variableGlobalNombre);
+        console.log("se logueo");
+        nextScreen("MainBottomTab");
+      } else if (data.login != true) {
+        console.log("no existe el usuario");
+      }
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
   };
+  
   const [invisible, setInvisible] = useToggle(true);
   const {
     control,
@@ -62,6 +94,8 @@ const Login = memo(() => {
       password: "Fede123",
     },
   });
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [canContinue, setCanContinue] = React.useState(false);
   React.useEffect(() => {
     if (errors.email === undefined && errors.password === undefined) {
@@ -97,10 +131,8 @@ const Login = memo(() => {
               label={t("email").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setUsername(value)}
+              value={username}
               onBlur={onBlur}
               keyboardType="email-address"
               caption={errors.email?.message}
@@ -116,11 +148,9 @@ const Login = memo(() => {
               label={t("password").toString()}
               status={errors.password ? "warning" : "basic"}
               style={styles.password}
-              value={value}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onChangeText={onChange}
-              onBlur={onBlur}
+              onChangeText={(value) => setPassword(value)}
+              value={password}
+             onBlur={onBlur}
               caption={errors.password?.message}
               secureTextEntry={invisible}
               accessoryRight={(props) => (

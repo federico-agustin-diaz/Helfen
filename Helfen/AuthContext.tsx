@@ -9,6 +9,10 @@ type Context = {
   isIntro: boolean;
   signIn: () => void;
   signOut: () => void;
+  variableGlobalTipo: integer;
+  variableGlobalId: integer;
+  variableGlobalEmail: string;
+  variableGlobalNombre: string;
 };
 
 export const AuthContext = React.createContext<Context>({
@@ -17,6 +21,10 @@ export const AuthContext = React.createContext<Context>({
   isIntro: false,
   signIn: () => {},
   signOut: () => {},
+  variableGlobalTipo: 0,
+  variableGlobalId: 0,
+  variableGlobalEmail: "",
+  variableGlobalNombre: ""
 });
 
 export const AuthProvider: React.FC = ({ children }) => {

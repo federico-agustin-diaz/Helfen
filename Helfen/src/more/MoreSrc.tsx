@@ -14,6 +14,7 @@ import useToggle from "hooks/useToggle";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "navigation/types";
 import HeaderMoreOption from "./components/HeaderMoreOption";
+import Globales from "src/Globales";
 
 const MoreSrc = memo(() => {
   const styles = useStyleSheet(themedStyles);
@@ -65,9 +66,9 @@ const MoreSrc = memo(() => {
     <Container style={styles.container}>
       <Content padder contentContainerStyle={styles.content}>
         <HeaderMoreOption
-          name={"Edith Johnson"}
+          name={Globales.variableGlobalNombre}
           avatar={Images.avatar2}
-          email={"lehieuds@gmail.com"}
+          email={Globales.variableGlobalEmail}
         />
         <View style={styles.details}>
           <Text category="h6">{t("myDetails")}</Text>
@@ -82,15 +83,6 @@ const MoreSrc = memo(() => {
               />
             );
           })}
-          <ButtonOptional
-            title={t("changeTheJobType")}
-            icon={"changeJob"}
-            status={"neutral"}
-            navigateSrc={"ReferFriend"}
-            onPress={() => {
-              navigate("ChangeJobType");
-            }}
-          />
         </View>
         <View style={styles.application}>
           <Text category="h6">{t("application")}</Text>

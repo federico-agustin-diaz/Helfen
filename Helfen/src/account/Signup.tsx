@@ -35,6 +35,46 @@ const Signup = memo(() => {
   const [selectedIndex, setSelectedIndex] = React.useState<
     IndexPath | IndexPath[]
   >();
+  const [selectedIndexGenero, setSelectedIndexGenero] = React.useState<
+  IndexPath | IndexPath[]
+>();
+
+const handleVerify = React.useCallback(() => {
+  navigate("SuccessScr", {
+    successScr: {
+      title: t("Se ha Registrado con Exito! Continua para Iniciar Sesion"),
+      children: [
+        {
+          title: t("Continuar"),
+          onPress: () => navigate('AuthStack', {screen: 'Login'}),
+          status: "outline",
+        },
+      ],
+      buttonsViewStyle: { marginHorizontal: 68 },
+    },
+  });
+}, []);
+
+const handleVerifyCuidador = React.useCallback(() => {
+  console.log(primerNombre),
+    navigate('IntroduceYourself',
+      {
+        userType: selectedIndex.row+1,
+        name: primerNombre,
+        lastName: segundoNombre,
+        dateOfBirth:  (`${birthday.getFullYear()}-${birthday.getMonth() + 1}-${birthday.getDate()}`).toString(),
+        dniNumber: dni.toString(),
+        localAddress: direccion,
+        postalCode: postal,
+        province: province,
+        mail: email,
+        phoneNumber: tel.toString(),
+        password: password,
+        latitude: "1",
+        longitude: "1",
+        gender: DATA_SELECT_Generos[selectedIndexGenero - 1]
+      })
+});
 
   const {
     control,
@@ -50,16 +90,67 @@ const Signup = memo(() => {
 
   const onLogin = React.useCallback(() => navigate("Login"), []);
   const onSignup = () => {
-    console.log(DATA_SELECT_1[selectedIndex - 1])
     if ((DATA_SELECT_1[selectedIndex - 1]) == "Cuidador") {
-      navigate("IntroduceYourself");
+      console.log(selectedIndex.row)
+      handleVerifyCuidador();
     } else if ((DATA_SELECT_1[selectedIndex - 1]) == "Familiar") {
-    //navigate("IntroduceYourself");
+      console.log(DATA_SELECT_1[selectedIndex - 1])
+    let birthdayString= `${birthday.getFullYear()}-${birthday.getMonth() + 1}-${birthday.getDate()}`
+      console.log(birthdayString)
+      console.log(selectedIndex.row+1)
+      return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userType: selectedIndex.row+1,
+        name: primerNombre,
+        lastName: segundoNombre,
+        dateOfBirth: birthdayString,
+        dniNumber: dni.toString(),
+        localAddress: direccion,
+        postalCode: postal,
+        province: province,
+        mail: email,
+        phoneNumber: tel.toString(),
+        password: password,
+        latitude: "1",
+        longitude: "1",
+        gender: DATA_SELECT_Generos[selectedIndexGenero - 1]
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.user != true) {
+        console.log(data)
+        console.log("se registro");
+        handleVerify();
+      } else if (data.login != true) {
+        console.log("error");
+      }
+    })
+      .catch((error) => {
+        console.log("error")
+        console.error(error);
+      });
     }
   };
   const onFacebook = React.useCallback(() => {}, []);
   const onTwitter = React.useCallback(() => {}, []);
-    const [birthday, setBirthday] = React.useState(new Date());
+  const [birthday, setBirthday] = React.useState(new Date());
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [primerNombre, setPrimerNombre] = React.useState("");
+  const [segundoNombre, setSegundoNombre] = React.useState("");
+  const [dni, setDni] = React.useState("");
+  const [direccion, setDireccion] = React.useState("");
+  const [tel, setTel] = React.useState("");
+  const [postal, setPostal] = React.useState("");
+  const [province, setProvince] = React.useState("");
+  const [gender, setGender] = React.useState("");
   return (
     <Container style={styles.container}>
       <TopNavigation accessoryLeft={<NavigationAction />} />
@@ -87,10 +178,8 @@ const Signup = memo(() => {
               label={t("email").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setEmail(value)}
+              value={email}
               onBlur={onBlur}
               keyboardType="email-address"
               caption={errors.email?.message}
@@ -106,10 +195,8 @@ const Signup = memo(() => {
               label={t("password").toString()}
               status={errors.password ? "warning" : "basic"}
               style={styles.password}
-              value={value}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onChangeText={onChange}
+              onChangeText={(value) => setPassword(value)}
+              value={password}
               onBlur={onBlur}
               caption={errors.password?.message}
               secureTextEntry={invisible}
@@ -133,10 +220,8 @@ const Signup = memo(() => {
               label={t("Primer Nombre").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setPrimerNombre(value)}
+              value={primerNombre}
               onBlur={onBlur}
             />
           )}
@@ -146,13 +231,11 @@ const Signup = memo(() => {
           name="segundoNombre"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label={t("Segundo Nombre").toString()}
+              label={t("Apellido").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setSegundoNombre(value)}
+              value={segundoNombre}
               onBlur={onBlur}
             />
           )}
@@ -185,10 +268,8 @@ const Signup = memo(() => {
               label={t("Numero DNI").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setDni(value)}
+              value={dni}
               onBlur={onBlur}
             />
           )}
@@ -201,10 +282,36 @@ const Signup = memo(() => {
               label={t("Direccion").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setDireccion(value)}
+              value={direccion}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="postal"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Codigo Postal").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              onChangeText={(value) => setPostal(value)}
+              value={postal}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="province"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              label={t("Provincia").toString()}
+              status={errors.email ? "warning" : "basic"}
+              style={styles.email}
+              onChangeText={(value) => setProvince(value)}
+              value={province}
               onBlur={onBlur}
             />
           )}
@@ -217,14 +324,25 @@ const Signup = memo(() => {
               label={t("Numero Telefono").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
+              onChangeText={(value) => setTel(value)}
+              value={tel}
               onBlur={onBlur}
             />
           )}
         />
+        <Select
+          selectedIndex={selectedIndexGenero}
+          onSelect={(index) => setSelectedIndexGenero(index)}
+          placeholder="Seleccione"
+          style={styles.consider}
+          label={`${t("Genero")}`}
+          /* @ts-ignore */
+          value={DATA_SELECT_Generos[selectedIndexGenero - 1]}
+        >
+          {DATA_SELECT_Generos.map((item, i) => {
+            return <SelectItem title={item} key={i} />;
+          })}
+        </Select>
         <Select
           selectedIndex={selectedIndex}
           onSelect={(index) => setSelectedIndex(index)}
@@ -279,3 +397,4 @@ const themedStyles = StyleService.create({
   },
 });
 const DATA_SELECT_1 = ["Familiar", "Cuidador"];
+const DATA_SELECT_Generos = ["M", "F"];

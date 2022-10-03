@@ -20,6 +20,7 @@ import MessagesSrc from "src/messages/MessagesSrc";
 import RequestsBottomNavigator from "./RequestsBottomNavigator";
 import CalendarNavigator from "./CalendarNavigator";
 import MoreNavigator from "./MoreNavigator";
+import Globales from "src/Globales";
 
 interface ButtonTabProps {
   focused: boolean;
@@ -82,79 +83,129 @@ const MainBottomTab = memo(() => {
     [modalRef]
   );
 
-  return (
-    <View style={styles.container}>
-      <BottomTab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarLabelStyle: styles.styleLabel,
-          tabBarStyle: [
-            styles.tabBarStyle,
-            {
-              height: (54 + bottom) * (height / 812),
-            },
-          ],
-        }}
-      >
-        <BottomTab.Screen
-          name="Buscar"
-          component={FindSrc}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <ButtonTab
-                focused={focused}
-                icon="search"
-                numberNotification={undefined}
-              />
-            ),
+  if (Globales.variableGlobalTipo == 1) {
+    return (
+      <View style={styles.container}>
+        <BottomTab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarLabelStyle: styles.styleLabel,
+            tabBarStyle: [
+              styles.tabBarStyle,
+              {
+                height: (54 + bottom) * (height / 812),
+              },
+            ],
           }}
+        >
+          <BottomTab.Screen
+            name="Buscar"
+            component={FindSrc}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab
+                  focused={focused}
+                  icon="search"
+                  numberNotification={undefined}
+                />
+              ),
+            }}
+          />
+          <BottomTab.Screen
+            name="Solicitudes"
+            component={RequestsBottomNavigator}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab
+                  focused={focused}
+                  icon="bookmark"
+                  numberNotification={undefined}
+                />
+              ),
+            }}
+          />
+          <BottomTab.Screen
+            name="Mas"
+            component={MoreNavigator}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab focused={focused} icon="more" />
+              ),
+            }}
+          />
+        </BottomTab.Navigator>
+        {/* Modal request job notification*/}
+        <ModalRequest
+          name={"Marcela Lopez"}
+          ref={modalRef}
+          avatar={Images.avatar3}
+          isOnl={true}
+          onDetails={hide}
         />
-        <BottomTab.Screen
-          name="Solicitudes"
-          component={RequestsBottomNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <ButtonTab
-                focused={focused}
-                icon="bookmark"
-                numberNotification={undefined}
-              />
-            ),
+      </View>
+    );
+  } else if (Globales.variableGlobalTipo == 2) {
+    return (
+      <View style={styles.container}>
+        <BottomTab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarLabelStyle: styles.styleLabel,
+            tabBarStyle: [
+              styles.tabBarStyle,
+              {
+                height: (54 + bottom) * (height / 812),
+              },
+            ],
           }}
+        >
+          <BottomTab.Screen
+            name="Solicitudes"
+            component={RequestsBottomNavigator}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab
+                  focused={focused}
+                  icon="bookmark"
+                  numberNotification={undefined}
+                />
+              ),
+            }}
+          />
+          <BottomTab.Screen
+            name="Calendario"
+            component={CalendarNavigator}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab
+                  focused={focused}
+                  icon="calendar"
+                  numberNotification={undefined}
+                />
+              ),
+            }}
+          />
+          <BottomTab.Screen
+            name="Mas"
+            component={MoreNavigator}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <ButtonTab focused={focused} icon="more" />
+              ),
+            }}
+          />
+        </BottomTab.Navigator>
+        {/* Modal request job notification*/}
+        <ModalRequest
+          name={"Marcela Lopez"}
+          ref={modalRef}
+          avatar={Images.avatar3}
+          isOnl={true}
+          onDetails={hide}
         />
-        <BottomTab.Screen
-          name="Calendario"
-          component={CalendarNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <ButtonTab
-                focused={focused}
-                icon="calendar"
-                numberNotification={undefined}
-              />
-            ),
-          }}
-        />
-        <BottomTab.Screen
-          name="Mas"
-          component={MoreNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <ButtonTab focused={focused} icon="more" />
-            ),
-          }}
-        />
-      </BottomTab.Navigator>
-      {/* Modal request job notification*/}
-      <ModalRequest
-        name={"Marcela Lopez"}
-        ref={modalRef}
-        avatar={Images.avatar3}
-        isOnl={true}
-        onDetails={hide}
-      />
-    </View>
-  );
+      </View>
+    );
+  }
 });
 export default MainBottomTab;
 
