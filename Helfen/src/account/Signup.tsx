@@ -56,7 +56,6 @@ const handleVerify = React.useCallback(() => {
 }, []);
 
 const handleVerifyCuidador = React.useCallback(() => {
-  console.log(primerNombre),
     navigate('IntroduceYourself',
       {
         userType: selectedIndex.row+1,

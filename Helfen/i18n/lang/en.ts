@@ -42,7 +42,7 @@ export default {
     loginWith: "Login with",
     dontHaveAcc: "No tienes una cuenta?",
     signup: " Registrate",
-    titleSignup: "Hola! Cree su cuenta",
+    titleSignup: "Hola! A continuacion, cree su cuenta",
     alreadyHaveAcc: "Ya tienes una cuenta?",
     login: "Iniciar Sesion",
     forgetPassword: "Olvidaste tu contraseña",

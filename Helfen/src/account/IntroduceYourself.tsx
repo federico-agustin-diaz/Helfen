@@ -52,7 +52,7 @@ const IntroduceYourself = memo(
   const { bottom } = useLayout();
   const styles = useStyleSheet(themedStyles);
   const route = useRoute<IntroduceYourselfNavigationProp>();
-  const form1 = new FormData();
+  var form1 = new FormData();
   const form2 = new FormData();
   let userType = route.params.userType;
   let name = route.params.name;
@@ -117,43 +117,36 @@ const IntroduceYourself = memo(
     console.log(form1)
       return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/saveimage', {
       method: 'POST',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        file: form1,
-        file1: form2
-      })
+      body: form1
     })
-    .then((response) =>  response.json())
-    .then((data) => {
+    .then((response) =>  {
+      console.log(response.status)
+      console.log("entrosubirFotelli2")
+      if (response.status == 200) {
       var url = 'https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user/checkid/' + dniNumber
+      console.log(url)
       return fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      }
     })
-    .then((response) =>  response.json())
+    .then((response) =>  console.log(response))
     .then((data) => {
       console.log(data);
-      if (data.user != true) {
-        console.log(data)
-        console.log("se registro con foto");
-        handleVerifyCompleto();
-      } else if (data.login != true) {
-        console.log("error");
-      }
     })
       .catch((error) => {
         console.log("error")
         console.error(error);
       });
-    })
+    }
+    else {
+      console.log("Por favor realiza las fotos de nuevo")
+      alert("Por favor realiza las fotos de nuevo");
+      form1 = new FormData();
+    }
+  })
+    
       .catch((error) => {
         console.log("error")
+        console.error(error.response);
         console.error(error);
       });
   };
@@ -179,13 +172,13 @@ const IntroduceYourself = memo(
       } else {
         const source = { uri: response.uri };
         console.log('response', JSON.stringify(response));
-        
-        
-        form1.append("Files", {
-          name: "DNI-1", // Whatever your filename is
-          //data: response.assets[0].data,
+        console.log(response.assets[0].uri);
+        // form1.append("file", response.assets[0].uri);
+        // form1.append("fileName", "DNI-1");
+        form1.append("file", {
+         name: dniNumber + "-1.jpg", // Whatever your filename is
           uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
-          //type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
+          type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
         }); 
         console.log(form1);
       }
@@ -193,6 +186,7 @@ const IntroduceYourself = memo(
   }
 
   const selectFileDNI2 = () => {
+    console.log("entro foto")
     let options = {
       storageOptions: {
         skipBackup: true,
@@ -213,12 +207,12 @@ const IntroduceYourself = memo(
         const source = { uri: response.uri };
         console.log('response', JSON.stringify(response));
         console.log(response.assets[0].uri);
-        form2.append("Files", {
-          name: "DNI-2", // Whatever your filename is
-          //data: response.assets[0].data,
+        form1.append("file1", {
+         name: dniNumber + "-2.jpg", // Whatever your filename is
           uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
           type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
         }); 
+        console.log(form1);
       }
     });
   }
@@ -438,7 +432,7 @@ const IntroduceYourself = memo(
         <Button
           children={t("Terminar Registro").toString()}
           style={globalStyle.shadowBtn}
-          onPress={onSignup}
+          onPress={handleVerify}
         />
       </View>
     </Container>

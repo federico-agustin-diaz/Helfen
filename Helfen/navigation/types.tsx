@@ -56,6 +56,9 @@ export type AuthStackParamList = {
   ApprovalChecklist: undefined;
   UploadPhoto: undefined;
   VideoIntroduce: undefined;
+  SuccessScr: {
+    successScr: SuccessScreenType;
+  };
 };
 export type FindStackParamList = {
   FindSrc: undefined;
