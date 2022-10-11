@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View } from "react-native";
+import { View, ToastAndroid } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -28,6 +28,7 @@ import { globalStyle } from "styles/globalStyle";
 import { AuthStackParamList } from "navigation/types";
 import useToggle from "hooks/useToggle";
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import Globales from "src/Globales";
 
 interface PersonalProps {
   userType: number,
@@ -68,8 +69,27 @@ const IntroduceYourself = memo(
   let longitude = route.params.longitude;
   let gender = route.params.gender;
   let postalCode = route.params.postalCode;
+  let arrayServices = new Array();
+  let userIDAfterRegistration: number;
   const { t } = useTranslation(["auth", "common"]);
-  const handleVerify = React.useCallback(() => {
+  const handleVerify = () => {
+    let higieneString = higiene ? "Higiene y confort," : ""
+    let banoString = bañocon ? "Baño con movilidad," : ""
+    let banoSinString = bañosin ? "Baño sin movilidad, " : ""
+    let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
+    let curacionesString = curaciones ? "Curaciones," : ""
+    let sueroString = bañocon ? "Cambio de suero," : ""
+    let aseoString = bañosin ? "Aseo del espacio," : ""
+    let alimString = alim ? "Alimentación," : ""
+    let asistString = asist ? "Asistencia en traslados," : ""
+    let paseosString = paseos ? "Paseos de rutina," : ""
+    let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
+    let rcpString = rcp ? "Primeros Auxilios," : ""
+    let hemString = hem ? "Maniobra de heimlich" : ""
+    let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
+    arrayServices = stringServices.split(",")
+    console.log(stringServices)
+    console.log(arrayServices)
     navigate("SuccessScr", {
       successScr: {
         title: "Solo queda un paso mas!",
@@ -94,7 +114,7 @@ const IntroduceYourself = memo(
         buttonsViewStyle: { marginHorizontal: 68 },
       },
     });
-  }, []);
+  };
 
   const handleVerifyCompleto = React.useCallback(() => {
     navigate("SuccessScr", {
@@ -113,6 +133,15 @@ const IntroduceYourself = memo(
   }, []);
 
   const onSubirFotelli = () => {
+    // ToastAndroid.showWithGravityAndOffset(
+    //   "Se esta realizando el chequeo facial, aguarda un momento.",
+    //   ToastAndroid.LONG,
+    //   ToastAndroid.BOTTOM,
+    //   250,
+    //   500
+    // );
+    if (form1._parts[0] != null) {
+    alert("Se esta realizando el chequeo facial, aguarda un momento.");
     console.log("entrosubirFotelli")
     console.log(form1)
       return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/saveimage', {
@@ -122,33 +151,51 @@ const IntroduceYourself = memo(
     .then((response) =>  {
       console.log(response.status)
       console.log("entrosubirFotelli2")
+      let controller = new AbortController();
       if (response.status == 200) {
       var url = 'https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user/checkid/' + dniNumber
       console.log(url)
+      let controller = new AbortController();
+      setTimeout(() => controller.abort(), 10000);
       return fetch(url, {
+      signal: controller.signal,
       method: 'GET',
     })
-    .then((response) =>  console.log(response))
-    .then((data) => {
-      console.log(data);
-    })
-      .catch((error) => {
-        console.log("error")
-        console.error(error);
-      });
-    }
-    else {
+    .then((response) =>  {  
+      console.log(response.status)   
+       if (response.status == 200) {
+       console.log("perfecto")
+        onSignup();
+    } else {
       console.log("Por favor realiza las fotos de nuevo")
       alert("Por favor realiza las fotos de nuevo");
       form1 = new FormData();
+      console.log(form1)
+    }})
+    .catch((error) => {
+      console.log("error")
+      console.error(error.response);
+      console.error(error);
+      alert("Por favor realiza las fotos de nuevo");
+      form1 = new FormData();
+      console.log(form1)
+    });
+    
+    } else {
+      console.log("Por favor realiza las fotos de nuevo")
+      alert("Por favor realiza las fotos de nuevo");
+      form1 = new FormData();
+      console.log(form1)
     }
   })
-    
       .catch((error) => {
         console.log("error")
         console.error(error.response);
         console.error(error);
       });
+    } else {
+      alert("Por favor realice ambas fotos");
+    }
   };
 
   const selectFileDNI1 = () => {
@@ -161,7 +208,6 @@ const IntroduceYourself = memo(
     };
     launchCamera(options, (response) => {
       console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -195,7 +241,6 @@ const IntroduceYourself = memo(
     };
     launchCamera(options, (response) => {
       console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -216,25 +261,42 @@ const IntroduceYourself = memo(
       }
     });
   }
+
+  const onCargarServicios = () => {
+    console.log(userIDAfterRegistration)
+    console.log(arrayServices)
+    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/service', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          carer: userIDAfterRegistration,
+          description: arrayServices
+        })
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.service != null) {
+          console.log(data)
+          console.log("se registro");
+          handleVerifyCompleto()
+        } else {
+          console.log("error");
+          alert("Hubo un error al asignar Servicios pero el Usuario fue creado");
+        }
+      })
+        .catch((error) => {
+          alert("Hubo un error al asignar Servicios pero el Usuario fue creado");
+          console.log("error")
+          console.error(error);
+        });
+      }
   
   const onSignup = () => {
     let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompañante" : "Ambos")
-    console.log(speciality)
-    let higieneString = higiene ? "Higiene y confort, " : ""
-    let banoString = bañocon ? "Baño con movilidad, " : ""
-    let banoSinString = bañosin ? "Baño sin movilidad, " : ""
-    let controlesString = controles ? "Controles (Presión, glucosa, temperatura)" : ""
-    let curacionesString = curaciones ? "Curaciones, " : ""
-    let sueroString = bañocon ? "Cambio de suero, " : ""
-    let aseoString = bañosin ? "Aseo del espacio, " : ""
-    let alimString = alim ? "Alimentación, " : ""
-    let asistString = asist ? "Asistencia en traslados" : ""
-    let paseosString = paseos ? "Paseos de rutina, " : ""
-    let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación, " : ""
-    let rcpString = rcp ? "Primeros Auxilios, " : ""
-    let hemString = hem ? "Maniobra de heimlich" : ""
-    let arrayServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
-      console.log(arrayServices)
     return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user', {
       method: 'POST',
       headers: {
@@ -253,59 +315,34 @@ const IntroduceYourself = memo(
         mail: mail,
         phoneNumber: phoneNumber,
         password: password,
-        latitude: "1",
-        longitude: "1",
+        latitude: Globales.variableGlobalLatitude,
+        longitude: Globales.variableGlobalLongitude,
         gender: gender,
         specialty: speciality,
         isNurse: enfermero,
-        price: 200,
+        price: 200
         //experience: experience
       })
     })
     .then((response) =>  response.json())
     .then((data) => {
-      console.log("llego aca");
-      console.log(userType);
       console.log(data);
-      if (data.user != true) {
+      if (data.user != null) {
         console.log(data)
-        console.log("termino la parte de registro");
-        return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/service', {
-      method: 'POST',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        carer: data.user.id,
-        description: arrayServices
-      })
-    })
-    .then((response) =>  response.json())
-    .then((data) => {
-      console.log(data);
-      if (data.user != true) {
-        console.log(data)
-        console.log("se registro con los services");
-        handleVerify();
-      } else if (data.login != true) {
+        console.log("se registro");
+        userIDAfterRegistration = data.user.carerId
+        onCargarServicios();
+      } else {
         console.log("error");
+        alert("Hubo un error al crear su usuario");
       }
     })
       .catch((error) => {
+        alert("Hubo un error al crear su usuario");
         console.log("error")
         console.error(error);
       });
-        handleVerify();
-      } else if (data.login != true) {
-        console.log("error");
-      }
-    })
-      .catch((error) => {
-        console.log("error")
-        console.error(error);
-      });
-    };
+    }
   const {
     control,
     handleSubmit,

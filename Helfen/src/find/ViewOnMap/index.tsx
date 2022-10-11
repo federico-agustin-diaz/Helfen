@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo,  useEffect, useState } from "react";
 import { View, TouchableOpacity, Platform, Image } from "react-native";
 import {
   TopNavigation,
@@ -23,6 +23,8 @@ import FilterRecommend from "../FilterRecommend";
 import { FindStackParamList } from "navigation/types";
 import ButtonFill from "components/ButtonFill";
 import Flex from "components/Flex";
+import Geolocation from '@react-native-community/geolocation';
+import Globales from "src/Globales";
 
 const ViewOnMap = memo(() => {
   const { navigate } = useNavigation<NavigationProp<FindStackParamList>>();
@@ -31,73 +33,59 @@ const ViewOnMap = memo(() => {
   const { t } = useTranslation(["find", "common"]);
 
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const initialRegion = {
-    latitude: 37.785834,
-    longitude: -122.406417,
-    latitudeDelta: 0.0122,
+  const [position, setPosition] = useState({
+    latitude: 37.4214938,
+    longitude: -122.083922,
+    latitudeDelta:  0.0421,
     longitudeDelta: 0.0421,
-  };
-  const [state, setState] = React.useState(initialRegion);
+  });
   const refMap = React.useRef<MapView | null>(null);
   const [mapIndex, setMapIndex] = React.useState(0);
   const { modalRef, hide, show } = useModal();
-  const _onPress = React.useCallback(() => {
-    refMap?.current?.animateToRegion({
-      ...initialRegion,
-    });
+
+  const [pin, setPin] = useState({
+    latitude: -34.6015023,
+    longitude: -58.50498,
+  });
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition((pos) => {
+      const crd = pos.coords;
+      console.log("entro a geoloc")
+    console.log(crd.latitude)
+    console.log(crd.longitude)
+    Globales.set_variableGlobalLatitude(crd.latitude)
+    Globales.set_variableGlobalLongitude(crd.longitude)
+      setPosition({
+        latitude: crd.latitude,
+        longitude: crd.longitude,
+        latitudeDelta: 0.0421,
+        longitudeDelta: 0.0421,
+      });
+    })
+
+    console.log(position)
   }, []);
 
-  const renderEventMap = React.useCallback(({ item }) => {
-    return (
-      <TouchableOpacity onPress={() => _onEvent({ item })} activeOpacity={0.54}>
-        <JobItem item={item} />
-      </TouchableOpacity>
-    );
-  }, []);
-  const _onEvent = React.useCallback(({ item }) => {
-    navigate("JobDetails", { name: item.name });
-  }, []);
-  const RenderPin = React.useCallback(
-    ({ item }) => {
-      return (
-        <Marker
-          onPress={() => {
-            setMapIndex(item.id);
-          }}
-          coordinate={item.mapLocation}
-          children={
-            <Image
-              source={item.avatar}
-              style={{
-                width: 48,
-                height: 48,
-                transform: [{ scale: mapIndex === item.id ? 1 : 0.85 }],
-              }}
-            />
-          }
-        />
-      );
-    },
-    [mapIndex]
-  );
+  const setGlobalPosition = () => {
+    Globales.set_variableGlobalLatitude(pin.latitude)
+    Globales.set_variableGlobalLongitude(pin.longitude)
+    console.log(Globales.variableGlobalLatitude)
+    console.log(Globales.variableGlobalLongitude)
+  }
+
   return (
     <Container style={styles.container} level="2">
       <TopNavigation
-        accessoryLeft={<NavigationAction icon="close" />}
-        title={t("viewOnMap").toString()}
+        accessoryLeft={<NavigationAction icon="close"/>}
+        title={t("Seleccione su direccion").toString()}
         appearance="primary"
-      />
-      <TabBar
-        style={styles.tabBar}
-        activeIndex={activeIndex}
-        onChange={setActiveIndex}
-        tabs={[t("recommended"), t("newJobs"), t("nearbyYou")]}
       />
       <View>
         <MapView
           ref={refMap}
           provider={PROVIDER_GOOGLE}
-          initialRegion={state}
+          region={position}
           showsUserLocation={false}
           showsMyLocationButton={false}
           showsScale
@@ -108,61 +96,21 @@ const ViewOnMap = memo(() => {
             styles.mapView,
             {
               width: width,
-              height:
-                Platform.OS === "android"
-                  ? 700 * (height / 812)
-                  : 668 * (height / 812),
+              height: height
             },
           ]}
         >
           <Marker
+            draggable
             image={Images.pinLocation}
-            coordinate={{ latitude: 37.785834, longitude: -122.406417 }}
+            coordinate={position}
+            onDragEnd={e => {
+              setPin(e.nativeEvent.coordinate);
+              setGlobalPosition();
+            }} 
           />
-          {RECOMMEND_DATA.map((item, i) => {
-            return <RenderPin key={i} item={item} />;
-          })}
         </MapView>
-        <View style={styles.contentJob}>
-          <Flex mh={24} mb={24} itemsCenter>
-            <ButtonFill
-              icon="currentLocation"
-              size="medium"
-              status="white"
-              onPress={_onPress}
-            />
-            <ButtonFill
-              icon="filter"
-              size="large"
-              status="warning"
-              onPress={show}
-            />
-          </Flex>
-          <Carousel
-            layout={"default"}
-            data={RECOMMEND_DATA}
-            sliderWidth={width}
-            itemWidth={327 * (width / 375)}
-            inactiveSlideShift={1}
-            renderItem={renderEventMap}
-            inactiveSlideScale={0.9}
-            inactiveSlideOpacity={1}
-            loop
-            scrollEventThrottle={16}
-            onSnapToItem={(index) => {
-              setMapIndex(index);
-              refMap?.current?.animateToRegion({
-                ...initialRegion,
-                latitude: RECOMMEND_DATA[index].mapLocation.latitude - 0.011,
-                longitude: RECOMMEND_DATA[index].mapLocation.longitude,
-              });
-            }}
-          />
-        </View>
       </View>
-      <Modal ref={modalRef} style={{ flex: 1, height: height }}>
-        <FilterRecommend onHide={hide} />
-      </Modal>
     </Container>
   );
 });

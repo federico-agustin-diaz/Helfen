@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Platform, PermissionsAndroid } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -25,12 +25,19 @@ import useToggle from "hooks/useToggle";
 import { Controller, useForm } from "react-hook-form";
 import { RuleEmail, RulePassword } from "utils/rules";
 import { globalStyle } from "styles/globalStyle";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { Images } from "assets/images";
+import useLayout from "hooks/useLayout";
+import Geolocation from '@react-native-community/geolocation';
+import Globales from "src/Globales";
 
 const Signup = memo(() => {
+  const refMap = React.useRef<MapView | null>(null);
+  const [mapIndex, setMapIndex] = React.useState(0);
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
   const styles = useStyleSheet(themedStyles);
   const { t } = useTranslation(["auth", "common"]);
-
+  const { height, width } = useLayout();
   const [invisible, setInvisible] = useToggle(true);
   const [selectedIndex, setSelectedIndex] = React.useState<
     IndexPath | IndexPath[]
@@ -86,9 +93,20 @@ const handleVerifyCuidador = React.useCallback(() => {
       consider: "",
     },
   });
-
+  
+  const _onMap = React.useCallback(() => {
+    
+    Geolocation.getCurrentPosition(info => console.log(info));
+    navigate('FindStack', {screen: 'ViewOnMap'});
+  }, []);
   const onLogin = React.useCallback(() => navigate("Login"), []);
+  const onSignupCheck = () => {
+    if (!primerNombre || !segundoNombre || !birthday || !dni.toString() || !direccion || !postal || !province || !email || !tel || !password || !province) {
+      alert("Por favor, complete todos los campos");
+    }
+  }
   const onSignup = () => {
+    onSignupCheck();
     if ((DATA_SELECT_1[selectedIndex - 1]) == "Cuidador") {
       console.log(selectedIndex.row)
       handleVerifyCuidador();
@@ -115,23 +133,25 @@ const handleVerifyCuidador = React.useCallback(() => {
         mail: email,
         phoneNumber: tel.toString(),
         password: password,
-        latitude: "1",
-        longitude: "1",
+        latitude: Globales.variableGlobalLatitude,
+        longitude: Globales.variableGlobalLongitude,
         gender: DATA_SELECT_Generos[selectedIndexGenero - 1]
       })
     })
     .then((response) =>  response.json())
     .then((data) => {
       console.log(data);
-      if (data.user != true) {
+      if (data.user != null) {
         console.log(data)
         console.log("se registro");
         handleVerify();
-      } else if (data.login != true) {
+      } else {
         console.log("error");
+        alert("Hubo un error al crear su usuario");
       }
     })
       .catch((error) => {
+        alert("Hubo un error al crear su usuario");
         console.log("error")
         console.error(error);
       });
@@ -278,13 +298,27 @@ const handleVerifyCuidador = React.useCallback(() => {
           name="direccion"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label={t("Direccion").toString()}
+              label={t("Escriba su direccion y marquela en el Mapa").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
               onChangeText={(value) => setDireccion(value)}
+              onKeyPress={()=>_onMap}
               value={direccion}
               onBlur={onBlur}
             />
+          )}
+          />
+        <Controller
+          control={control}
+          name="ubicacion"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Button
+          children={t("Presione aqui para abrir el mapa").toString()}
+          onPress={_onMap}
+          status="outline"
+          style={styles.birthday}
+          //style={globalStyle.shadowBtn}
+        />
           )}
         />
         <Controller
@@ -371,6 +405,9 @@ const themedStyles = StyleService.create({
   container: {
     flex: 1,
   },
+  birthday: {
+    marginBottom: 24,
+  },
   email: {
     borderBottomWidth: 2,
     marginBottom: 24,
@@ -381,6 +418,7 @@ const themedStyles = StyleService.create({
   },
   consider: {
     borderBottomWidth: 2,
+    marginBottom: 24,
     borderColor: "background-basic-color-3",
   },
   facebook: {
@@ -393,6 +431,9 @@ const themedStyles = StyleService.create({
     backgroundColor: "color-twitter-100",
     borderColor: "transparent",
     flex: 1,
+  },
+  mapView: {
+    zIndex: -10,
   },
 });
 const DATA_SELECT_1 = ["Familiar", "Cuidador"];

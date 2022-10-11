@@ -62,7 +62,7 @@ export const globalStyle = StyleSheet.create({
     },
     shadowOpacity: 0.58,
     shadowRadius: 12.0,
-
+    marginBottom: 24,
     elevation: 24,
   },
 

@@ -67,10 +67,11 @@ const Login = memo(() => {
         console.log(data)
         //chequear si es cuidador o no. 1 es Familiar 2 Cuidador
         Globales.set_variableGlobalTipo(data.user.user.userType)
-        Globales.set_variableGlobalNombre(data.user.user.lastName)
+        Globales.set_variableGlobalPrimerNombre(data.user.user.name)
+        Globales.set_variableGlobalApellido(data.user.user.lastName)
         Globales.set_variableGlobalEmail(data.user.user.mail)
         console.log(Globales.variableGlobalTipo);
-        console.log(Globales.variableGlobalNombre);
+        console.log(Globales.variableGlobalApellido);
         console.log("se logueo");
         nextScreen("MainBottomTab");
       } else if (data.login != true) {

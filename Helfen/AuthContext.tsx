@@ -9,10 +9,13 @@ type Context = {
   isIntro: boolean;
   signIn: () => void;
   signOut: () => void;
-  variableGlobalTipo: integer;
-  variableGlobalId: integer;
+  variableGlobalTipo: number;
+  variableGlobalId: number;
   variableGlobalEmail: string;
-  variableGlobalNombre: string;
+  variableGlobalPrimerNombre: string;
+  variableGlobalApellido: string;
+  variableGlobalLatitude: number;
+  variableGlobalLongitude: number;
 };
 
 export const AuthContext = React.createContext<Context>({
@@ -24,7 +27,10 @@ export const AuthContext = React.createContext<Context>({
   variableGlobalTipo: 0,
   variableGlobalId: 0,
   variableGlobalEmail: "",
-  variableGlobalNombre: ""
+  variableGlobalPrimerNombre: "",
+  variableGlobalApellido: "",
+  variableGlobalLatitude: 0,
+  variableGlobalLongitude: 0
 });
 
 export const AuthProvider: React.FC = ({ children }) => {

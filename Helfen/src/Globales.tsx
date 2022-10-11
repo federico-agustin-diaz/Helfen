@@ -3,7 +3,10 @@ class Global {
     variableGlobalTipo: number = 0;
     variableGlobalId: number = 0;
     variableGlobalEmail: string = "";
-    variableGlobalNombre: string = "";
+    variableGlobalPrimerNombre: string = "";
+    variableGlobalApellido: string = "";
+    variableGlobalLatitude: number = 0;
+    variableGlobalLongitude: number = 0;
     // you can define more variables
     public get_myName(){
         return this.myName;
@@ -34,11 +37,32 @@ class Global {
         return this.variableGlobalEmail;
     }
 
-    public set_variableGlobalNombre(new_number:string){
-        this.variableGlobalNombre = new_number;
+    public set_variableGlobalPrimerNombre(new_number:string){
+        this.variableGlobalPrimerNombre = new_number;
     }
-    public get_variableGlobalNombre(){
-        return this.variableGlobalNombre;
+    public get_variableGlobalPrimerNombre(){
+        return this.variableGlobalPrimerNombre;
+    }
+
+    public set_variableGlobalApellido(new_number:string){
+        this.variableGlobalApellido = new_number;
+    }
+    public get_variableGlobalApellido(){
+        return this.variableGlobalApellido;
+    }
+
+    public set_variableGlobalLatitude(new_number:number){
+        this.variableGlobalLatitude = new_number;
+    }
+    public get_variableGlobalLatitude(){
+        return this.variableGlobalLatitude;
+    }
+
+    public set_variableGlobalLongitude(new_number:number){
+        this.variableGlobalLongitude = new_number;
+    }
+    public get_variableGlobalLongitude(){
+        return this.variableGlobalLongitude;
     }
 }
 

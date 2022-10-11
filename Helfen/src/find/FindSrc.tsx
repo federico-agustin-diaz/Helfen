@@ -67,7 +67,6 @@ const FindSrc = memo(() => {
     <Container style={styles.container}>
       <TopNavigation
         title={t('title').toString()}
-        accessoryRight={<NavigationAction icon="map" onPress={_onMap} />}
       />
       <FlatList
         data={[1]}
