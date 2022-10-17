@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View, ToastAndroid } from "react-native";
+import { View, ToastAndroid, ActivityIndicator } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -71,6 +71,7 @@ const IntroduceYourself = memo(
   let postalCode = route.params.postalCode;
   let arrayServices = new Array();
   let userIDAfterRegistration: number;
+  const [isLoaded, setLoading] = React.useState(false);
   const { t } = useTranslation(["auth", "common"]);
   const handleVerify = () => {
     let higieneString = higiene ? "Higiene y confort," : ""
@@ -93,7 +94,7 @@ const IntroduceYourself = memo(
     navigate("SuccessScr", {
       successScr: {
         title: "Solo queda un paso mas!",
-        description: t("A continuacion, requerimos que adjunte fotos del frente y dorso de su DNI"),
+        description: t("A continuacion, requerimos que adjunte fotos del frente de su DNI y una Selfie"),
         children: [
           {
             title: t("Adjuntar Foto Frente"),
@@ -101,7 +102,7 @@ const IntroduceYourself = memo(
             status: "outline",
           },
           {
-            title: t("Adjuntar Foto Detras"),
+            title: t("Adjuntar Selfie"),
             onPress: () => selectFileDNI2(),
             status: "outline",
           },
@@ -119,7 +120,7 @@ const IntroduceYourself = memo(
   const handleVerifyCompleto = React.useCallback(() => {
     navigate("SuccessScr", {
       successScr: {
-        title: t("Felicitaciones, se ha Registrado con Exito"),
+        title: t("Felicitaciones, se ha Registrado como Cuidador con Exito"),
         children: [
           {
             title: t("Continuar"),
@@ -133,15 +134,17 @@ const IntroduceYourself = memo(
   }, []);
 
   const onSubirFotelli = () => {
-    // ToastAndroid.showWithGravityAndOffset(
+
+    if (form1._parts[0] != null) {
+          // ToastAndroid.showWithGravityAndOffset(
     //   "Se esta realizando el chequeo facial, aguarda un momento.",
     //   ToastAndroid.LONG,
     //   ToastAndroid.BOTTOM,
     //   250,
     //   500
     // );
-    if (form1._parts[0] != null) {
     alert("Se esta realizando el chequeo facial, aguarda un momento.");
+    setLoading(true);
     console.log("entrosubirFotelli")
     console.log(form1)
       return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/saveimage', {
@@ -156,7 +159,7 @@ const IntroduceYourself = memo(
       var url = 'https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user/checkid/' + dniNumber
       console.log(url)
       let controller = new AbortController();
-      setTimeout(() => controller.abort(), 10000);
+      setTimeout(() => controller.abort(), 3000000);
       return fetch(url, {
       signal: controller.signal,
       method: 'GET',
@@ -165,14 +168,17 @@ const IntroduceYourself = memo(
       console.log(response.status)   
        if (response.status == 200) {
        console.log("perfecto")
+       setLoading(false);
         onSignup();
     } else {
+      setLoading(false);
       console.log("Por favor realiza las fotos de nuevo")
       alert("Por favor realiza las fotos de nuevo");
       form1 = new FormData();
       console.log(form1)
     }})
     .catch((error) => {
+      setLoading(false);
       console.log("error")
       console.error(error.response);
       console.error(error);
@@ -182,6 +188,7 @@ const IntroduceYourself = memo(
     });
     
     } else {
+      setLoading(false);
       console.log("Por favor realiza las fotos de nuevo")
       alert("Por favor realiza las fotos de nuevo");
       form1 = new FormData();
@@ -189,11 +196,13 @@ const IntroduceYourself = memo(
     }
   })
       .catch((error) => {
+        setLoading(false);
         console.log("error")
         console.error(error.response);
         console.error(error);
       });
     } else {
+      setLoading(false);
       alert("Por favor realice ambas fotos");
     }
   };
@@ -204,6 +213,9 @@ const IntroduceYourself = memo(
       storageOptions: {
         skipBackup: true,
         path: 'images',
+        maxWidth: 10,
+        maxHeight: 20,
+        ratio: '1:1'
       },
     };
     launchCamera(options, (response) => {
@@ -216,9 +228,6 @@ const IntroduceYourself = memo(
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
-        console.log(response.assets[0].uri);
         // form1.append("file", response.assets[0].uri);
         // form1.append("fileName", "DNI-1");
         form1.append("file", {
@@ -226,7 +235,6 @@ const IntroduceYourself = memo(
           uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
           type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
         }); 
-        console.log(form1);
       }
     });
   }
@@ -249,15 +257,11 @@ const IntroduceYourself = memo(
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
-        console.log(response.assets[0].uri);
         form1.append("file1", {
          name: dniNumber + "-2.jpg", // Whatever your filename is
           uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
           type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
         }); 
-        console.log(form1);
       }
     });
   }
@@ -397,11 +401,11 @@ const IntroduceYourself = memo(
               label={t("Experiencia laboral").toString()}
               onChangeText={(value) => setExperience(value)}
               value={experience}
-              //
-              //onTouchStart={handleSubmit(() => {})}
               onTouchStart={handleSubmit(() => {})}
               onTouchEnd={handleSubmit(() => {})}
               onBlur={onBlur}
+              multiline
+              style={styles.inputExperienciaLaboral}
               keyboardType="email-address"
               caption={errors.fullName?.message}
             />
@@ -504,4 +508,7 @@ const themedStyles = StyleService.create({
   bottom: {
     paddingHorizontal: 24,
   },
+  inputExperienciaLaboral: {
+    minHeight: 50,
+  }
 });

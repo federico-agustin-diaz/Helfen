@@ -108,7 +108,7 @@ export default {
     motorCheckBadges2: "More Likely to land a job ",
     purchaseNow: "Purchase Now",
     cardDetails: "Card Details",
-    introduceYourself: "Introducite como Cuidador",
+    introduceYourself: "Registrate como Cuidador",
     gender: "Gender",
     homeAddress: "Home Address",
     homeAddressCaption: "Add your home address to Buscar jobs near you",

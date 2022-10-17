@@ -66,7 +66,7 @@ const MoreSrc = memo(() => {
     <Container style={styles.container}>
       <Content padder contentContainerStyle={styles.content}>
         <HeaderMoreOption
-          name={Globales.variableGlobalPrimerNombre + Globales.variableGlobalApellido}
+          name={Globales.variableGlobalPrimerNombre +" "+ Globales.variableGlobalApellido}
           avatar={Images.avatar2}
           email={Globales.variableGlobalEmail}
         />

@@ -75,10 +75,12 @@ const Login = memo(() => {
         console.log("se logueo");
         nextScreen("MainBottomTab");
       } else if (data.login != true) {
+        alert("Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
         console.log("no existe el usuario");
       }
     })
       .catch((error) => {
+        alert("Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
         console.log("error")
         console.error(error);
       });

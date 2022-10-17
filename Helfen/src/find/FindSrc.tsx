@@ -28,6 +28,12 @@ const FindSrc = memo(() => {
   const {height, bottom} = useLayout();
   const styles = useStyleSheet(themedStyles);
   const {t} = useTranslation(['find', 'common']);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const toggleModal = () => {
+    console.log("Le pego al toggleModal")
+    setModalVisible(!isModalVisible);
+  };
 
   const [activeIndex, setActiveIndex] = React.useState(0);
   const {modalRef, show, hide} = useModal();
@@ -87,8 +93,8 @@ const FindSrc = memo(() => {
         style={styles.filter}
       />
 
-      <Modal ref={modalRef} style={{ flex: 1, height: height }}>
-        <FilterRecommend onHide={hide} />
+      <Modal visible={isModalVisible} ref={modalRef} style={{ flex: 1, height: height }} >
+        <FilterRecommend onHide={toggleModal} />
       </Modal>
     </Container>
   );

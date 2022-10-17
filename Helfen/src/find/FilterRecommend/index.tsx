@@ -22,6 +22,7 @@ import SliderDistance from "src/account/components/SliderDistance";
 import FilterHour from "../components/FilterHour";
 import RegularlySchedule from "./RegularlySchedule";
 import { globalStyle } from "styles/globalStyle";
+import Geolocation from '@react-native-community/geolocation';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Keyboard, Platform, ScrollView, StyleSheet, View } from "react-native";
 import useToggle from "hooks/useToggle";
@@ -44,14 +45,6 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
       consider: "",
     },
   });
-  const [babysitter, setBabysitter] = React.useState(0);
-  const [sortBy, setSortBy] = React.useState(0);
-  const [value, setValue] = React.useState<number | number[]>(10);
-  const [hour, setHour] = React.useState<number | number[]>(15);
-  const [regularly, setRegularly] = React.useState(true);
-  const [occasional, setOccasional] = React.useState(false);
-  const [oneTime, setOneTime] = React.useState(false);
-  const [needASAP, setNeedASAP] = React.useState(false);
   const [male, setMale] = React.useState(false);
   const [hombre, setHombre] = useToggle(true);
   const [cuidador, setCuidador] = useToggle(true);
@@ -69,6 +62,10 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
   const [rcp, setrcp] = useToggle(false);
   const [aux, setaux] = useToggle(false);
   const [hem, sethem] = useToggle(false);
+  const _onMap = React.useCallback(() => {
+    Geolocation.getCurrentPosition(info => console.log(info));
+    navigate('FindStack', {screen: 'ViewOnMap'});
+  }, []);
   const onChange = React.useCallback((next) => {
     setMale(next);
   }, []);
@@ -78,13 +75,11 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
     <Container
       style={[styles.container, { width: width, paddingTop: bottom + 20 }]}
     >
-        <ScrollView  contentContainerStyle={{ flexGrow: 1, borderWidth: 5 }}>
+        <ScrollView >
       <TopNavigation
         title={t("filter").toString()}
         accessoryLeft={
-          <TouchableOpacity activeOpacity={0.54} onPress={onHide}>
-            <Icon pack="assets" name="close" />
-          </TouchableOpacity>
+            <Icon pack="assets" name="close" onPress={onHide}/>
         }
       />
 
@@ -106,20 +101,12 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
         <Text category="h7" mb={10}>
           {t("Direccion para ubicar profesionales mas cercanos")}
         </Text>
-        <Controller
-          control={control}
-          name="direccion"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              status={errors.email ? "warning" : "basic"}
-              style={styles.email}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onBlur={onBlur}
-            />
-          )}
+        <Button
+          children={t("Presione aqui para abrir el mapa").toString()}
+          onPress={_onMap}
+          status="outline"
+          style={styles.email}
+          //style={globalStyle.shadowBtn}
         />
         <Text category="h7" mb={24}>
           {t("Servicios Prestados")}
@@ -143,7 +130,7 @@ const FilterRecommend = memo(({ onHide }: FilterRecommendProps) => {
       </Content>
 
 </ScrollView>
-<Button styles={styles.button} children={t("buttonFilter").toString()}/>
+<Button styles={styles.button} onPress = {onHide} children={t("buttonFilter").toString()}/>
     </Container>
 
   );
@@ -181,7 +168,6 @@ const themedStyles = StyleService.create({
     width: 24,
   },
   email: {
-    borderBottomWidth: 2,
     marginBottom: 24,
   }
 });

@@ -146,8 +146,16 @@ const handleVerifyCuidador = React.useCallback(() => {
         console.log("se registro");
         handleVerify();
       } else {
+        if (data.message == "406 Not Acceptable. Mail already exists.") {
+          alert("El Mail ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo mail.");
+        } else if (data.message == "406 Not Acceptable. Phone number already exists."){
+          alert("El Numero de Telefono ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo telefono.");
+        } else if (data.message == "406 Not Acceptable. Dni number already exists.") {
+          alert("El DNI ingresado ya esta en uso.")
+        } else {
         console.log("error");
         alert("Hubo un error al crear su usuario");
+      }
       }
     })
       .catch((error) => {

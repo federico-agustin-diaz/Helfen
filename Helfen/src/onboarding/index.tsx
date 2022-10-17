@@ -113,7 +113,7 @@ const Onboarding = memo(() => {
         </Animated.ScrollView>
         <Dots translationValue={translationX} data={DATA} />
         <Flex padder pv={28}>
-          <Button style={[styles.login, globalStyle.shadowBtn]} status="outline" onPress={onLogin}>
+          <Button style={[styles.login]} status="outline" onPress={onLogin}>
             {t('common:login').toString()}
           </Button>
           <Button
@@ -144,6 +144,7 @@ const themedStyles = StyleService.create({
   login: {
     flex: 1,
     marginRight: 16,
+    marginBottom: 24
   },
   signup: {
     flex: 1,

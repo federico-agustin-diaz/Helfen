@@ -34,12 +34,6 @@ const RequestInterviewItem = ({
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      onPress={() =>
-        navigate("RequestStack", {
-          screen: "InterviewDetails",
-          params: { type: item.type },
-        })
-      }
       activeOpacity={0.54}
     >
       <Flex style={[contentStyle, styles.content]}>
