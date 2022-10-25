@@ -57,10 +57,10 @@ const NotificationScreen = memo(
               />
             )}
           </View>
-          <Text center category="h2" mb={8} mt={56}>
+          <Text center category="h2" mb={8} mt={0}>
             {title}
           </Text>
-          <Text category="h8-s" center mb={44} mh={24}>
+          <Text category="h8-s" center mb={10} mh={5}>
             {description}
           </Text>
           {children?.map((item, i) => {

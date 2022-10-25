@@ -56,6 +56,38 @@ export interface JobItemProps {
   rating: number;
 }
 
+export interface JobItemPropsPosta {
+  user:UserItem,
+amountCare: number,
+price: number,
+latitudeCurrent: number,
+longitudeCurrent: number,
+specialty: string,
+isNurse: boolean,
+experience: string,
+carerId: number,
+distance: number,
+qualification: number
+}
+
+export interface UserItem {
+  name: string,
+  lastName: string,
+  dateOfBirth: string,
+  localAddress: string,
+  mail: string,
+  otherMail: string,
+  phoneNumber: string,
+  postalCode: string,
+  province: string,
+  apartment: string,
+  gender: string,
+  latitude: string,
+  longitude: string,
+  floor: null,
+  id: number
+}
+
 export interface MessagesItemProps {
   id: number;
   name: string;

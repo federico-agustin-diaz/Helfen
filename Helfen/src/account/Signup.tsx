@@ -115,7 +115,7 @@ const handleVerifyCuidador = React.useCallback(() => {
     let birthdayString= `${birthday.getFullYear()}-${birthday.getMonth() + 1}-${birthday.getDate()}`
       console.log(birthdayString)
       console.log(selectedIndex.row+1)
-      return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user', {
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user', {
       method: 'POST',
       headers: {
         'Accept': '*/*',

@@ -6,6 +6,7 @@ import JobItem from "./components/JobItem";
 import { RECOMMEND_DATA } from "constants/Data";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "navigation/types";
+import Globales from "src/Globales";
 
 const Recommended = memo(() => {
   const styles = useStyleSheet(themedStyles);

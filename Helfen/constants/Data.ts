@@ -321,7 +321,7 @@ export const DATA_CURRENT_INTERVIEW = [
   {
     id: 0,
     name: "Cristina Gomez",
-    time: new Date(),
+    time: new Date(2022,10,29),
     dateIn: "17:00 - 17:30",
     type: Request_Status_Type_Enum.Accepted,
     avatar: Images.avatar2,
@@ -330,7 +330,7 @@ export const DATA_CURRENT_INTERVIEW = [
   {
     id: 1,
     name: "Ariana Foressi",
-    time: new Date(),
+    time: new Date(2022,10,30).toLocaleDateString("es"),
     dateIn: "18:00 - 18:30",
     type: Request_Status_Type_Enum.Completed,
     avatar: Images.avatar3,
@@ -339,7 +339,7 @@ export const DATA_CURRENT_INTERVIEW = [
   {
     id: 1,
     name: "Alex Falcon",
-    time: new Date(),
+    time: new Date(2022,11,5),
     dateIn: "12:00 - 12:30",
     type: Request_Status_Type_Enum.Unconfirmed,
     avatar: Images.avatar,

@@ -117,25 +117,25 @@ const DATA_CALENDAR = [
   {
     id: 0,
     time_start: new Date(),
-    list: [{ id: 0, time: "SEPTEMBER 30 - OCTOBER 6 " }],
+    list: [{ id: 0, time: "Octubre 30 - Noviembre 6 " }],
   },
   {
     id: 1,
     time_start: new Date().getTime() + 518400000,
     list: [
       {
-        weekend: "SEPTEMBER 30 - OCTOBER 6",
+        weekend: "Octubre 30 - Noviembre 6",
         title: "Cristina Gomez",
         meeting_time: "17:00 - 17:30",
       },
       {
-        weekend: "OCTOBER 7 - 13",
+        weekend: "Noviembre 7 - 13",
       },
       {
-        weekend: "OCTOBER 14 - 20",
+        weekend: "Noviembre 14 - 20",
       },
       {
-        weekend: "OCTOBER 21 - 27",
+        weekend: "Noviembre 21 - 27",
       },
     ],
   },

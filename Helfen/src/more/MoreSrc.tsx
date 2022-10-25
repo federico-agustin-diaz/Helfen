@@ -54,12 +54,6 @@ const MoreSrc = memo(() => {
       status: "placeholder",
       navigateSrc: "MyJobProfile",
     },
-    {
-      title: t("boostProfileGuideline"),
-      icon: "term",
-      status: "green",
-      navigateSrc: "ReferFriend",
-    },
   ];
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   return (
@@ -94,6 +88,9 @@ const MoreSrc = memo(() => {
                 status={item.status}
                 key={i}
                 navigateSrc={item.navigateSrc}
+                onPress={() => {
+                  navigate("FAQ");
+                }}
               />
             );
           })}

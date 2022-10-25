@@ -139,7 +139,7 @@ const ApplicationDetails = memo(() => {
             <Text category="h8" status={"placeholder"} mb={8}>
               {t("common:start")}
             </Text>
-            <Text category="h6">Tue, Otc 14</Text>
+            <Text category="h6">Mar, Otc 14</Text>
           </View>
           <View>
             <Text category="h8" status={"placeholder"} mb={8}>

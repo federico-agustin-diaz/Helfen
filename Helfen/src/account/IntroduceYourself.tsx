@@ -94,16 +94,26 @@ const IntroduceYourself = memo(
     navigate("SuccessScr", {
       successScr: {
         title: "Solo queda un paso mas!",
-        description: t("A continuacion, requerimos que adjunte fotos del frente de su DNI y una Selfie"),
+        description: t("A continuacion, requerimos que adjunte las siguientes fotos"),
         children: [
           {
-            title: t("Adjuntar Foto Frente"),
+            title: t("Adjuntar Foto DNI"),
             onPress: () => selectFileDNI1(),
             status: "outline",
           },
           {
-            title: t("Adjuntar Selfie"),
+            title: t("Adjuntar Foto Serio"),
             onPress: () => selectFileDNI2(),
+            status: "outline",
+          },
+          {
+            title: t("Adjuntar Foto Sonriendo"),
+            onPress: () => selectFileDNI3(),
+            status: "outline",
+          },
+          {
+            title: t("Adjuntar Foto Cerrando los Ojos"),
+            onPress: () => selectFileDNI4(),
             status: "outline",
           },
           {
@@ -147,7 +157,8 @@ const IntroduceYourself = memo(
     setLoading(true);
     console.log("entrosubirFotelli")
     console.log(form1)
-      return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/saveimage', {
+    console.log(form1._parts.count)
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/saveimage', {
       method: 'POST',
       body: form1
     })
@@ -156,7 +167,7 @@ const IntroduceYourself = memo(
       console.log("entrosubirFotelli2")
       let controller = new AbortController();
       if (response.status == 200) {
-      var url = 'https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user/checkid/' + dniNumber
+      var url = 'https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user/checkid/' + dniNumber
       console.log(url)
       let controller = new AbortController();
       setTimeout(() => controller.abort(), 3000000);
@@ -203,7 +214,7 @@ const IntroduceYourself = memo(
       });
     } else {
       setLoading(false);
-      alert("Por favor realice ambas fotos");
+      alert("Por favor realice todas las fotos");
     }
   };
 
@@ -266,10 +277,64 @@ const IntroduceYourself = memo(
     });
   }
 
+  const selectFileDNI3 = () => {
+    console.log("entro foto")
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchCamera(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        form1.append("file2", {
+         name: dniNumber + "-3.jpg", // Whatever your filename is
+          uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
+          type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
+        }); 
+      }
+    });
+  }
+
+  const selectFileDNI4 = () => {
+    console.log("entro foto")
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchCamera(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        form1.append("file3", {
+         name: dniNumber + "-4.jpg", // Whatever your filename is
+          uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg
+          type: response.assets[0].type, // video/mp4 for videos..or image/png etc...
+        }); 
+      }
+    });
+  }
+
   const onCargarServicios = () => {
     console.log(userIDAfterRegistration)
     console.log(arrayServices)
-    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/service', {
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/service', {
         method: 'POST',
         headers: {
           'Accept': '*/*',
@@ -301,7 +366,7 @@ const IntroduceYourself = memo(
   
   const onSignup = () => {
     let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompañante" : "Ambos")
-    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/user', {
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user', {
       method: 'POST',
       headers: {
         'Accept': '*/*',

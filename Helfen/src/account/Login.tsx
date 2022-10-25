@@ -49,7 +49,7 @@ const Login = memo(() => {
   }, []);
 
   const onLogin = () => {
-    return fetch('https://seahorse-app-vm8c4.ondigitalocean.app/helfenapi-back2/login', {
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/login', {
       method: 'POST',
       headers: {
         'Accept': '*/*',

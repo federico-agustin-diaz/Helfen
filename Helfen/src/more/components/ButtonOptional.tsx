@@ -55,6 +55,7 @@ const ButtonOptional = ({
     useNavigation<NavigationProp<MainBottomTabStackParamList>>();
 
   const onNavigate = React.useCallback(() => {
+    console.log(navigateSrc)
     navigateSrc === undefined
       ? goBack()
       : navigate("More", { screen: navigateSrc });

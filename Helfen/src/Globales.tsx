@@ -7,6 +7,7 @@ class Global {
     variableGlobalApellido: string = "";
     variableGlobalLatitude: number = 0;
     variableGlobalLongitude: number = 0;
+    variableGlobalCuidadores: any = [];
     // you can define more variables
     public get_myName(){
         return this.myName;
@@ -63,6 +64,13 @@ class Global {
     }
     public get_variableGlobalLongitude(){
         return this.variableGlobalLongitude;
+    }
+
+    public set_variableGlobalCuidadores(new_number:Array<any>){
+        this.variableGlobalCuidadores = new_number;
+    }
+    public get_variableGlobalCuidadores(){
+        return this.variableGlobalCuidadores;
     }
 }
 

@@ -19,7 +19,6 @@ import { RECOMMEND_DATA } from "constants/Data";
 import Carousel from "react-native-snap-carousel";
 import JobItem from "../components/JobItem";
 import useModal from "hooks/useModal";
-import FilterRecommend from "../FilterRecommend";
 import { FindStackParamList } from "navigation/types";
 import ButtonFill from "components/ButtonFill";
 import Flex from "components/Flex";

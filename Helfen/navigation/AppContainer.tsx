@@ -13,6 +13,7 @@ import ChangeJobType from 'src/more/ChangJobType';
 import Onboarding from 'src/onboarding';
 import SuccessScr from 'src/SuccessScr';
 import HomeAddress from 'src/more/HomeAddress';
+import FAQ from 'src/more/FAQ';
 
 LogBox.ignoreAllLogs();
 
@@ -34,6 +35,7 @@ const AppContainer = () => {
         <Stack.Screen name="HomeAddress" component={HomeAddress} />
         <Stack.Screen name="AddMorePayment" component={AddMorePayment} />
         <Stack.Screen name="ChangeJobType" component={ChangeJobType} />
+        <Stack.Screen name="FAQ" component={FAQ} />
         <Stack.Screen name="SuccessScr" component={SuccessScr} />
       </Stack.Navigator>
     </NavigationContainer>

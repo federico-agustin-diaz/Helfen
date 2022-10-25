@@ -18,6 +18,7 @@ export type RootStackParamList = {
   SuccessScr: {
     successScr: SuccessScreenType;
   };
+  FAQ:undefined
 };
 export type MainBottomTabStackParamList = {
   Find: undefined;
@@ -62,6 +63,7 @@ export type AuthStackParamList = {
 };
 export type FindStackParamList = {
   FindSrc: undefined;
+  FilterRecommend: undefined;
   ViewOnMap: undefined;
   JobDetails: { name: string, rating: number };
 };

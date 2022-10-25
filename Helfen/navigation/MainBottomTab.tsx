@@ -135,13 +135,6 @@ const MainBottomTab = memo(() => {
           />
         </BottomTab.Navigator>
         {/* Modal request job notification*/}
-        <ModalRequest
-          name={"Marcela Lopez"}
-          ref={modalRef}
-          avatar={Images.avatar3}
-          isOnl={true}
-          onDetails={hide}
-        />
       </View>
     );
   } else if (Globales.variableGlobalTipo == 2) {
