@@ -14,14 +14,15 @@ const Recommended = memo(() => {
 
   return (
     <View style={styles.container}>
-      {RECOMMEND_DATA.map((item, i) => {
+      {Globales.variableGlobalCuidadores.map((item, i) => {
+        console.log(item)
         return (
           <TouchableOpacity
             key={i}
             onPress={() => {
               navigate("FindStack", {
                 screen: "JobDetails",
-                params: { name: item.name },
+                params: { name: item.user.name, rating: item.carerId },
               });
             }}
           >

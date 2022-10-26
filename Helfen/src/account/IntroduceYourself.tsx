@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { View, ToastAndroid, ActivityIndicator } from "react-native";
+import Snackbar from 'react-native-snackbar';
 import {
   TopNavigation,
   StyleService,
@@ -71,24 +72,27 @@ const IntroduceYourself = memo(
   let postalCode = route.params.postalCode;
   let arrayServices = new Array();
   let userIDAfterRegistration: number;
-  const [isLoaded, setLoading] = React.useState(false);
+  const [isLoaded, setLoading] = React.useState(true);
   const { t } = useTranslation(["auth", "common"]);
   const handleVerify = () => {
+    let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompaniante" : "Ambos")
+    console.log(speciality)
     let higieneString = higiene ? "Higiene y confort," : ""
     let banoString = bañocon ? "Baño con movilidad," : ""
     let banoSinString = bañosin ? "Baño sin movilidad, " : ""
     let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
     let curacionesString = curaciones ? "Curaciones," : ""
-    let sueroString = bañocon ? "Cambio de suero," : ""
-    let aseoString = bañosin ? "Aseo del espacio," : ""
+    let sueroString = suero ? "Cambio de suero," : ""
+    let aseoString = aseo ? "Aseo del espacio," : ""
     let alimString = alim ? "Alimentación," : ""
     let asistString = asist ? "Asistencia en traslados," : ""
     let paseosString = paseos ? "Paseos de rutina," : ""
     let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
-    let rcpString = rcp ? "Primeros Auxilios," : ""
+    let rcpString = rcp ? "Tecnica RCP," : ""
     let hemString = hem ? "Maniobra de heimlich" : ""
     let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
     arrayServices = stringServices.split(",")
+    arrayServices.splice(-1)
     console.log(stringServices)
     console.log(arrayServices)
     navigate("SuccessScr", {
@@ -144,17 +148,18 @@ const IntroduceYourself = memo(
   }, []);
 
   const onSubirFotelli = () => {
-
+    
     if (form1._parts[0] != null) {
-          // ToastAndroid.showWithGravityAndOffset(
-    //   "Se esta realizando el chequeo facial, aguarda un momento.",
-    //   ToastAndroid.LONG,
-    //   ToastAndroid.BOTTOM,
-    //   250,
-    //   500
-    // );
+      Snackbar.show({
+        text: 'Se esta realizando el chequeo facial, aguarda un momento.',
+        duration: Snackbar.LENGTH_INDEFINITE,
+        action: {
+          text: 'OK',
+          textColor: 'green',
+          onPress: () => { Snackbar.dismiss; },
+        },
+      });
     alert("Se esta realizando el chequeo facial, aguarda un momento.");
-    setLoading(true);
     console.log("entrosubirFotelli")
     console.log(form1)
     console.log(form1._parts.count)
@@ -162,11 +167,11 @@ const IntroduceYourself = memo(
       method: 'POST',
       body: form1
     })
-    .then((response) =>  {
-      console.log(response.status)
+    .then((response1) =>  {
+      console.log(response1.status)
       console.log("entrosubirFotelli2")
       let controller = new AbortController();
-      if (response.status == 200) {
+      if (response1.status == 200) {
       var url = 'https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user/checkid/' + dniNumber
       console.log(url)
       let controller = new AbortController();
@@ -175,21 +180,23 @@ const IntroduceYourself = memo(
       signal: controller.signal,
       method: 'GET',
     })
-    .then((response) =>  {  
-      console.log(response.status)   
-       if (response.status == 200) {
+    .then((response) =>  response.json())
+    .then((data) =>  {  
+      console.log(data) 
+      console.log(data.result) 
+       if (data.result == true) {
        console.log("perfecto")
-       setLoading(false);
+       Snackbar.dismiss;
         onSignup();
     } else {
-      setLoading(false);
+      Snackbar.dismiss;
       console.log("Por favor realiza las fotos de nuevo")
       alert("Por favor realiza las fotos de nuevo");
       form1 = new FormData();
       console.log(form1)
     }})
     .catch((error) => {
-      setLoading(false);
+      Snackbar.dismiss;
       console.log("error")
       console.error(error.response);
       console.error(error);
@@ -199,7 +206,7 @@ const IntroduceYourself = memo(
     });
     
     } else {
-      setLoading(false);
+      Snackbar.dismiss;
       console.log("Por favor realiza las fotos de nuevo")
       alert("Por favor realiza las fotos de nuevo");
       form1 = new FormData();
@@ -207,13 +214,13 @@ const IntroduceYourself = memo(
     }
   })
       .catch((error) => {
-        setLoading(false);
+        Snackbar.dismiss;
         console.log("error")
         console.error(error.response);
         console.error(error);
       });
     } else {
-      setLoading(false);
+      Snackbar.dismiss;
       alert("Por favor realice todas las fotos");
     }
   };
@@ -365,7 +372,9 @@ const IntroduceYourself = memo(
       }
   
   const onSignup = () => {
-    let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompañante" : "Ambos")
+    Snackbar.dismiss;
+    let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompaniante" : "Ambos")
+    console.log(speciality)
     return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user', {
       method: 'POST',
       headers: {
@@ -575,5 +584,14 @@ const themedStyles = StyleService.create({
   },
   inputExperienciaLaboral: {
     minHeight: 50,
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });

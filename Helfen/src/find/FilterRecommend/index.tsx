@@ -57,6 +57,8 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
   let location: Boolean = false;
   const [hombre, setHombre] = useToggle(true);
   const [cuidador, setCuidador] = useToggle(true);
+  const [acompañante, setacompañante] = useToggle(false);
+  const [both, setboth] =useToggle(false);
   const [higiene, sethigiene] = useToggle(false);
   const [bañocon, setbañocon] = useToggle(false);
   const [bañosin, setbañosin] = useToggle(false);
@@ -80,6 +82,8 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
   // }, []);
   const onSearch = () => {
     if (Globales.variableGlobalLatitude != null) {
+      let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompaniante" : "Ambos")
+      console.log(speciality)
     let higieneString = higiene ? "Higiene y confort," : ""
     let banoString = bañocon ? "Baño con movilidad," : ""
     let banoSinString = bañosin ? "Baño sin movilidad, " : ""
@@ -91,10 +95,11 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
     let asistString = asist ? "Asistencia en traslados," : ""
     let paseosString = paseos ? "Paseos de rutina," : ""
     let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
-    let rcpString = rcp ? "Primeros Auxilios," : ""
+    let rcpString = rcp ? "Tecnica RCP," : ""
     let hemString = hem ? "Maniobra de heimlich" : ""
     let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
     arrayServices = stringServices.split(",")
+    arrayServices.splice(-1)
     console.log(stringServices)
     console.log(arrayServices)
     return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/users', {
@@ -107,7 +112,7 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
         latitude: Globales.variableGlobalLatitude,
         longitude: Globales.variableGlobalLatitude,
     description: arrayServices,
-    specialty: cuidador==true ? "Cuidador" : "Acompañante",
+    specialty: speciality,
     gender: hombre==true ? "M" : "F"
       })
     })
@@ -115,11 +120,11 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
     .then((data) => {
       console.log(data);
       if (data.carers.length != 0) {
-        onHide()
-        onFilter()
         console.log(data)
         Globales.variableGlobalCuidadores = data.carers
         console.log(Globales.variableGlobalCuidadores)
+        onHide()
+        onFilter()
       } else if (data.carers.length == 0) {
         alert("No se encontraron cuidadores que cumplan con estas preferencias.")
         console.log("no hay cuidadores");
@@ -162,8 +167,9 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
           {t("Tipo de Profesion")}
         </Text>
         <Flex mb={32}>
-          <CheckBox children={"Cuidador"} checked={cuidador} onChange={setCuidador} />
-          <CheckBox children={"Acompañante"} checked={!cuidador} onChange={setCuidador} />
+          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setCuidador} />
+          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañante} />
+          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setboth} />
         </Flex>
         <Text category="h7" mb={24}>
           {t("Genero Paciente")}
@@ -204,7 +210,7 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       </Content>
 
 </ScrollView>
-<Button styles={styles.button} onPress = {onSearch} children={t("buttonFilter").toString()}/>
+<Button style={styles.button} onPress = {onSearch} children={t("buttonFilter").toString()}/>
     </Container>
 
   );
@@ -239,7 +245,7 @@ const themedStyles = StyleService.create({
     bottom: 0,
   },
   button: {
-    width: 24,
+    marginBottom: 0,
   },
   email: {
     marginBottom: 24,

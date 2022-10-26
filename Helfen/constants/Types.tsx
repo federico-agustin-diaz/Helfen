@@ -30,6 +30,7 @@ export interface SuccessScreenType {
   children?: ButtonType[] | null;
   buttonsViewStyle?: ViewStyle;
   logo?: boolean;
+  loading?: boolean
 }
 export interface WeekdaysProps {
   title: string;
@@ -67,7 +68,8 @@ isNurse: boolean,
 experience: string,
 carerId: number,
 distance: number,
-qualification: number
+qualification: number,
+services: [String]
 }
 
 export interface UserItem {

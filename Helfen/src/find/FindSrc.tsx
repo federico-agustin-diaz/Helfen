@@ -37,10 +37,11 @@ const FindSrc = memo(() => {
     console.log("Le pego al toggleModal")
     console.log(!isModalVisible)
     setModalVisible(!isModalVisible);
+    setSeteo(2)
   };
 
   const toggleSeteo = () => {
-    setSeteo(2)
+    setSeteo(3)
   };
 
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -79,7 +80,7 @@ const FindSrc = memo(() => {
       <TopNavigation
         title={t('title').toString()}
       />
-      {isSeteo != 2 ? <Text center category="h2" mb={15} mh={40} mt={80}>
+      {isSeteo != 3 ? <Text center category="h2" mb={15} mh={40} mt={80}>
       {isSeteo == 0 ?
         `Si quiere visualizar los profesionales mas cercanos, debe marcar su ubicacion (boton verde).
 Luego puede filtrar segun sus preferencias (boton naranja).` :

@@ -9,10 +9,12 @@ import { globalStyle } from "styles/globalStyle";
 
 interface DescriptionProps {
   tagResponsibilities: string[];
+  experience?: string;
+  distance: number;
 }
 
 const Description = memo(
-  ({ tagResponsibilities }: DescriptionProps) => {
+  ({ tagResponsibilities, experience, distance }: DescriptionProps) => {
     const styles = useStyleSheet(themedStyles);
     const { t } = useTranslation(["find", "common"]);
     return (
@@ -21,12 +23,20 @@ const Description = memo(
           <Text category="h3" mb={24}>
             {t("description")}
           </Text>
-          <Text category="para-m" mb={32}>
-            {t("description1")}
+          {/* <Text category="para-m" mb={32}>
+            {experience = null ? "El Profesional no ha dado su Descripcion" : experience }
+          </Text> */}
+          {experience == null || experience == "" ? 
+            <Text category="para-m" mb={32}> {"El Profesional no ha dado su Descripcion"} </Text>  
+           : 
+           <Text category="para-m" mb={32}> {experience} </Text> 
+          }
+          <Text category="para-m" mb={10}>
+            {"Se encuentra a una distancia de " + distance.toFixed(0) + "km"}
           </Text>
         </View>
         <View>
-          <Text category="h3" mb={24}>
+          <Text category="h3" mb={10}>
             {t("Servicios Proporcionados")}
           </Text>
           {tagResponsibilities.map((item, i) => {

@@ -41,7 +41,7 @@ import Personal from "./Personal";
 import Weekdays from "../components/Weekdays";
 import Description from "./Description";
 import useModal from "hooks/useModal";
-
+import Globales from "src/Globales";
 const JobDetails = memo(() => {
   const { navigate, goBack } =
     useNavigation<NavigationProp<RootStackParamList>>();
@@ -53,7 +53,9 @@ const JobDetails = memo(() => {
   const { modalRef, show, hide } = useModal();
 
   let NAME = route.params.name;
-  const items = RECOMMEND_DATA.filter(item => item.name == NAME);
+  let ID = route.params.rating;
+  const items = Globales.variableGlobalCuidadores.filter(item => item.carerId == ID);
+  console.log(items)
   const translationY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translationY.value = event.contentOffset.y;
@@ -151,7 +153,7 @@ const JobDetails = memo(() => {
           styles.content,
         ]}
       >
-        <Personal name={NAME} rating={items[0].rating} mt={72} mb={32} />
+        <Personal name={NAME+" "+items[0].user.lastName} rating={items[0].qualification} speciality={items[0].specialty} mt={72} mb={32} />
         {/* <Text category="para-m" mb={16}>
           Soy una persona muy capa
         </Text>
@@ -192,7 +194,10 @@ const JobDetails = memo(() => {
           }}
         /> */}
         <Description
+          experience={items[0].experience}
           tagResponsibilities={items[0].services}
+          distance={items[0].distance}
+          speciality={items[0].speciality}
         />
       </Animated.ScrollView>
       <Layout

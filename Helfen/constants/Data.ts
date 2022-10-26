@@ -12,7 +12,7 @@ export const RECOMMEND_DATA = [
     id: 0,
     name: "Marcela Lopez",
     title: "",
-    services: ["Tecnicas RCP", "Tecnicas Hemlich", "Higiene y confort"],
+    services: ["Tecnicas Hemlich", "Higiene y confort"],
     online: true,
     avatar: Images.avatar1,
     ageType: "Toddler, Junior-High",
@@ -63,7 +63,7 @@ export const RECOMMEND_DATA = [
     id: 1,
     name: "Alex Falcon",
     title: "Babysitting for a few hours",
-    services: ["Tecnicas RCP", "Primeros Auxilios", "Acompañamiento en rehabilitación"],
+    services: ["Higiene y Confort", "Primeros Auxilios", "Acompañamiento en rehabilitación"],
     online: false,
     avatar: Images.avatar2,
     ageType: "Toddler",
@@ -84,7 +84,7 @@ export const RECOMMEND_DATA = [
     id: 2,
     name: "Ariana Foressi",
     title: "Babysitting for two hours",
-    services: ["Tecnicas RCP", "Tecnicas Hemlich"],
+    services: ["Higiene y Confort", "Tecnicas Hemlich"],
     online: true,
     avatar: Images.avatar3,
     ageType: "Toddler",
@@ -105,7 +105,7 @@ export const RECOMMEND_DATA = [
     id: 3,
     name: "Federico Diaz",
     title: "Babysitting for two hours",
-    services: ["Tecnicas RCP", "Tecnicas Hemlich", "Higiene y confort"],
+    services: ["Higiene y Confort", "Tecnicas Hemlich"],
     online: true,
     avatar: Images.avatar4,
     ageType: "Toddler",
@@ -330,7 +330,7 @@ export const DATA_CURRENT_INTERVIEW = [
   {
     id: 1,
     name: "Ariana Foressi",
-    time: new Date(2022,10,30).toLocaleDateString("es"),
+    time: new Date(2022,10,30),
     dateIn: "18:00 - 18:30",
     type: Request_Status_Type_Enum.Completed,
     avatar: Images.avatar3,
@@ -612,15 +612,15 @@ export const DATA_PASS_APPLICATION = [
 export const ABILITY_DATA = [
   {
     id: 0,
-    date: 1648647101000,
-    title: "10 Octubre - 17 Octubre",
+    date: new Date(2022,10,25),
+    title: "25 Octubre - 2 Noviembre",
   },
   {
     id: 1,
     type: Request_Type_Enum.Interview,
-    date: 1649338301000,
+    date: new Date(2022,11,4),
     meeting_time: "17:00 - 17:30",
-    title: "10 Octubre - 17",
+    title: "2 Noviembre - 9 Noviembre",
     user: {
       id: 1,
       name: "Cristina Gomez",
@@ -631,9 +631,9 @@ export const ABILITY_DATA = [
   {
     id: 2,
     type: Request_Type_Enum.Interview,
-    date: 1649943101000,
+    date: new Date(2022,11,11),
     meeting_time: "12:00 - 12:30",
-    title: "17 Octubre - 24 Octubre",
+    title: "9 Noviembre - 16 Noviembre",
     user: {
       id: 1,
       name: "Vanina Aranda",
@@ -643,7 +643,7 @@ export const ABILITY_DATA = [
   },
   {
     id: 3,
-    date: 1650547901000,
-    title: "24 Octubre - 31 Octubre",
+    date: new Date(2022,11,16),
+    title: "16 Noviembre - 23 Noviembre",
   }
 ];

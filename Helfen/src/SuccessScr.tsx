@@ -1,4 +1,5 @@
 import React, {memo} from 'react';
+import { ScrollView, ScrollViewProps } from "react-native";
 import {useRoute} from '@react-navigation/native';
 import {ModalScreenNavigationProp} from 'navigation/types';
 import NotificationScreen from 'components/NotificationScreen';
@@ -17,6 +18,7 @@ const SuccessScr = memo(() => {
     route?.params?.successScr || initValue;
 
   return (
+    <ScrollView>
     <NotificationScreen
       title={title}
       description={description}
@@ -24,6 +26,7 @@ const SuccessScr = memo(() => {
       buttonsViewStyle={buttonsViewStyle}
       logo={logo}
     />
+    </ScrollView>
   );
 });
 

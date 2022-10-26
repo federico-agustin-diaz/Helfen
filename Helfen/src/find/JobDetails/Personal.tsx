@@ -13,15 +13,19 @@ interface PersonalProps {
   carePro: boolean;
   mt?: number;
   mb?: number;
+  speciality: string;
 }
 const Personal = memo(
-  ({ name, rating, trustedFamily, carePro, mt, mb }: PersonalProps) => {
+  ({ name, speciality, rating, trustedFamily, carePro, mt, mb }: PersonalProps) => {
     const { t } = useTranslation(["find", "common"]);
     const styles = useStyleSheet(themedStyles);
     return (
       <View style={[styles.container, { marginTop: mt, marginBottom: mb }]}>
         <Text category="h3" center mb={24}>
           {name}
+        </Text>
+        <Text category="h6" center mb={24}>
+          {speciality}
         </Text>
         <Rating
             readonly

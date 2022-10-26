@@ -14,18 +14,19 @@ import {
 import Flex from "components/Flex";
 import { globalStyle } from "styles/globalStyle";
 import Weekdays from "./Weekdays";
-import { JobItemProps } from "constants/Types";
+import { JobItemPropsPosta } from "constants/Types";
 import useLayout from "hooks/useLayout";
 
 interface ItemProps {
-  item: JobItemProps;
+  item: JobItemPropsPosta;
 }
 
 const JobItem = memo(({ item }: ItemProps) => {
   const {
     services,
-    name,
-    rating,
+    qualification,
+    user,
+    distance
   } = item;
   const styles = useStyleSheet(themedStyles);
   const theme = useTheme();
@@ -50,21 +51,29 @@ const JobItem = memo(({ item }: ItemProps) => {
             },
           ]}
         /> */}
-        <Text category="h7" ml={16} maxWidth={231} lineHeight={24}>
-          {name}
+        <Text category="h5" ml={16} maxWidth={231} lineHeight={24}>
+          {user.name+ " " +user.lastName}
         </Text>
       </Flex>
       <Layout level={"2"} style={styles.bottom}>
         <Flex justify="flex-start" itemsCenter mb={8}>
           <Icon pack="assets" name="baby" style={styles.icon} />
-          <Text category="h8" ml={8}>
+          <Text category="h6" ml={5} mr={40}>
             Servicios Proporcionados: {services.join(",  ")}
           </Text>
+          
         </Flex>
+        <Flex justify="flex-start" itemsCenter mb={8}>
+          <Icon pack="assets" name="map" style={styles.icon} />
+          <Text category="h7" ml={5} mr={0}>
+          {distance.toFixed(0) + "km de distancia"}
+          </Text>
+        </Flex>
+        
           <Rating
             readonly
             //aca tenes que poner lo que te devuelve backend
-            startingValue={rating}
+            startingValue={qualification}
             type='star'
             ratingCount={10}
             imageSize={20}
@@ -90,8 +99,8 @@ const themedStyles = StyleService.create({
     borderBottomRightRadius: 16,
   },
   icon: {
-    width: 14,
-    height: 14,
+    width: 24,
+    height: 24,
     tintColor: "text-placeholder-color",
     marginLeft: 16,
   },
