@@ -19,6 +19,7 @@ import ButtonFill from "components/ButtonFill";
 import AbilityItem from "./AbilityItem";
 import { ABILITY_DATA } from "constants/Data";
 import { CalendarStackParamList } from "navigation/types";
+import Globales from "src/Globales";
 
 const CalendarSrc = memo(() => {
   const { height, width, top, bottom } = useLayout();
@@ -43,29 +44,61 @@ const CalendarSrc = memo(() => {
   const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
   const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
   const onPressAddAbility = () => navigate("AvailabilitySrc", { type: "Add" });
+  const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  var arrayCalendarEvents = new Array(); 
+  const mapGlobales = () => {
+    Globales.variableGlobalEventosCalendario.forEach((element) =>  {
+      element.stringDays.forEach((elementito) =>  {
+        var datePart = elementito.match(/\d+/g),
+        year = datePart[0],
+        month = months[datePart[1]-1], 
+        day = datePart[2];
+        var dateFormatted = day+' de '+ month +' del '+year;
+        var calendarObject = {
+          dateParaElOrden: new Date(elementito),
+          date: dateFormatted,
+          name: element.familiar.user.name + " " + element.familiar.user.lastName,
+          localAddress: element.familiar.user.localAddress,
+          time: "Horario: Desde " + element.startEvent + " hasta las " + element.endEvent,
+          notes: element.notes != "" ? ("Notas: " + element.notes) : ("No se detallaron Notas")
+        }
+        console.log(calendarObject)
+        arrayCalendarEvents.push(calendarObject)
+      }
+      );
+    }
+    );
+    arrayCalendarEvents.sort(function(a,b){
+      return (a.dateParaElOrden) - (b.dateParaElOrden)
+    })
+    //falta ordenar segun la fecha
+  }
+  console.log("este el evento del calendar")
+  console.log(Globales.variableGlobalEventosCalendario)
+  mapGlobales();
   return (
     <Container style={styles.container}>
       <TopNavigation title={t("title").toString()} />
       <Content padder contentContainerStyle={styles.content}>
-        {/* <ImageBackground
+       {/* <ImageBackground
           source={Images.bgSuggestion}
           style={[
             styles.img,
             {
               width: width - 48,
-              height: 130 * (height / 812),
+              height: 100 * (height / 812),
             },
           ]}
           imageStyle={{}}
         >
-          <Text category="h2" mt={20} status="primary" mb={12}>
-            {t("suggestTitle")}
+          <Text category="h6" mt={20} status="primary" mb={12}>
+            {"Estos son los Eventos que se han Registrado"}
           </Text>
         </ImageBackground> */}
         <Text category="h6" mb={24}>
           {(getCurrentDate())}
         </Text>
-        {ABILITY_DATA.map((item, i) => {
+        {arrayCalendarEvents.map((item, i) => {
           return (
             <AbilityItem
               item={item}
@@ -77,12 +110,6 @@ const CalendarSrc = memo(() => {
           );
         })}
       </Content>
-      {/* <ButtonFill
-        icon="plusImg"
-        status="warning"
-        size="large"
-        style={[styles.addButton, { bottom: bottom + 32 }]}
-      /> */}
     </Container>
   );
 });

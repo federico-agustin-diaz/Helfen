@@ -4,7 +4,7 @@ import ApplicationDetails from "src/requests/Applications/ApplicationDetails";
 import BookingDetails from "src/requests/Bookings/BookingDetails";
 import ConfirmHour from "src/requests/Bookings/ConfirmHour";
 import InterviewDetails from "src/requests/Interview/InterviewDetails";
-
+import ConfirmEventInputs from "src/requests/ConfirmEventInputs";
 import { RequestsStackParamList } from "./types";
 
 const Stack = createStackNavigator<RequestsStackParamList>();
@@ -18,6 +18,7 @@ const RequestsNavigator = memo(() => {
       <Stack.Screen name="BookingDetails" component={BookingDetails} />
       <Stack.Screen name="ApplicationDetails" component={ApplicationDetails} />
       <Stack.Screen name="ConfirmHour" component={ConfirmHour} />
+      <Stack.Screen name="ConfirmEventInputs" component={ConfirmEventInputs} />
     </Stack.Navigator>
   );
 });

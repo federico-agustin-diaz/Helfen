@@ -10,6 +10,7 @@ import {
 import {
   Onl_State_Types_Enum,
   RequestInterviewItemProps,
+  RequestPendientes,
 } from "constants/Types";
 import { convertTime } from "utils/convertTime";
 import Flex from "components/Flex";
@@ -19,7 +20,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "navigation/types";
 
 export interface InterviewItemProps {
-  item: RequestInterviewItemProps;
+  item: RequestPendientes;
   containerStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
 }
@@ -31,6 +32,7 @@ const RequestInterviewItem = ({
 }: InterviewItemProps) => {
   const styles = useStyleSheet(themedStyles);
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  console.log(item)
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
@@ -38,7 +40,7 @@ const RequestInterviewItem = ({
     >
       <Flex style={[contentStyle, styles.content]}>
         <View>
-          <Text category="h7">{item.name}</Text>
+          <Text category="h7">{item.name + " " + item.lastName}</Text>
         </View>
       </Flex>
     </TouchableOpacity>

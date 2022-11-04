@@ -8,6 +8,11 @@ class Global {
     variableGlobalLatitude: number = 0;
     variableGlobalLongitude: number = 0;
     variableGlobalCuidadores: any = [];
+    variableGlobalFamiliaresPendientes: any = [];
+    variableGlobalFamiliaresConfirmados: any = [];
+    variableGlobalCuidadoresPendientes: any = [];
+    variableGlobalCuidadoresConfirmados: any = [];
+    variableGlobalEventosCalendario: any = [];
     // you can define more variables
     public get_myName(){
         return this.myName;
@@ -71,6 +76,41 @@ class Global {
     }
     public get_variableGlobalCuidadores(){
         return this.variableGlobalCuidadores;
+    }
+
+    public set_variableGlobalFamiliaresPendientes(new_number:Array<any>){
+        this.variableGlobalFamiliaresPendientes = new_number;
+    }
+    public get_variableGlobalFamiliaresPendientes(){
+        return this.variableGlobalFamiliaresPendientes;
+    }
+
+    public set_variableGlobalCuidadoresPendientes(new_number:Array<any>){
+        this.variableGlobalCuidadoresPendientes = new_number;
+    }
+    public get_variableGlobalCuidadoresPendientes(){
+        return this.variableGlobalCuidadoresPendientes;
+    }
+
+    public set_variableGlobalFamiliaresConfirmados(new_number:Array<any>){
+        this.variableGlobalFamiliaresConfirmados = new_number;
+    }
+    public get_variableGlobalFamiliaresConfirmados(){
+        return this.variableGlobalFamiliaresConfirmados;
+    }
+
+    public set_variableGlobalCuidadoresConfirmados(new_number:Array<any>){
+        this.variableGlobalCuidadoresConfirmados = new_number;
+    }
+    public get_variableGlobalCuidadoresConfirmados(){
+        return this.variableGlobalCuidadoresConfirmados;
+    }
+
+    public set_variableGlobalEventosCalendario(new_number:Array<any>){
+        this.variableGlobalEventosCalendario = new_number;
+    }
+    public get_variableGlobalEventosCalendario(){
+        return this.variableGlobalEventosCalendario;
     }
 }
 

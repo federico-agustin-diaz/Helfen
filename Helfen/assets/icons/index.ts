@@ -7,6 +7,7 @@ export const Icons = {
   currentLocation: require("./ic_current_location.png"),
   filter: require("./ic_filter.png"),
   pinMap: require("./ic_pin_map.png"),
+  pinMapActive: require("./ic_pin_map_active.png"),
   trash: require("./ic_trash.png"),
   camera: require("./ic_camera.png"),
   option: require("./ic_option.png"),

@@ -70,6 +70,7 @@ const Login = memo(() => {
         Globales.set_variableGlobalPrimerNombre(data.user.user.name)
         Globales.set_variableGlobalApellido(data.user.user.lastName)
         Globales.set_variableGlobalEmail(data.user.user.mail)
+        Globales.set_variableGlobalId(data.user.id)
         console.log(Globales.variableGlobalTipo);
         console.log(Globales.variableGlobalApellido);
         console.log("se logueo");
@@ -203,6 +204,8 @@ const themedStyles = StyleService.create({
   container: {
     flex: 1,
     paddingBottom: 0,
+    backgroundColor:  '#fff',
+
   },
   content: {
     marginTop: 40,

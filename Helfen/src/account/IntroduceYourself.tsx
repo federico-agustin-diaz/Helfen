@@ -162,22 +162,26 @@ const IntroduceYourself = memo(
     alert("Se esta realizando el chequeo facial, aguarda un momento.");
     console.log("entrosubirFotelli")
     console.log(form1)
-    console.log(form1._parts.count)
+    console.log(form1._parts[0])
+    console.log(form1._parts[1])
+    console.log(form1._parts[2])
+    console.log(form1._parts[3])
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/saveimage', {
       method: 'POST',
-      body: form1
+      body: form1,
+      headers:{
+        'Accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      }
     })
     .then((response1) =>  {
       console.log(response1.status)
       console.log("entrosubirFotelli2")
-      let controller = new AbortController();
       if (response1.status == 200) {
+          console.log("termino el timeout")
       var url = 'https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/user/checkid/' + dniNumber
       console.log(url)
-      let controller = new AbortController();
-      setTimeout(() => controller.abort(), 3000000);
       return fetch(url, {
-      signal: controller.signal,
       method: 'GET',
     })
     .then((response) =>  response.json())
@@ -204,7 +208,6 @@ const IntroduceYourself = memo(
       form1 = new FormData();
       console.log(form1)
     });
-    
     } else {
       Snackbar.dismiss;
       console.log("Por favor realiza las fotos de nuevo")
@@ -230,10 +233,7 @@ const IntroduceYourself = memo(
     let options = {
       storageOptions: {
         skipBackup: true,
-        path: 'images',
-        maxWidth: 10,
-        maxHeight: 20,
-        ratio: '1:1'
+        path: 'images'
       },
     };
     launchCamera(options, (response) => {
@@ -246,8 +246,6 @@ const IntroduceYourself = memo(
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        // form1.append("file", response.assets[0].uri);
-        // form1.append("fileName", "DNI-1");
         form1.append("file", {
          name: dniNumber + "-1.jpg", // Whatever your filename is
           uri: response.assets[0].uri, //  file:///data/user/0/com.cookingrn/cache/rn_image_picker_lib_temp_5f6898ee-a8d4-48c9-b265-142efb11ec3f.jpg

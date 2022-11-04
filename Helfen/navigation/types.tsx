@@ -80,6 +80,7 @@ export type RequestsStackParamList = {
   BookingDetails: { type: Request_Status_Type_Enum };
   ApplicationDetails: { type: Request_Status_Type_Enum };
   ConfirmHour: undefined;
+  ConfirmEventInputs:undefined;
 };
 export type CalendarStackParamList = {
   CalendarSrc: undefined;

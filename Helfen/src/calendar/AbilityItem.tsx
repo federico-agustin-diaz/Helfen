@@ -9,14 +9,14 @@ import {
   Avatar,
   useTheme,
 } from "@ui-kitten/components";
-import { AbilityProps, Onl_State_Types_Enum } from "constants/Types";
+import { AbilityProps, Onl_State_Types_Enum, CalendarEventito } from "constants/Types";
 import { globalStyle } from "styles/globalStyle";
 import ButtonFill from "components/ButtonFill";
 import dayjs from "dayjs";
 import useLayout from "hooks/useLayout";
 
 interface AbilityItemProps {
-  item: AbilityProps;
+  item: CalendarEventito;
   style?: ViewStyle;
   onPress?(): void;
   light?: boolean;
@@ -36,27 +36,27 @@ const AbilityItem = ({
 
   return (
     <View style={[styles.container, style]}>
-      <View>
-        <Text mt={32} category="h9-s" status={"basic"}>
-          {dayjs(item.date).format("ddd").toUpperCase()}
-        </Text>
-        <Text category="h5">{dayjs(item.date).format("D").toUpperCase()}</Text>
-      </View>
-      <View style={{ width: 272 * (width / 375) }}>
-        <Text category="h9-s" status="placeholder" mb={16}>
-          {item.title?.toUpperCase()}
-        </Text>
-        {item.type ? (
+      <View style={{ width: 300 * (width / 375) }}>
+        {/* <Text category="h9-s" status="placeholder" mb={16}>
+          {item.carer.services[0]}
+        </Text> */}
+        {item ? (
           <TouchableOpacity activeOpacity={0.54} onPress={onPress}>
             <Layout level={"2"} style={styles.content}>
               <View>
-                <Text category="h8" status={"warning"}>
-                  {item.type}
+                <Text category="h8" status={"placeholder"}>
+                {item.date}
                 </Text>
-                <Text category="h7" mv={8}>
-                  {item.user?.name}
+                <Text category="h7" mv={8} status={"link"}>
+                {item.name} 
                 </Text>
-                <Text category="h8-s">{item.meeting_time}</Text>
+                <Text category="h8-s"  mv={8}>{item.time}</Text>
+                <Text category="h8-s" mv={8}>
+                {item.localAddress} 
+                </Text>
+                <Text category="h8-s" mv={8}>
+                  {item.notes}
+                </Text>
               </View>
             </Layout>
           </TouchableOpacity>
@@ -93,9 +93,12 @@ export default AbilityItem;
 
 const themedStyles = StyleService.create({
   container: {
-    marginBottom: 40,
+    marginBottom: 20,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  cuadrado: {
+    padding: 20,
   },
   time: {},
   content: {

@@ -11,10 +11,11 @@ interface DescriptionProps {
   tagResponsibilities: string[];
   experience?: string;
   distance: number;
+  speciality: string;
 }
 
 const Description = memo(
-  ({ tagResponsibilities, experience, distance }: DescriptionProps) => {
+  ({ tagResponsibilities, experience, distance, speciality }: DescriptionProps) => {
     const styles = useStyleSheet(themedStyles);
     const { t } = useTranslation(["find", "common"]);
     return (

@@ -57,6 +57,26 @@ export interface JobItemProps {
   rating: number;
 }
 
+export interface RequestPendientes {
+  name: string;
+lastName: string;
+dateOfBirth: string;
+dniNumber: number;
+localAddress: string;
+mail: string;
+otherMail: string;
+phoneNumber: string;
+password: string;
+postalCode: string;
+province: string;
+apartment: string;
+gender: string;
+latitude: string;
+longitude: string;
+floor: null;
+id: number;
+}
+
 export interface JobItemPropsPosta {
   user:UserItem,
 amountCare: number,
@@ -121,6 +141,28 @@ export interface AbilityProps {
   meeting_time?: string;
   title?: string;
   user?: UserProps;
+}
+
+export interface CalendarEvent {
+  id: number;
+            carer: JobItemPropsPosta;
+            date: string;
+            day: number;
+            endEvent: string
+            expirationDate: string;
+            localAddress: string;
+            notes: string;
+            startEvent: string;
+            status: boolean;
+            stringDays?: [String]
+}
+
+export interface CalendarEventito {
+  date: string,
+          name: string,
+          localAddress: string,
+          time: string,
+          notes: string
 }
 
 export interface CaregiverCardProps {
@@ -223,3 +265,5 @@ export type LibraryProps = {
   fonts?: Fonts
   overrides?: Overrides
 }
+
+

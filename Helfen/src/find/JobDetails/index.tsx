@@ -100,12 +100,38 @@ const JobDetails = memo(() => {
 
   const _onOption = React.useCallback(() => {}, []);
   const _onApply = React.useCallback(() => {
+    console.log(items[0].carerId)
+    console.log(Globales.variableGlobalId)
     //pedir turno
-    modalRef.current?.show();
-    setTimeout(() => {
-      navigate("MainBottomTab");
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        carer: items[0].carerId,
+        familiar: Globales.variableGlobalId
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.possibleContacts != null) {
+        console.log(data)
+        modalRef.current?.show();
+       setTimeout(() => {
+        navigate("MainBottomTab");
     }, 1800);
-    
+      } else {
+        alert("Ya estaba creada la relacion.")
+      }
+    })
+      .catch((error) => {
+        alert("Hubo un error al crear la relacion.")
+        console.log("error")
+        console.error(error);
+      });
   }, []);
 
   return (

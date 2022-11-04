@@ -52,6 +52,7 @@ const AssetIconsPack: IconPack<ImageProps | SvgProps> = {
     filter: createIcon(Icons.filter),
     photoLibrary: createIcon(Icons.photoLibrary),
     pinMap: createIcon(Icons.pinMap),
+    pinMapActive: createIcon(Icons.pinMapActive),
     option: createIcon(Icons.option),
     map: createIcon(Icons.map),
     more: createIcon(Icons.more),
