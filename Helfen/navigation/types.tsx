@@ -75,6 +75,15 @@ export type RequestsBottomStackParamList = {
   RequestsSrc: undefined;
   RequestsInPast: { requestType: Request_Type_Enum };
 };
+
+export type RatingsBottomStackParamList = {
+  RatingsSrc: undefined;
+};
+
+export type LocationBottomStackParamList = {
+  LocationSrc: undefined;
+};
+
 export type RequestsStackParamList = {
   InterviewDetails: { type: Request_Status_Type_Enum };
   BookingDetails: { type: Request_Status_Type_Enum };

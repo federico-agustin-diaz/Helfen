@@ -1,18 +1,18 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { memo } from "react";
 import RequestsInPast from "src/requests/RequestsInPass";
-import RequestsSrc from "src/requests/RequestsSrc";
+import RatingsSrc from "src/requests/RatingsSrc";
 
-import { RequestsBottomStackParamList } from "./types";
+import { RatingsBottomStackParamList } from "./types";
 
-const Stack = createStackNavigator<RequestsBottomStackParamList>();
+const Stack = createStackNavigator<RatingsBottomStackParamList>();
 const RatingsBottomNavigator = memo(() => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="RequestsSrc"
+      initialRouteName="RatingsSrc"
     >
-      <Stack.Screen name="RequestsSrc" component={RequestsSrc} />
+      <Stack.Screen name="RatingsSrc" component={RatingsSrc} />
     </Stack.Navigator>
   );
 });
