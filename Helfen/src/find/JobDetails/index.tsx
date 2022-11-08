@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { RECOMMEND_DATA } from "constants/Data";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
@@ -26,8 +26,6 @@ import {
   JobDetailsScreenNavigationProp,
   RootStackParamList,
 } from "navigation/types";
-import { Images } from "assets/images";
-import FocusAwareStatusBar from "components/FocusAwareStatusBar";
 import Flex from "components/Flex";
 import { globalStyle } from "styles/globalStyle";
 import Animated, {
@@ -38,7 +36,6 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import Personal from "./Personal";
-import Weekdays from "../components/Weekdays";
 import Description from "./Description";
 import useModal from "hooks/useModal";
 import Globales from "src/Globales";
@@ -51,6 +48,8 @@ const JobDetails = memo(() => {
   const { t } = useTranslation(["find", "common"]);
   const route = useRoute<JobDetailsScreenNavigationProp>();
   const { modalRef, show, hide } = useModal();
+  const [comments, setComments] = React.useState([]);
+  const [seSetearonLosPendientes, setSeSetearonLosPendientes] = React.useState(true);
 
   let NAME = route.params.name;
   let ID = route.params.rating;
@@ -98,7 +97,33 @@ const JobDetails = memo(() => {
     };
   });
 
-  const _onOption = React.useCallback(() => {}, []);
+  const onPedirValoraciones = React.useCallback(() => {
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/reviews/' + items[0].carerId, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.reviews != null) {
+        var listaReviews = data.reviews.map(item => item.comment)
+        console.log("esta es la lista de reviews")
+        console.log(listaReviews)
+        setComments(listaReviews)
+      } else {
+        //alert("Ya estaba creada la relacion.")
+      }
+    })
+      .catch((error) => {
+        alert("Hubo un error al crear la relacion.")
+        console.log("error")
+        console.error(error);
+      });
+  }, []);
+
   const _onApply = React.useCallback(() => {
     console.log(items[0].carerId)
     console.log(Globales.variableGlobalId)
@@ -134,42 +159,16 @@ const JobDetails = memo(() => {
       });
   }, []);
 
+  useEffect(() => {
+    if (seSetearonLosPendientes) {
+      onPedirValoraciones()
+      setSeSetearonLosPendientes(false)
+    }
+  }, []);
+
   return (
     <Container style={styles.container} useSafeArea={false} level="2">
-      {/* <FocusAwareStatusBar barStyle="light-content" /> */}
-      {/* <Animated.Image source={Images.cover} style={styleCover} /> */}
       <Flex>
-        {/* <TouchableOpacity activeOpacity={0.54} onPress={goBack}>
-          <ImageBackground
-            source={Images.fill}
-            imageStyle={{ tintColor: theme["color-basic-700"] }}
-            style={styles.goBack}
-          >
-            <Icon
-              pack="assets"
-              name="back"
-              style={{ tintColor: theme["text-primary-color"] }}
-            />
-          </ImageBackground>
-        </TouchableOpacity>
-        <Animated.View style={styleHeader}>
-          <Text status={"basic"} center category="h6" mt={4}>
-            {NAME}
-          </Text>
-        </Animated.View> */}
-        {/* <TouchableOpacity activeOpacity={0.54} onPress={_onOption}>
-          <ImageBackground
-            source={Images.fill}
-            imageStyle={{ tintColor: theme["color-basic-700"] }}
-            style={styles.goBack}
-          >
-            <Icon
-              pack="assets"
-              name="option"
-              style={{ tintColor: theme["text-primary-color"] }}
-            />
-          </ImageBackground>
-        </TouchableOpacity> */}
       </Flex>
       <Animated.ScrollView
         scrollEventThrottle={16}
@@ -180,50 +179,12 @@ const JobDetails = memo(() => {
         ]}
       >
         <Personal name={NAME+" "+items[0].user.lastName} rating={items[0].qualification} speciality={items[0].specialty} mt={72} mb={32} />
-        {/* <Text category="para-m" mb={16}>
-          Soy una persona muy capa
-        </Text>
-        <Flex mr={36} mb={24}>
-          <View>
-            <Text category="h8" status={"placeholder"} mb={8}>
-              {t("common:start")}
-            </Text>
-            <Text category="h6">Tue, Otc 14</Text>
-          </View>
-          <View>
-            <Text category="h8" status={"placeholder"} mb={8}>
-              {t("common:hour")}
-            </Text>
-            <Text category="h6">08:00 - 12:00</Text>
-          </View>
-        </Flex>
-        <Flex mb={32}>
-          <View style={styles.regularly}>
-            <Text category="h9" status={"primary"}>
-              {t("common:regularly")}
-            </Text>
-          </View>
-          <Weekdays data={DAY_IN_WEEK} size="large" status="primary" />
-        </Flex>
-        <Flex justify="flex-start" itemsCenter mb={16}>
-          <Text category="para-m">Rochester, NY</Text>
-          <Layout style={globalStyle.dot} level="5" />
-          <Text category="para-m">2 miles</Text>
-        </Flex>
-        <Image
-          source={Images.map}
-          style={{
-            width: width,
-            marginLeft: -24,
-            height: 200 * (height / 812),
-            marginBottom: 56,
-          }}
-        /> */}
         <Description
           experience={items[0].experience}
           tagResponsibilities={items[0].services}
           distance={items[0].distance}
           speciality={items[0].speciality}
+          comments={comments}
         />
       </Animated.ScrollView>
       <Layout
@@ -284,36 +245,6 @@ const themedStyles = StyleService.create({
     borderRadius: 8,
   },
 });
-const DAY_IN_WEEK = [
-  {
-    title: "Domingo",
-    isActive: false,
-  },
-  {
-    title: "Lunes",
-    isActive: false,
-  },
-  {
-    title: "Martes",
-    isActive: true,
-  },
-  {
-    title: "Miercoles",
-    isActive: true,
-  },
-  {
-    title: "Jueves",
-    isActive: true,
-  },
-  {
-    title: "Viernes",
-    isActive: false,
-  },
-  {
-    title: "Sabado",
-    isActive: false,
-  },
-];
 const TAG_QUALIFICATIONS = [
   "Has a car",
   "Comfortable with pets",

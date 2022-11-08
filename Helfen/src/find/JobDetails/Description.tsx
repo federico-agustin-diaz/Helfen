@@ -12,10 +12,11 @@ interface DescriptionProps {
   experience?: string;
   distance: number;
   speciality: string;
+  comments?: string[];
 }
 
 const Description = memo(
-  ({ tagResponsibilities, experience, distance, speciality }: DescriptionProps) => {
+  ({ tagResponsibilities, experience, distance, speciality, comments }: DescriptionProps) => {
     const styles = useStyleSheet(themedStyles);
     const { t } = useTranslation(["find", "common"]);
     return (
@@ -50,10 +51,10 @@ const Description = memo(
           })}
         </View>
         <View>
-          <Text category="h3" mb={10}>
-            {t("Comentarios y Valoraciones de Familiares")}
+          <Text category="h3" mb={10} mt={20}>
+            {t("Comentarios de Familiares")}
           </Text>
-          {tagResponsibilities.map((item, i) => {
+          {comments.map((item, i) => {
             return (
               <Flex key={i} justify="flex-start" itemsCenter mb={12}>
                 <Layout style={globalStyle.dot} level="5" />
