@@ -50,7 +50,7 @@ const InterviewDetails = memo(() => {
         <Rating
             startingValue={0}
             type='star'
-            ratingCount={10}
+            ratingCount={5}
             imageSize={33}
           />
         <View style={styles.additional}>

@@ -19,9 +19,12 @@ import { Images } from "assets/images";
 import MessagesSrc from "src/messages/MessagesSrc";
 import RequestsBottomNavigator from "./RequestsBottomNavigator";
 import RatingsBottomNavigator from "./RatingsBottomNavigator";
-import CalendarNavigator from "./CalendarNavigator";
+import CalendarNavigator from "./CalendarNavigator"; 
+import LocationBottomNavigator from "./LocationBottomNavigator"; 
 import MoreNavigator from "./MoreNavigator";
 import Globales from "src/Globales";
+import Geolocation from '@react-native-community/geolocation';
+
 
 interface ButtonTabProps {
   focused: boolean;
@@ -41,6 +44,7 @@ const MainBottomTab = memo(() => {
   const [familiarId, setFamiliarId] = React.useState(0)
   const [cuidadorId, setCuidadorId] = React.useState(0)
   const [cuidadorTelefono, setCuidadorTelefono] = React.useState(0)
+  const [listaDePendientes, setListaDePendientes] = React.useState([])
 
   const checkRelations = () => {
     if (Globales.variableGlobalTipo == 2) {
@@ -55,13 +59,13 @@ const MainBottomTab = memo(() => {
     .then((data) => {
       console.log(data);
       if (data.possibleContacts.length > 0) {
-        console.log(data.possibleContacts[0].carer.user.name)
         console.log(data.possibleContacts.length)
-        setContactName(data.possibleContacts[0].familiar.user.name + " " + data.possibleContacts[0].carer.user.lastName)
+        setContactName(data.possibleContacts[0].familiar.user.name + " " + data.possibleContacts[0].familiar.user.lastName)
         setFamiliarId(data.possibleContacts[0].familiar.id)
-        Globales.set_variableGlobalFamiliaresPendientes(data.data.possibleContacts[0].familiar)
-        //checkRelationsvar = true
-        console.log(contactName)
+        Globales.set_variableGlobalFamiliaresPendientes(data.possibleContacts[0].familiar)
+        console.log(Globales.variableGlobalFamiliaresPendientes)
+        setListaDePendientes(Globales.variableGlobalFamiliaresPendientes)
+        console.log("esta es la lista de pendientes")
         modalRef.current?.show();
       } else {
         //alert("No tienes nuevas relaciones pendientes.")
@@ -69,7 +73,7 @@ const MainBottomTab = memo(() => {
     })
       .catch((error) => {
         alert("Hubo un error al obtener relaciones.")
-        console.log("error")
+        console.log("error linea 78")
         console.error(error);
       });
     } else if (Globales.variableGlobalTipo == 1) {
@@ -88,31 +92,33 @@ const MainBottomTab = memo(() => {
           console.log(data.possibleContacts[0].carer.user.name)
           var posiblesContactosSinFiltrar: any = []
           posiblesContactosSinFiltrar = data.possibleContacts
+          console.log("estos son los posibles sin filtrar")
           console.log(posiblesContactosSinFiltrar)
+          console.log(posiblesContactosSinFiltrar[0].contactConfirmated)
           //creo que es false y false
           const posiblesContactos = posiblesContactosSinFiltrar.filter(item => item.contactConfirmated == true && item.relationConfirmated == false);
+          console.log("estos son los posibles")
           console.log(posiblesContactos)
           var mapPosiblesContactos = posiblesContactos.map(item => item.carer)
           console.log("el map")
           console.log(mapPosiblesContactos)
-          if (mapPosiblesContactos > 0) {
+          if (mapPosiblesContactos.length > 0) {
+          console.log("entro al mapPosiblesContactos > 0")
           Globales.set_variableGlobalCuidadoresPendientes(mapPosiblesContactos)
-          console.log(Globales.variableGlobalCuidadoresPendientes)
+          console.log("set varaibleGLobal")
           setContactName(Globales.variableGlobalCuidadoresPendientes[0].user.name + " " + Globales.variableGlobalCuidadoresPendientes[0].user.lastName)
-          console.log(contactName)
           setCuidadorTelefono(Globales.variableGlobalCuidadoresPendientes[0].user.phoneNumber)
           setCuidadorId(Globales.variableGlobalCuidadoresPendientes[0].id)
-          console.log(cuidadorTelefono)
-          console.log(cuidadorId)
+          console.log("llego antes del show")
           modalRef.current?.show();
           }
         } else {
-          alert("No tienes nuevas relaciones pendientes.")
+          console.log("No tienes nuevas relaciones pendientes.")
         }
       })
         .catch((error) => {
           alert("Hubo un error al obtener relaciones.")
-          console.log("error")
+          console.log("error linea 121")
           console.error(error);
         });
     }
@@ -129,6 +135,7 @@ const MainBottomTab = memo(() => {
     .then((response) =>  response.json())
     .then((data) => {
       console.log(data);
+      console.log("Entro al notification Relation")
       if (data.possibleContacts.length > 0) {
         var contactRelationFalseContactTrue = data.possibleContacts.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false)
         console.log (contactRelationFalseContactTrue)
@@ -162,11 +169,11 @@ const MainBottomTab = memo(() => {
         })
         .then((response) =>  response.json())
         .then((data) => {
-          if (data.events > 0) {
+          console.log("entro al events pendientes")
+          if (data.events.length > 0) {
           console.log(data);
           var eventId = data.events[0].id
           console.log(eventId)
-          
           //agregar el accept
           return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + eventId, {
               method: 'PATCH',
@@ -179,7 +186,8 @@ const MainBottomTab = memo(() => {
             .then((data) => {
               console.log(data);
               if (data.event != null) {
-              alert("Se confirmaron nuevos Eventos. Puede visualizarlos en el Calendario");
+              alert("Se agregaron nuevos Eventos. Puede visualizarlos en el Calendario");
+              getCalendarEvents();
             } else {
               console.log("Hubo un error al confirmar evento")
             }
@@ -214,12 +222,70 @@ const MainBottomTab = memo(() => {
     })
       .catch((error) => {
         alert("Hubo un error al obtener relaciones.")
-        console.log("error")
+        console.log("error linea 223")
         console.error(error);
       });
   }
   
+  const getContactosConfirmados = () => {
+    return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relations/' + Globales.variableGlobalId, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+        console.log("Estos son los Cuidadores Confirmados para pedir los Reviews")
+        console.log(data);
+        if (data.possibleContacts.length > 0) {
+          console.log(data.possibleContacts)
+          Globales.set_variableGlobalCuidadoresConfirmados(data.possibleContacts.map(item => item.carer))
+          console.log(Globales.variableGlobalCuidadoresConfirmados)
+        } else {
+          console.log("no tiene contactos confirmados")
+        }
+      })
+        .catch((error) => {
+          alert("Hubo un error al obtener eventos del calendario.")
+          console.log("error")
+          console.error(error);
+        });
+}
+
 //variableGlobalEventosCalendario
+const enviarUbicacionCuidador = () => {
+  Geolocation.getCurrentPosition((pos) => {
+    const crd = pos.coords;
+    console.log("entro a geoloc")
+    console.log(crd.latitude)
+    console.log(crd.longitude)
+    Globales.set_variableGlobalLatitude(crd.latitude)
+    Globales.set_variableGlobalLongitude(crd.longitude)
+  })
+  return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/location', {
+        method: 'PUT',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: Globales.variableGlobalId,
+        latitudeCurrent: Globales.variableGlobalLatitude,
+        longitudeCurrent: Globales.variableGlobalLongitude
+        })
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+        console.log(data)
+        console.log("se mando la ubi del cuidador")
+      })
+        .catch((error) => {
+          console.log("error")
+          console.error(error);
+        });
+ }
 
 const getCalendarEvents = () => {
   if (Globales.variableGlobalTipo == 2) {
@@ -246,19 +312,19 @@ const getCalendarEvents = () => {
       console.log("error")
       console.error(error);
     });
-}
+} 
 }
   const ButtonTab = React.useCallback(
     ({ focused, icon, numberNotification }: ButtonTabProps) => {
       React.useEffect(() => {
         if (focused && icon == "bookmark") {
-          setTimeout(() => {
             checkRelations();
-          }, 1200);
-          clearTimeout();
         if (Globales.variableGlobalTipo == 2) {
             findNotificationRelation();
             getCalendarEvents();
+            setInterval(enviarUbicacionCuidador, 10000)
+        } else {
+          getContactosConfirmados();
         }
       } 
       }, [focused]);  
@@ -339,7 +405,7 @@ const getCalendarEvents = () => {
           />
            <BottomTab.Screen
             name="Ubicacion"
-            component={RequestsBottomNavigator}
+            component={LocationBottomNavigator}
             options={{
               tabBarIcon: ({ focused }) => (
                 <ButtonTab

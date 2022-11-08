@@ -74,7 +74,7 @@ const BasicTabBar = ({
               {item}
             </Text>
             <Layout />
-            <RenderProgress />
+            {/* <RenderProgress /> */}
           </TouchableOpacity>
         );
       })}

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import RequestInterviewItem from "../components/RequestInterviewItem";
@@ -14,24 +14,124 @@ import { useTranslation } from "react-i18next";
 import EmptyData from "../components/EmptyData";
 import Globales from "../../Globales"
 
-interface InterviewProps {
-  dataPendientes: RequestPendientes[];
-}
-
 const InterviewTab = memo(
-  ({ dataPendientes }: InterviewProps) => {
+  () => {
+    const [listaDePendientes, setListaDePendientes] = React.useState([]);
+    const [seSetearonLosPendientes, setSeSetearonLosPendientes] = React.useState(true);
+    const checkRelations = () => {
+      if (Globales.variableGlobalTipo == 2) {
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + Globales.variableGlobalId, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.possibleContacts.length > 0) {
+          setListaDePendientes(data.possibleContacts)
+          console.log("esta es la lista de pendientes")
+          return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relation/' + Globales.variableGlobalId, {
+            method: 'GET',
+            headers: {
+              'Accept': '*/*',
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) =>  response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("Entro al notification Relation")
+            if (data.possibleContacts.length > 0) {
+              var contactRelationFalseContactTrue = data.possibleContacts.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false)
+              listaDePendientes.push(contactRelationFalseContactTrue)
+            }
+          })
+            .catch((error) => {
+              console.log("error linea 61")
+            });
+        } else {
+          return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relation/' + Globales.variableGlobalId, {
+            method: 'GET',
+            headers: {
+              'Accept': '*/*',
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) =>  response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("Entro al notification Relation")
+            if (data.possibleContacts.length > 0) {
+              var contactRelationFalseContactTrue = data.possibleContacts.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false)
+              listaDePendientes.push(contactRelationFalseContactTrue)
+            }
+          })
+            .catch((error) => {
+              console.log("error linea 61")
+            });
+        }
+      })
+        .catch((error) => {
+          console.log("error linea 61")
+          console.error(error);
+        });
+      } else if (Globales.variableGlobalTipo == 1) {
+        console.log("entro a contacts")
+        return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contacts/' + Globales.variableGlobalId, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((response) =>  response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.possibleContacts.length > 0) {
+            var posiblesContactosSinFiltrar: any = []
+            posiblesContactosSinFiltrar = data.possibleContacts
+            console.log("estos son los posibles sin filtrar")
+            console.log(posiblesContactosSinFiltrar)
+            const posiblesContactos = posiblesContactosSinFiltrar.filter(item => item.contactConfirmated == true && item.relationConfirmated == false || item.contactConfirmated == false && item.relationConfirmated == false);
+            var mapPosiblesContactos = posiblesContactos.map(item => item.carer)
+            console.log(mapPosiblesContactos)
+            if (mapPosiblesContactos.length > 0) {
+              console.log("entro al mapPosiblesContactos > 0")
+              setListaDePendientes(mapPosiblesContactos)
+              console.log("set varaibleGLobal")
+            }
+          } else {
+            console.log("No tienes nuevas relaciones pendientes.")
+          }
+        })
+          .catch((error) => {
+            alert("Hubo un error al obtener relaciones.")
+            console.log("error linea 96")
+            console.error(error);
+          });
+      }
+    }
+    useEffect(() => {
+      if (seSetearonLosPendientes) {
+        checkRelations()
+        setSeSetearonLosPendientes(false)
+      }
+      
+    }, []);
+    
+    
     const { t } = useTranslation(["requests", "common"]);
     const { navigate } =
       useNavigation<NavigationProp<MainBottomTabStackParamList>>();
     const styles = useStyleSheet(themedStyles);
-    console.log("dataPendientes que le pase al interviewTab")
-    console.log(dataPendientes)
-    console.log(Globales.variableGlobalCuidadoresPendientes)
-    const dataPendientesGlobales = Globales.variableGlobalTipo == 2 ? Globales.variableGlobalFamiliaresPendientes : Globales.variableGlobalCuidadoresPendientes;
-    console.log(dataPendientesGlobales)
+    console.log("listaPendientes")
+    console.log(listaDePendientes)
     return (
       <View style={styles.container}>
-        {dataPendientesGlobales === (undefined) || dataPendientesGlobales == (null) || dataPendientesGlobales.length == 0 ? (
+        {listaDePendientes === (undefined) || listaDePendientes == (null) || listaDePendientes.length == 0 ? (
           <EmptyData
             image={Images.noInterview}
             title={t("noRequest")}
@@ -39,8 +139,12 @@ const InterviewTab = memo(
           />
         ) : (
           <View>
-            {dataPendientesGlobales.map((item, i) => {
-              return <RequestInterviewItem item={item.user} key={i} />;
+            {listaDePendientes.map((item, i) => {
+              if (Globales.variableGlobalTipo == 1) {
+                return <RequestInterviewItem item={item.user} key={i} />;
+              } else if (Globales.variableGlobalTipo == 2) {
+                return <RequestInterviewItem item={item.familiar.user} key={i} />;
+            }
             })}
           </View>
         )}

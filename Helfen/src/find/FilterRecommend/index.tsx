@@ -75,11 +75,6 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
   const [hem, sethem] = useToggle(false);
   let arrayServices = new Array();
   
-  // const _onMap = React.useCallback(() => {
-  //   location = true
-  //   Geolocation.getCurrentPosition(info => console.log(info));
-  //   navigate('FindStack', {screen: 'ViewOnMap'});
-  // }, []);
   const onSearch = () => {
     if (Globales.variableGlobalLatitude != null) {
       let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompaniante" : "Ambos")

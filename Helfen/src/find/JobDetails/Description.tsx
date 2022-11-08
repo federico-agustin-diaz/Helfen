@@ -49,6 +49,19 @@ const Description = memo(
             );
           })}
         </View>
+        <View>
+          <Text category="h3" mb={10}>
+            {t("Comentarios y Valoraciones de Familiares")}
+          </Text>
+          {tagResponsibilities.map((item, i) => {
+            return (
+              <Flex key={i} justify="flex-start" itemsCenter mb={12}>
+                <Layout style={globalStyle.dot} level="5" />
+                <Text category="para-m">{item}</Text>
+              </Flex>
+            );
+          })}
+        </View>
       </View>
     );
   }

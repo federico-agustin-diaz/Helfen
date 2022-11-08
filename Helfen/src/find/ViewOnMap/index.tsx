@@ -33,8 +33,8 @@ const ViewOnMap = memo(() => {
 
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [position, setPosition] = useState({
-    latitude: 37.4214938,
-    longitude: -122.083922,
+    latitude: Globales.variableGlobalLatitude,
+    longitude: Globales.variableGlobalLongitude,
     latitudeDelta:  0.0421,
     longitudeDelta: 0.0421,
   });
@@ -43,28 +43,28 @@ const ViewOnMap = memo(() => {
   const { modalRef, hide, show } = useModal();
 
   const [pin, setPin] = useState({
-    latitude: -34.6015023,
-    longitude: -58.50498,
+    latitude: Globales.variableGlobalLatitude,
+    longitude: Globales.variableGlobalLongitude,
   });
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition((pos) => {
-      const crd = pos.coords;
-      console.log("entro a geoloc")
-    console.log(crd.latitude)
-    console.log(crd.longitude)
-    Globales.set_variableGlobalLatitude(crd.latitude)
-    Globales.set_variableGlobalLongitude(crd.longitude)
-      setPosition({
-        latitude: crd.latitude,
-        longitude: crd.longitude,
-        latitudeDelta: 0.0421,
-        longitudeDelta: 0.0421,
-      });
-    })
+  // useEffect(() => {
+  //   Geolocation.getCurrentPosition((pos) => {
+  //     const crd = pos.coords;
+  //     console.log("entro a geoloc")
+  //   console.log(crd.latitude)
+  //   console.log(crd.longitude)
+  //   Globales.set_variableGlobalLatitude(crd.latitude)
+  //   Globales.set_variableGlobalLongitude(crd.longitude)
+  //     setPosition({
+  //       latitude: crd.latitude,
+  //       longitude: crd.longitude,
+  //       latitudeDelta: 0.0421,
+  //       longitudeDelta: 0.0421,
+  //     });
+  //   })
 
-    console.log(position)
-  }, []);
+  //   console.log(position)
+  // }, []);
 
   const setGlobalPosition = () => {
     Globales.set_variableGlobalLatitude(pin.latitude)

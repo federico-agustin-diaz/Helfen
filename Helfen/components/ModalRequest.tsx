@@ -51,8 +51,9 @@ function ModalRequest(
       })
       .then((response) =>  response.json())
       .then((data) => {
-        
+        if (Globales.variableGlobalTipo == 1) {
         handleEventInputs();
+        }
         console.log(data);
         if (data.possibleContacts =! null) {
           alert("Se ha confirmado el Contacto. El Familiar se comunicara por telefono.")
@@ -87,7 +88,8 @@ function ModalRequest(
       body: JSON.stringify({
         "carer": id,
         "familiar": Globales.variableGlobalId,
-        "relationConfirmated": false
+        "relationConfirmated": false,
+        "resume": ""
       })
     })
     .then((response) =>  response.json())
@@ -195,6 +197,7 @@ function ModalRequest(
   );
           } else if (Globales.variableGlobalTipo == 1) {
             console.log("entro linea 152")
+            console.log(modalRef)
             return (
               <Modal
                 ref={modalRef}

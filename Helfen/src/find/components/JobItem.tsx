@@ -75,7 +75,7 @@ const JobItem = memo(({ item }: ItemProps) => {
             //aca tenes que poner lo que te devuelve backend
             startingValue={qualification}
             type='star'
-            ratingCount={10}
+            ratingCount={5}
             imageSize={20}
           />
       </Layout>

@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { memo } from "react";
 import ApplicationDetails from "src/requests/Applications/ApplicationDetails";
 import BookingDetails from "src/requests/Bookings/BookingDetails";
+import RatingDetails from "src/requests/RatingsDetails";
 import ConfirmHour from "src/requests/Bookings/ConfirmHour";
 import InterviewDetails from "src/requests/Interview/InterviewDetails";
 import ConfirmEventInputs from "src/requests/ConfirmEventInputs";
@@ -16,6 +17,7 @@ const RequestsNavigator = memo(() => {
     >
       <Stack.Screen name="InterviewDetails" component={InterviewDetails} />
       <Stack.Screen name="BookingDetails" component={BookingDetails} />
+      <Stack.Screen name="RatingDetails" component={RatingDetails} />
       <Stack.Screen name="ApplicationDetails" component={ApplicationDetails} />
       <Stack.Screen name="ConfirmHour" component={ConfirmHour} />
       <Stack.Screen name="ConfirmEventInputs" component={ConfirmEventInputs} />

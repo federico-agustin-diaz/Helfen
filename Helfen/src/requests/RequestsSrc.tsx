@@ -29,7 +29,7 @@ import BookingsTab from "./Bookings/BookingsTab";
 import ApplicationsTab from "./Applications/ApplicationsTab";
 import Globales from "src/Globales";
 
-const RequestsSrc = memo(() => {
+const RequestsSrc = memo((lista: Array <any>) => {
   const { navigate } = useNavigation<NavigationProp<RequestsStackParamList>>();
   const styles = useStyleSheet(themedStyles);
   const { t } = useTranslation(["requests", "common"]);
@@ -37,52 +37,10 @@ const RequestsSrc = memo(() => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const shouldLoadComponent = (index: number) => index === activeIndex;
 
-  const [dataToday, setToday] = React.useState(DATA_TODAY_INTERVIEW);
-  const [dataPendientes, setCurrent] = React.useState(DATA_TODAY_INTERVIEW);
-  //const [dataPendientes, setCurrent] = Globales.variableGlobalTipo == 1 ? Globales.variableGlobalFamiliaresPendientes : Globales.variableGlobalCuidadoresPendientes;
-  const [dataPast, setPast] = React.useState(DATA_PAST_INTERVIEW);
-  const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-  var arrayCalendarEventsHoy = new Array(); 
-  var arrayCalendarEventsPasados = new Array(); 
-  var arrayCalendarEventsFuturos = new Array(); 
 
-  // const mapGlobales = () => {
-  //   Globales.variableGlobalEventosCalendario.forEach((element) =>  {
-  //     element.stringDays.forEach((elementito) =>  {
-  //       var datePart = elementito.match(/\d+/g),
-  //       year = datePart[0],
-  //       month = months[datePart[1]-1], 
-  //       day = datePart[2];
-  //       var dateFormatted = day+' de '+ month +' del '+year;
-  //       var calendarObject = {
-  //         dateParaElOrden: new Date(elementito),
-  //         date: dateFormatted,
-  //         name: element.familiar.user.name + " " + element.familiar.user.lastName,
-  //         localAddress: element.familiar.user.localAddress,
-  //         time: "Horario: Desde " + element.startEvent + " hasta las " + element.endEvent,
-  //         notes: element.notes != "" ? ("Notas: " + element.notes) : ("No se detallaron Notas")
-  //       }
-  //       console.log(calendarObject.dateParaElOrden )
-  //       console.log(calendarObject.dateParaElOrden > new Date())
-  //       if (calendarObject.dateParaElOrden == new Date()) {
-  //         arrayCalendarEventsHoy.push(calendarObject)
-  //       } else if (calendarObject.dateParaElOrden > new Date()) {
-  //         arrayCalendarEventsFuturos.push(calendarObject)
-  //       } else if (calendarObject.dateParaElOrden < new Date()) {
-  //         arrayCalendarEventsPasados.push(calendarObject)
-  //       }
-  //     }
-  //     );
-  //   }
-  //   );
-  //   // arrayCalendarEvents.sort(function(a,b){
-  //   //   return (a.dateParaElOrden) - (b.dateParaElOrden)
-  //   // })
-  //   //falta ordenar segun la fecha
-  // }
 
   const ListFooterComponent = React.useCallback(() => {
-    //mapGlobales();
+    
     return (
       <View style={styles.footer}>
         <ViewPager
@@ -93,19 +51,14 @@ const RequestsSrc = memo(() => {
           shouldLoadComponent={shouldLoadComponent}
         >
           <InterviewTab
-            dataCurrentRequest={dataPendientes}
-            dataPassRequest={dataPast}
           />
-          <InterviewTabConfirmed
-            dataTodayRequest = {dataToday}
-            dataCurrentRequest={dataPendientes}
-            dataPassRequest={dataPast}
-          />
+          {/* <InterviewTabConfirmed
+          /> */}
           <ApplicationsTab />
         </ViewPager>
       </View>
     );
-  }, [activeIndex, dataPendientes, dataPast]);
+  }, [activeIndex]);
   const ListHeaderComponent = React.useCallback(() => {
     return (
       <Layout>
@@ -113,7 +66,7 @@ const RequestsSrc = memo(() => {
           style={styles.tabBar}
           activeIndex={activeIndex}
           onChange={setActiveIndex}
-          tabs={Globales.variableGlobalTipo == 1 ? [t("interview"), t("applications")] : [t("sin confirmar")]}
+          tabs={[t("")]}
         />
       </Layout>
     );

@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { memo } from "react";
-import RequestsSrc from "src/requests/RequestsSrc";
+import LocationSrc from "src/requests/LocationSrc";
 
 import { LocationBottomStackParamList } from "./types";
 
@@ -11,7 +11,7 @@ const LocationBottomNavigator = memo(() => {
       screenOptions={{ headerShown: false }}
       initialRouteName="LocationSrc"
     >
-      <Stack.Screen name="LocationSrc" component={RequestsSrc} />
+      <Stack.Screen name="LocationSrc" component={LocationSrc} />
     </Stack.Navigator>
   );
 });

@@ -22,6 +22,7 @@ import FilterRecommend from './FilterRecommend';
 import {RootStackParamList} from 'navigation/types';
 import ButtonFill from 'components/ButtonFill';
 import {globalStyle} from 'styles/globalStyle';
+import Geolocation from '@react-native-community/geolocation';
 import Globales from 'src/Globales';
 
 const FindSrc = memo(() => {
@@ -72,6 +73,11 @@ const FindSrc = memo(() => {
   );
 
   const _onMap = React.useCallback(() => {
+    Geolocation.getCurrentPosition((pos) => {
+      const crd = pos.coords;
+    Globales.set_variableGlobalLatitude(crd.latitude)
+    Globales.set_variableGlobalLongitude(crd.longitude)
+    })
     navigate('FindStack', {screen: 'ViewOnMap'});
     setSeteo(1);
   }, []);

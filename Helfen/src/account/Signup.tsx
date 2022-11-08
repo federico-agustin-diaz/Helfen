@@ -95,8 +95,11 @@ const handleVerifyCuidador = React.useCallback(() => {
   });
   
   const _onMap = React.useCallback(() => {
-    
-    Geolocation.getCurrentPosition(info => console.log(info));
+    Geolocation.getCurrentPosition((pos) => {
+      const crd = pos.coords;
+    Globales.set_variableGlobalLatitude(crd.latitude)
+    Globales.set_variableGlobalLongitude(crd.longitude)
+    })
     navigate('FindStack', {screen: 'ViewOnMap'});
   }, []);
   const onLogin = React.useCallback(() => navigate("Login"), []);

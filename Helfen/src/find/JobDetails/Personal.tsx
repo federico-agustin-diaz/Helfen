@@ -32,7 +32,7 @@ const Personal = memo(
             //aca tenes que poner lo que te devuelve backend
             startingValue={rating}
             type='star'
-            ratingCount={10}
+            ratingCount={5}
             imageSize={20}
           />
         <Flex center mb={24}>

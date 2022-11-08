@@ -65,6 +65,7 @@ export type FindStackParamList = {
   FindSrc: undefined;
   FilterRecommend: undefined;
   ViewOnMap: undefined;
+  ViewOnMapVivo: undefined;
   JobDetails: { name: string, rating: number };
 };
 export type MessagesStackParamList = {
@@ -72,7 +73,7 @@ export type MessagesStackParamList = {
   VideoCall: undefined;
 };
 export type RequestsBottomStackParamList = {
-  RequestsSrc: undefined;
+  RequestsSrc: { lista: Array<any> };
   RequestsInPast: { requestType: Request_Type_Enum };
 };
 
@@ -88,6 +89,7 @@ export type RequestsStackParamList = {
   InterviewDetails: { type: Request_Status_Type_Enum };
   BookingDetails: { type: Request_Status_Type_Enum };
   ApplicationDetails: { type: Request_Status_Type_Enum };
+  RatingDetails: { name: string, id: number}
   ConfirmHour: undefined;
   ConfirmEventInputs:undefined;
 };
@@ -128,6 +130,10 @@ export type BookingDetailsScreenNavigationProp = RouteProp<
 export type ApplicationDetailsScreenNavigationProp = RouteProp<
   RequestsStackParamList,
   "ApplicationDetails"
+>;
+export type RatingDetailsScreenNavigationProp = RouteProp<
+  RequestsStackParamList,
+  "RatingDetails"
 >;
 export type JobDetailsScreenNavigationProp = RouteProp<
   FindStackParamList,

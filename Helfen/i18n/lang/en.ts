@@ -219,7 +219,7 @@ export default {
     interview: "Sin Confirmar",
     bookings: "Bookings",
     applications: "Confirmados",
-    noRequest: "No tienes contactos pendientes, espera a que se contacten contigo.",
+    noRequest: "No tienes contactos pendientes, espera a que se contacten contigo, o acepten una solicitud.",
     noRequestTitle: "",
     current: "Empleos Futuros",
     past: "Empleos ya Realizados",
