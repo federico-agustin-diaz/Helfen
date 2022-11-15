@@ -24,6 +24,7 @@ import {
 import { RequestsStackParamList } from "navigation/types";
 import InterviewTab from "./Interview/InterviewTab";
 import InterviewTabConfirmed from "./Interview/InterviewTabConfirmed";
+import Text from "components/Text";
 
 import BookingsTab from "./Bookings/BookingsTab";
 import ApplicationsTab from "./Applications/ApplicationsTab";
@@ -37,12 +38,14 @@ const RequestsSrc = memo((lista: Array <any>) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const shouldLoadComponent = (index: number) => index === activeIndex;
 
-
-
   const ListFooterComponent = React.useCallback(() => {
-    
     return (
       <View style={styles.footer}>
+        {Globales.variableGlobalTipo == 1 ? (
+            <Text category="h5" status={"basic"} center >
+            Presione en el profesional para crear el evento.
+            </Text>
+          ) : null}
         <ViewPager
           selectedIndex={activeIndex}
           onSelect={setActiveIndex}
@@ -52,9 +55,7 @@ const RequestsSrc = memo((lista: Array <any>) => {
         >
           <InterviewTab
           />
-          {/* <InterviewTabConfirmed
-          /> */}
-          <ApplicationsTab />
+          {/* <ApplicationsTab /> */}
         </ViewPager>
       </View>
     );

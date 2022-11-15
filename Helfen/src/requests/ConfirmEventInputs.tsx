@@ -13,17 +13,16 @@ import {
   Button
 } from "@ui-kitten/components";
 import { Controller, useForm } from "react-hook-form";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import Text from "components/Text";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Flex from "components/Flex";
 import useLayout from "hooks/useLayout";
-
 import Container from "components/Container";
 import { globalStyle } from "styles/globalStyle";
 import keyExtractor from "utils/keyExtractor";
-import { RequestsStackParamList } from "navigation/types";
+import { RequestsStackParamList, ConfirmEventInputsNavigationProp } from "navigation/types";
 import InterviewTab from "./Interview/InterviewTab";
 import InterviewTabConfirmed from "./Interview/InterviewTabConfirmed";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -48,6 +47,8 @@ const [horarioInicio, setHorarioInicio] = React.useState("");
 const [horarioFin, setHorarioFin] = React.useState("");
 const { bottom } = useLayout();
    const [lunes, setLunes] = React.useState(false);
+   const route = useRoute<ConfirmEventInputsNavigationProp>();
+   const carerId = route.params.id;
    const [martes, setMartes] = React.useState(false);
    const [miercoles, setMiercoles] = React.useState(false);
    const [jueves, setJueves] = React.useState(false);
@@ -66,7 +67,45 @@ const { bottom } = useLayout();
     },
   });
 
-  const handleEvento = () => {
+  // const handleCreateRelationAndEvent = () => {
+  //   console.log("entro al handle create relation and evnet")
+  //   console.log(carerId)
+  // return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relation', {
+  //   method: 'PUT',
+  //   headers: {
+  //     'Accept': '*/*',
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({
+  //     "carer": carerId,
+  //     "familiar": Globales.variableGlobalId,
+  //     "relationConfirmated": false,
+  //     "resume": ""
+  //   })
+  // })
+  // .then((response) =>  response.json())
+  // .then((data) => {
+  //   if (data.message == "404 Not Found Error. The relation not exist.") {
+  //    Alert.alert("Aviso","Ha habido un error, la relacion no existe")
+  //   }
+
+  //   // console.log(data);
+  //   // setTimeout(() => {
+  //     return createEvento()
+  //   // }, 2000);
+  //   // clearTimeout();
+    
+
+  // })
+  //   .catch((error) => {
+      
+  //    Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
+  //     console.log("error")
+  //     console.error(error);
+  //   });
+  // }
+
+  const createEvento = () => {
     var arrayDias = new Array()
     lunes ? arrayDias.push(1) : console.log("sarasa")
     martes ? arrayDias.push(2) : console.log("sarasa")
@@ -76,8 +115,7 @@ const { bottom } = useLayout();
     sabado ? arrayDias.push(6) : console.log("sarasa")
     domingo ? arrayDias.push(0) : console.log("sarasa")
     console.log(Globales.variableGlobalId)
-    console.log(Globales.variableGlobalCuidadoresPendientes[0])
-    console.log()
+    console.log("linea 119")
     console.log(arrayDias)
     return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event', {
       method: 'POST',
@@ -87,7 +125,7 @@ const { bottom } = useLayout();
       },
       body: JSON.stringify({
         "familiar": Globales.variableGlobalId,
-    "carer": Globales.variableGlobalCuidadoresPendientes[0].id,
+    "carer": carerId,
     "day": arrayDias,
     "date": (`${fechaInicio.getFullYear()}-${fechaInicio.getMonth() + 1}-${fechaInicio.getDate()}`).toString(),
     "startEvent": horarioInicio,
@@ -101,26 +139,19 @@ const { bottom } = useLayout();
     .then((data) => {
       console.log(data);
       if (data.event =! null) {
-        alert("Se ha confirmado el Evento.")
+       Alert.alert("Aviso","Se ha confirmado el Evento.")
         goBack();
       } else {
-        alert("Ha habido un error al confirmar contacto.")
+       Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
       }
     })
       .catch((error) => {
-        alert("Ha habido un error al confirmar contacto.")
+       Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
         console.log("error")
         console.error(error);
       });
 }
 
-//   "day": [2],
-//     "date": "2022-07-22",
-//     "startEvent": "10:00",
-//     "endEvent": "11:00",
-//     "localAddress": "Calle falsa 123",
-//     "expirationDate": "2022-07-25",
-//     "notes": "LALALA"
   return (
         <Container style={styles.container}>
           <KeyboardAwareScrollView
@@ -165,9 +196,10 @@ const { bottom } = useLayout();
           name="Horario Inicio"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              label={t("Horario Inicio").toString()}
+              label={t("Horario Inicio (Hora:Minutos)").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
+              keyboardType="numbers-and-punctuation"
               onChangeText={(value) => setHorarioInicio(value)}
               value={horarioInicio}
               onBlur={onBlur}
@@ -176,13 +208,14 @@ const { bottom } = useLayout();
         />
         <Controller
           control={control}
-          name="Horario Fin"
+          name="Horario Fin (Hora:Minutos)"
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               label={t("Horario Fin").toString()}
               status={errors.email ? "warning" : "basic"}
               style={styles.email}
               onChangeText={(value) => setHorarioFin(value)}
+              keyboardType="numbers-and-punctuation"
               value={horarioFin}
               onBlur={onBlur}
             />
@@ -242,7 +275,7 @@ const { bottom } = useLayout();
         <Button
           children= {`${t("Enviar informacion de la Actividad").toString()}`}
           style={globalStyle.shadowBtn}
-          onPress={handleEvento}
+          onPress={createEvento}
         />
           </KeyboardAwareScrollView>
         

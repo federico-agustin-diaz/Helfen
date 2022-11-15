@@ -71,17 +71,16 @@ const Login = memo(() => {
         Globales.set_variableGlobalApellido(data.user.user.lastName)
         Globales.set_variableGlobalEmail(data.user.user.mail)
         Globales.set_variableGlobalId(data.user.id)
-        console.log(Globales.variableGlobalTipo);
-        console.log(Globales.variableGlobalApellido);
+        Globales.set_variableGlobalIdUserParaMandarUbicacion(data.user.user.id)
         console.log("se logueo");
         nextScreen("MainBottomTab");
       } else if (data.login != true) {
-        alert("Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
+       Alert.alert("Aviso","Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
         console.log("no existe el usuario");
       }
     })
       .catch((error) => {
-        alert("Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
+       Alert.alert("Aviso","Hubo un error en el usuario o contraseña. Recuerde que puede utilizar la opcion Olvide mi contraseña.")
         console.log("error")
         console.error(error);
       });
@@ -185,8 +184,7 @@ const Login = memo(() => {
         >
           {t("login").toString()}
         </Button>
-      </KeyboardAwareScrollView>
-      <Flex center mb={bottom + 16} style={styles.bottom}>
+        <Flex center mb={100}>
         <Text category="h8-s">{t("dontHaveAcc")}</Text>
         <TouchableOpacity activeOpacity={0.54} onPress={onSignup}>
           <Text status={"link"} category="h8-s">
@@ -194,6 +192,8 @@ const Login = memo(() => {
           </Text>
         </TouchableOpacity>
       </Flex>
+      </KeyboardAwareScrollView>
+      
     </Container>
   );
 });

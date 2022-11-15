@@ -18,25 +18,38 @@ import { globalStyle } from "styles/globalStyle";
 import ButtonFill from "components/ButtonFill";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "navigation/types";
+import Globales from "src/Globales";
 
 export interface InterviewItemProps {
   item: RequestPendientes;
   containerStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
+  id?: number;
 }
 
 const RequestInterviewItem = ({
   item,
   containerStyle,
   contentStyle,
+  id
 }: InterviewItemProps) => {
   const styles = useStyleSheet(themedStyles);
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+  const onCrearEvento = React.useCallback(() => {
+    if (Globales.variableGlobalTipo == 1) {
+      console.log(id)
+    navigate("RequestStack", {
+      screen: "ConfirmEventInputs",
+      params: { id: id },
+    })
+  }
+  }, []);
   console.log(item)
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
       activeOpacity={0.54}
+      onPress={onCrearEvento}
     >
       <Flex style={[contentStyle, styles.content]}>
         <View>

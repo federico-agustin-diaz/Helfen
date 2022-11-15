@@ -6,8 +6,10 @@ import {
   ViewStyle,
   TouchableOpacity,
   Image,
+  Alert,
+  TextInput
 } from "react-native";
-import { useTheme, Modal, Avatar, Layout } from "@ui-kitten/components";
+import { useTheme, Modal, Avatar, Layout, Input } from "@ui-kitten/components";
 import { useTranslation } from "react-i18next";
 import Globales from "src/Globales";
 import Text from "./Text";
@@ -25,17 +27,149 @@ interface ModalConfirmProps {
   isOnl: boolean;
   id: number;
   telefono?: number;
+  relationId: number;
+  modalConfirmarEvento?: boolean;
+  eventId: number;
 }
 
 function ModalRequest(
-  { name, onDetails, avatar, style, isOnl, id, telefono }: ModalConfirmProps,
+  { name, onDetails, avatar, style, isOnl, id, telefono, relationId, modalConfirmarEvento, eventId }: ModalConfirmProps,
   ref: React.ForwardedRef<{ show: () => void; hide: () => void }>
 ) {
   const { t } = useTranslation("common");
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const { width, height, bottom } = useLayout();
   const themes = useTheme();
+  const [notas, setNotas] = React.useState("")
+
+  const confirmarEvento = () => {
+    console.log("entro a confirmar evento")
+    //var eventIdString = Globales.variableGlobalEventid.toString()
+    console.log(Globales.variableGlobalEventid)
+    Globales.variableGlobalEventid.forEach((element) =>  {
+      console.log("ejecuto crear evento para eventid")
+      console.log(element)
+     fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + element, {
+        method: 'PATCH',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  {
+        fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + element, {
+        method: 'PATCH',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "id": element,
+          "notes": notas,
+        })
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        //alert("Hubo un error al confirmar eventos.")
+        console.log("error 75")
+        console.error(error);
+      });
+    })
+      .catch((error) => {
+        //alert("Hubo un error al confirmar eventos.")
+        console.log("error 81")
+        console.error(error);
+      });
+    })
+    console.log("entro al realtionConfirm")
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relation/confirm', {
+      method: 'PUT',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "carer": Globales.variableGlobalId,
+        "familiar": id,
+        "relationConfirmated": true
+      })
+    })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+    })
+     .catch((error) => {
+        //alert("Hubo un error al confirmar eventos.")
+        console.log("error 104")
+        console.error(error);
+      });
+  }
+
+  const onCancelarContacto = () => {
+    console.log("este es el id que recibio modal")
+    console.log(relationId)
+    modalRef.current?.hide();
+    var idString = relationId.toString()
+    console.log(idString)
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + idString, {
+        method: 'DELETE',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  {
+        console.log("este es el id que recibio del eventId linea 82")
+        console.log(eventId)
+        var eventIdString = Globales.variableGlobalEventid.toString()
+        console.log(eventIdString)
+          return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + eventIdString, {
+            method: 'DELETE',
+            headers: {
+              'Accept': '*/*',
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) =>  {
+            
+          })
+          .then((data) => {
+          })
+            .catch((error) => {
+            });
+      })
+      .then((data) => {
+      })
+        .catch((error) => {
+        });
+  }
+
+  const onCancelarContactoYEliminarEvento = () => {
+    console.log("este es el id que recibio modal")
+    console.log(relationId)
+    modalRef.current?.hide();
+    var idString = relationId.toString()
+    console.log(idString)
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + idString, {
+        method: 'DELETE',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  response.json())
+      .then((data) => {
+      })
+        .catch((error) => {
+        });
+  }
+
   const onConfirmContactoDeCuidadorAFamiliar = () => {
+    setNotas(notas)
+    console.log(notas)
     modalRef.current?.hide();
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/confirm', {
         method: 'PUT',
@@ -51,28 +185,23 @@ function ModalRequest(
       })
       .then((response) =>  response.json())
       .then((data) => {
+        confirmarEvento();
         if (Globales.variableGlobalTipo == 1) {
-        handleEventInputs();
+       // handleEventInputs();
         }
         console.log(data);
         if (data.possibleContacts =! null) {
-          alert("Se ha confirmado el Contacto. El Familiar se comunicara por telefono.")
+         Alert.alert("Aviso","Se ha confirmado el Contacto. El Familiar se comunicara por telefono.")
         } else {
-          alert("Ha habido un error al confirmar contacto.")
+         Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
         }
       })
         .catch((error) => {
-          alert("Ha habido un error al confirmar contacto.")
+         Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
           console.log("error")
           console.error(error);
         });
   }
-
-  const handleEventInputs = React.useCallback(() => {
-    navigate("RequestStack", {
-      screen: "ConfirmEventInputs"
-    })
-  }, []);
 
   const onConfirmRelacionDeFamiliarACuidador = () => {
     modalRef.current?.hide();
@@ -96,14 +225,14 @@ function ModalRequest(
     .then((data) => {
       
       console.log(data);
-      handleEventInputs();
+      //handleEventInputs();
       if (data.message == "404 Not Found Error. The relation not exist.") {
-        alert("Ha habido un error, la relacion no existe")
+       Alert.alert("Aviso","Ha habido un error, la relacion no existe")
       }
     })
       .catch((error) => {
         
-        alert("Ha habido un error al confirmar contacto.")
+       Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
         console.log("error")
         console.error(error);
       });
@@ -124,7 +253,7 @@ function ModalRequest(
     modalRef.current?.hide();
   }, []);
 
-  if (Globales.variableGlobalTipo == 2) {
+  if (Globales.variableGlobalTipo == 2 && modalConfirmarEvento==false) {
     console.log("entro linea 81")
   return (
     <Modal
@@ -163,41 +292,127 @@ function ModalRequest(
           </Text>
         </Flex>
         <View style={styles.buttonView}>
-          <TouchableOpacity
-            activeOpacity={0.54}
-            onPress={hide}
-            style={[
-              styles.btnOk,
-              {
-                borderColor: themes["background-basic-color-1"],
-              },
-            ]}
-          >
-            <Text
-              category="para-m"
-              center
-              status={"placeholder"}
-              mt={16}
-              mb={10}
-            >
-              OK, confirmare luego
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+        <TouchableOpacity
             activeOpacity={0.54}
             onPress={onConfirmContactoDeCuidadorAFamiliar}
           >
             <Text category="h7" status={"link"} center mt={16} mb={20}>
-              Confirmar Contacto!
+              Confirmar Solicitud!
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.54}
+            onPress={onCancelarContacto}
+          >
+            <Text category="h7" status={"warning"} center mb={20}>
+              Rechazar Solicitud
             </Text>
           </TouchableOpacity>
         </View>
       </Layout>
     </Modal>
   );
-          } else if (Globales.variableGlobalTipo == 1) {
+          } else if (Globales.variableGlobalTipo == 2 && modalConfirmarEvento == true) {
+            //Modal de creacion de evento
+            return (
+              <Modal
+                ref={modalRef}
+                // onBackdropPress={hide}
+                backdropStyle={[styles.container]}
+              >
+                <Layout style={{ flex: 1, borderRadius: 16 }}>
+                  <Image
+                    source={Images.modalBg}
+                    style={{
+                      width: width - 80,
+                      height: 334 * (height / 812),
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                    }}
+                  />
+                  <Flex
+                    mh={32}
+                    mt={32}
+                    style={{
+                      maxWidth: 231 * (width / 375),
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                      <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Se ha solicitado el siguiente evento.`}
+                      />
+                  </Flex>
+                  <View style={styles.buttonView}>
+                  <Text category="h7" center>
+                  <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Desde el Dia: `}
+                      />
+                      {Globales.variableGlobalEventStart}
+                    </Text>
+                    <Text category="h7" center>
+                  <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Hasta el Dia: `}
+                      />
+                      {Globales.variableGlobalEventFinish}
+                    </Text>
+                    <Text category="h7" center>
+                  <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Desde las: `}
+                      />
+                      {Globales.variableGlobalEventHoraStart}
+                    </Text>
+                    <Text category="h7" center>
+                  <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Hasta las: `}
+                      />
+                      {Globales.variableGlobalEventHoraFinish}
+                    </Text>
+                <Input
+                  label={t("Ingrese Notas para el evento").toString()}
+                  // value={notas}
+                  style={styles.inputNotas}
+                  keyboardType="email-address"
+                />
+                  <TouchableOpacity
+                      activeOpacity={0.54}
+                      onPress={onConfirmContactoDeCuidadorAFamiliar}
+                    >
+                      <Text category="h7" status={"link"} center mt={16} mb={20}>
+                        Confirmar Evento!
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      activeOpacity={0.54}
+                      onPress={onCancelarContactoYEliminarEvento}
+                    >
+                      <Text category="h7" status={"warning"} center mb={20}>
+                        Rechazar Evento
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Layout>
+              </Modal>
+            )
+          }
+          else if (Globales.variableGlobalTipo == 1) {
             console.log("entro linea 152")
-            console.log(modalRef)
             return (
               <Modal
                 ref={modalRef}
@@ -248,32 +463,10 @@ function ModalRequest(
                         category="para-m"
                         ml={4}
                         fontFamily="GothamPro-Medium"
-                        children={` es su numero telefonico.`}
+                        children={` es su numero de telefono.`}
                       />
                     </Text>
                   </Flex>
-                  <View style={styles.buttonView}>
-                    <TouchableOpacity
-                      activeOpacity={0.54}
-                      onPress={hide}
-                      style={[
-                        styles.btnOk,
-                        {
-                          borderColor: themes["background-basic-color-1"],
-                        },
-                      ]}
-                    >
-                      <Text
-                        category="para-m"
-                        center
-                        status={"placeholder"}
-                        mt={16}
-                        mb={10}
-                      >
-                        OK, confirmare luego
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
                   <View style={styles.buttonView}>
                     <TouchableOpacity
                       activeOpacity={0.54}
@@ -292,10 +485,11 @@ function ModalRequest(
                         mt={16}
                         mb={10}
                       >
-                        Confirmar Contacto
+                        Ok
                       </Text>
                     </TouchableOpacity>
                   </View>
+                  
                 </Layout>
               </Modal>
             );       
@@ -334,6 +528,11 @@ const styles = StyleSheet.create({
   btnOk: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
+  },
+  inputNotas: {
+    minHeight: 50,
+    marginTop: 10,
+    marginHorizontal: 10
   },
   onlineIcon: {
     width: 16,

@@ -9,6 +9,7 @@ import PaymentMethod from "src/more/PaymentMethod";
 import ProfileSrc from "src/more/ProfileSrc";
 import ReferFriend from "src/more/ReferFriend";
 import FAQ from "src/more/FAQ";
+import About from "src/more/About";
 
 import { MoreStackParamList } from "./types";
 
@@ -22,6 +23,7 @@ const MoreNavigator = memo(() => {
       <Stack.Screen name="MoreSrc" component={MoreSrc} />
       <Stack.Screen name="MyJobProfile" component={MyJobProfile} />
       <Stack.Screen name="FAQ" component={FAQ} />
+      <Stack.Screen name="About" component={About} />
       <Stack.Screen name="ReferFriend" component={ReferFriend} />
       <Stack.Screen name="MyStats" component={MyStats} />
       <Stack.Screen name="ProfileSrc" component={ProfileSrc} />

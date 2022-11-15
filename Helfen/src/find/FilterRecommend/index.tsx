@@ -27,7 +27,7 @@ import { globalStyle } from "styles/globalStyle";
 import NavigationAction from "components/NavigationAction";
 import Geolocation from '@react-native-community/geolocation';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Keyboard, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Keyboard, Platform, ScrollView, StyleSheet, View, Alert } from "react-native";
 import useToggle from "hooks/useToggle";
 import Globales from "src/Globales";
 import { Pressable } from "react-native"
@@ -55,10 +55,12 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
     },
   });
   let location: Boolean = false;
-  const [hombre, setHombre] = useToggle(true);
-  const [cuidador, setCuidador] = useToggle(true);
-  const [acompañante, setacompañante] = useToggle(false);
-  const [both, setboth] =useToggle(false);
+  const [mujer, setMujer] = React.useState(false);
+  const [hombre, setHombre] = React.useState(true);
+  const [bothSexos, setbothSexos] = React.useState(false);
+  const [cuidador, setCuidador] = React.useState(true);
+  const [acompañante, setacompañante] = React.useState(false);
+  const [both, setboth] =React.useState(false);
   const [higiene, sethigiene] = useToggle(false);
   const [bañocon, setbañocon] = useToggle(false);
   const [bañosin, setbañosin] = useToggle(false);
@@ -75,23 +77,60 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
   const [hem, sethem] = useToggle(false);
   let arrayServices = new Array();
   
+  const setHombrePosta = () => {
+    setHombre(true)
+    setMujer(false)
+    setbothSexos(false)
+  }
+
+  const setMujerPosta = () => {
+    setHombre(false)
+    setMujer(true)
+    setbothSexos(false)
+  }
+
+  const setbothSexosPosta = () => {
+    setHombre(false)
+    setMujer(false)
+    setbothSexos(true)
+  }
+
+    const setCuidadorPosta = () => {
+    setCuidador(true)
+    setacompañante(false)
+    setboth(false)
+  }
+
+  const setacompañantePosta = () => {
+    setCuidador(false)
+    setacompañante(true)
+    setboth(false)
+  }
+
+  const setbothPosta = () => {
+    setCuidador(false)
+    setacompañante(false)
+    setboth(true)
+  }
   const onSearch = () => {
     if (Globales.variableGlobalLatitude != null) {
       let speciality = cuidador==true ? "Cuidador" : (acompañante==true ? "Acompaniante" : "Ambos")
       console.log(speciality)
-    let higieneString = higiene ? "Higiene y confort," : ""
-    let banoString = bañocon ? "Baño con movilidad," : ""
-    let banoSinString = bañosin ? "Baño sin movilidad, " : ""
-    let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
-    let curacionesString = curaciones ? "Curaciones," : ""
-    let sueroString = bañocon ? "Cambio de suero," : ""
-    let aseoString = bañosin ? "Aseo del espacio," : ""
-    let alimString = alim ? "Alimentación," : ""
-    let asistString = asist ? "Asistencia en traslados," : ""
-    let paseosString = paseos ? "Paseos de rutina," : ""
-    let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
-    let rcpString = rcp ? "Tecnica RCP," : ""
-    let hemString = hem ? "Maniobra de heimlich" : ""
+      let sexo = hombre == true ? "M" : (mujer==true ? "F" : "")
+      console.log(sexo)
+      let higieneString = higiene ? "Higiene y confort," : ""
+      let banoString = bañocon ? "Baño con movilidad," : ""
+      let banoSinString = bañosin ? "Baño sin movilidad, " : ""
+      let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
+      let curacionesString = curaciones ? "Curaciones," : ""
+      let sueroString = suero ? "Cambio de suero," : ""
+      let aseoString = aseo ? "Aseo del espacio," : ""
+      let alimString = alim ? "Alimentación," : ""
+      let asistString = asist ? "Asistencia en traslados," : ""
+      let paseosString = paseos ? "Paseos de rutina," : ""
+      let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
+      let rcpString = rcp ? "Tecnica RCP," : ""
+      let hemString = hem ? "Maniobra de heimlich" : ""
     let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
     arrayServices = stringServices.split(",")
     arrayServices.splice(-1)
@@ -105,10 +144,10 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       },
       body: JSON.stringify({
         latitude: Globales.variableGlobalLatitude,
-        longitude: Globales.variableGlobalLatitude,
+        longitude: Globales.variableGlobalLongitude,
     description: arrayServices,
     specialty: speciality,
-    gender: hombre==true ? "M" : "F"
+    gender: sexo
       })
     })
     .then((response) =>  response.json())
@@ -121,18 +160,18 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
         onHide()
         onFilter()
       } else if (data.carers.length == 0) {
-        alert("No se encontraron cuidadores que cumplan con estas preferencias.")
+       Alert.alert("Aviso","No se encontraron cuidadores que cumplan con estas preferencias.")
         console.log("no hay cuidadores");
       }
     })
       .catch((error) => {
         onHide()
-        alert("Hubo un error buscando cuidadores. Pruebe mas tarde.")
+       Alert.alert("Aviso","Hubo un error buscando cuidadores. Pruebe mas tarde.")
         console.log("error")
         console.error(error);
       });
     } else {
-      alert("Por favor marque su ubicacion en el mapa")
+     Alert.alert("Aviso","Por favor marque su ubicacion en el mapa")
     }
   };
 
@@ -158,32 +197,23 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       {/* <Pressable onPress={()=> onHide()}>
       <Icon pack="assets" name="close"/>
        </Pressable> */}
-        <Text category="h7" mb={24}>
+        <Text category="h7" mb={15}>
           {t("Tipo de Profesion")}
         </Text>
-        <Flex mb={32}>
-          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setCuidador} />
-          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañante} />
-          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setboth} />
-        </Flex>
-        <Text category="h7" mb={24}>
-          {t("Genero Paciente")}
+        <View style={styles.checks}>
+          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setCuidadorPosta} />
+          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañantePosta} />
+          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setbothPosta} />
+        </View>
+        <Text category="h7" mb={15}>
+          {t("Genero deseado en un profesional")}
         </Text>
-        <Flex mb={32}>
-          <CheckBox children={"Masculino"} checked={hombre} onChange={setHombre} />
-          <CheckBox children={"Femenino"} checked={!hombre} onChange={setHombre} />
-        </Flex>
-        {/* <Text category="h7" mb={10}>
-          {t("Ubicar profesionales mas cercanos")}
-        </Text>
-        <Button
-          children={t("Presione para ubicar su posicion el mapa").toString()}
-          onPress={onMap}
-          status="outline"
-          style={styles.email}
-          //style={globalStyle.shadowBtn}
-        /> */}
-        <Text category="h7" mb={24}>
+        <View style={styles.checks}>
+          <CheckBox children={"Masculino"} checked={hombre && !mujer && !bothSexos} onChange={setHombrePosta} />
+          <CheckBox children={"Femenino"} checked={!hombre && mujer && !bothSexos} onChange={setMujerPosta} />
+          <CheckBox children={"Indistinto"} checked={!hombre && !mujer && bothSexos} onChange={setbothSexosPosta} />
+        </View>
+        <Text category="h7" mb={15}>
           {t("Servicios Prestados")}
         </Text>
           <CheckBox children={"Higiene y confort"} checked={higiene} onChange={sethigiene} />
@@ -244,5 +274,8 @@ const themedStyles = StyleService.create({
   },
   email: {
     marginBottom: 24,
+  },
+  checks: {
+    marginBottom: 15,
   }
 });

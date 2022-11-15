@@ -5,6 +5,7 @@ import {
   StyleService,
   useStyleSheet,
   Modal,
+  Button
 } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
@@ -45,6 +46,7 @@ const ViewOnMapVivo = memo(() => {
     longitude: Globales.variableGlobalLongitude,
   });
 
+  const { goBack } = useNavigation();
   useEffect(() => {
       setPosition({
         latitude: Globales.variableGlobalLatitude,
@@ -62,7 +64,7 @@ const ViewOnMapVivo = memo(() => {
         title={t("Seleccione su direccion").toString()}
         appearance="primary"
       />
-      <View>
+      <View style={styles.flexazo}>
         <MapView
           ref={refMap}
           provider={PROVIDER_GOOGLE}
@@ -86,6 +88,7 @@ const ViewOnMapVivo = memo(() => {
             coordinate={position}
           />
         </MapView>
+        <Button onPress= {goBack} style={styles.button} children={"Ok"}/>
       </View>
     </Container>
   );
@@ -109,5 +112,13 @@ const themedStyles = StyleService.create({
   content: {},
   mapView: {
     zIndex: -10,
+    flex: 1
+  },
+  button: {
+    marginBottom: 5,
+    marginHorizontal:20
+  },
+  flexazo: {
+    flex: 1,
   },
 });

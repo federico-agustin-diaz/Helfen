@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, StyleProp, ViewStyle } from "react-native";
+import { View, TouchableOpacity, StyleProp, ViewStyle, Alert } from "react-native";
 import Text from "components/Text";
 import {
   useStyleSheet,
@@ -31,15 +31,12 @@ const ContactosParaUbicarItem = ({
     const onMap = React.useCallback(() => {
         navigate('FindStack', {screen: 'ViewOnMapVivo'});
       }, []);
-    const getNumeroDia = () => {
-        const d = new Date();
-        return d.getDay().toString;
-    }
-    console.log(getNumeroDia())
-    console.log(Globales.variableGlobalId)
-    console.log(id)
+    const d = new Date();
+    console.log("numero de dia es")
+    const getNumeroDia = d.getDay().toString()
+    console.log(getNumeroDia)
     const getUbicacion = () => {
-        return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/location?familiarId=' + Globales.variableGlobalId + '&carerId=' + id + '&eventDay=' + getNumeroDia(), {
+        return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/location?familiarId=' + Globales.variableGlobalId + '&carerId=' + id + '&eventDay=' + getNumeroDia, {
         method: 'GET',
         headers: {
           'Accept': '*/*',
@@ -57,10 +54,10 @@ const ContactosParaUbicarItem = ({
             onMap();
         }
         if (data.message == "400 Bad Request Error. Event not found.") {
-            return alert("No hay Eventos registrados a esta hora y dia.")
+            returnAlert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
           }
         if (data.latitude == null) {
-            return alert("El cuidador todavia no dio su ubicacion.")
+            returnAlert.alert("Aviso","El cuidador todavia no dio su ubicacion.")
         }
           console.log("se obtuvo la ubi")
       })

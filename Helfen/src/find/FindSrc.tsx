@@ -78,8 +78,13 @@ const FindSrc = memo(() => {
     Globales.set_variableGlobalLatitude(crd.latitude)
     Globales.set_variableGlobalLongitude(crd.longitude)
     })
-    navigate('FindStack', {screen: 'ViewOnMap'});
+    setTimeout(() => {
+      navigate('FindStack', {screen: 'ViewOnMap'});
+  }, 300);
+  setTimeout(() => {
     setSeteo(1);
+}, 3500);
+    
   }, []);
   return (
     <Container style={styles.container}>

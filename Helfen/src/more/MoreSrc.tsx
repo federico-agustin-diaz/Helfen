@@ -37,21 +37,17 @@ const MoreSrc = memo(() => {
   ];
   const DATA_APPLICATION: ButtonOptionalProps[] = [
     {
-      title: t("setting"),
-      icon: "setting",
-      status: "twitter-3",
+      title: t("helpFAQ"),
+      icon: "helpWhite",
+      status: "placeholder",
       navigateSrc: "MyJobProfile",
     },
+  ];
+  const DATA_APPLICATION2: ButtonOptionalProps[] = [
     {
       title: t("aboutHelfen"),
       icon: "stats",
       status: "basic",
-      navigateSrc: "MyJobProfile",
-    },
-    {
-      title: t("helpFAQ"),
-      icon: "helpWhite",
-      status: "placeholder",
       navigateSrc: "MyJobProfile",
     },
   ];
@@ -64,7 +60,7 @@ const MoreSrc = memo(() => {
           avatar={Images.avatar2}
           email={Globales.variableGlobalEmail}
         />
-        <View style={styles.details}>
+        {/* <View style={styles.details}>
           <Text category="h6">{t("myDetails")}</Text>
           {DATA_DETAILS.map((item, i) => {
             return (
@@ -77,7 +73,7 @@ const MoreSrc = memo(() => {
               />
             );
           })}
-        </View>
+        </View> */}
         <View style={styles.application}>
           <Text category="h6">{t("application")}</Text>
           {DATA_APPLICATION.map((item, i) => {
@@ -94,15 +90,20 @@ const MoreSrc = memo(() => {
               />
             );
           })}
-          <ButtonOptional
-            withToggle
-            icon="darkMode"
-            title={t("switchDarkMode")}
-            status={"danger"}
-            checked={darkMode}
-            onPress={setDarkMode}
-            navigateSrc={undefined}
-          />
+          {DATA_APPLICATION2.map((item, i) => {
+            return (
+              <ButtonOptional
+                icon={item.icon}
+                title={item.title}
+                status={item.status}
+                key={i}
+                navigateSrc={item.navigateSrc}
+                onPress={() => {
+                  navigate("About");
+                }}
+              />
+            );
+          })}
         </View>
       </Content>
     </Container>

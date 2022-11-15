@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { TouchableOpacity, Platform, PermissionsAndroid } from "react-native";
+import { TouchableOpacity, Platform, PermissionsAndroid, Alert } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -105,7 +105,7 @@ const handleVerifyCuidador = React.useCallback(() => {
   const onLogin = React.useCallback(() => navigate("Login"), []);
   const onSignupCheck = () => {
     if (!primerNombre || !segundoNombre || !birthday || !dni.toString() || !direccion || !postal || !province || !email || !tel || !password || !province) {
-      alert("Por favor, complete todos los campos");
+     Alert.alert("Aviso","Por favor, complete todos los campos");
     }
   }
   const onSignup = () => {
@@ -150,19 +150,19 @@ const handleVerifyCuidador = React.useCallback(() => {
         handleVerify();
       } else {
         if (data.message == "406 Not Acceptable. Mail already exists.") {
-          alert("El Mail ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo mail.");
+         Alert.alert("Aviso","El Mail ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo mail.");
         } else if (data.message == "406 Not Acceptable. Phone number already exists."){
-          alert("El Numero de Telefono ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo telefono.");
+         Alert.alert("Aviso","El Numero de Telefono ingresado ya esta en uso. Por favor inicie sesion o ingrese un nuevo telefono.");
         } else if (data.message == "406 Not Acceptable. Dni number already exists.") {
-          alert("El DNI ingresado ya esta en uso.")
+         Alert.alert("Aviso","El DNI ingresado ya esta en uso.")
         } else {
         console.log("error");
-        alert("Hubo un error al crear su usuario");
+       Alert.alert("Aviso","Hubo un error al crear su usuario");
       }
       }
     })
       .catch((error) => {
-        alert("Hubo un error al crear su usuario");
+       Alert.alert("Aviso","Hubo un error al crear su usuario");
         console.log("error")
         console.error(error);
       });

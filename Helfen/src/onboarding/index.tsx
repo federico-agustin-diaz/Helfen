@@ -22,7 +22,8 @@ import {RootStackParamList} from 'navigation/types';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import useAuth from 'hooks/useAuth';
 import {globalStyle} from 'styles/globalStyle';
-
+import Geolocation from '@react-native-community/geolocation';
+import Globales from 'src/Globales';
 const Onboarding = memo(() => {
   const {width} = useLayout();
   const styles = useStyleSheet(themedStyles);
@@ -46,7 +47,15 @@ const Onboarding = memo(() => {
     [],
   );
   const onSignup = React.useCallback(
-    () => navigate('AuthStack', {screen: 'Signup'}),
+    () => { Geolocation.getCurrentPosition((pos) => {
+      const crd = pos.coords;
+      console.log("esta es desde el singup")
+      console.log(crd.latitude)
+    Globales.set_variableGlobalLatitude(crd.latitude)
+    console.log(Globales.variableGlobalLatitude)
+    Globales.set_variableGlobalLongitude(crd.longitude)
+    })
+    navigate('AuthStack', {screen: 'Signup'})},
     [],
   );
   const onGetHere = React.useCallback(() => {}, []);
@@ -112,7 +121,7 @@ const Onboarding = memo(() => {
           })}
         </Animated.ScrollView>
         <Dots translationValue={translationX} data={DATA} />
-        <Flex padder pv={28}>
+        <Flex padder pv={28} mb={20}>
           <Button style={[styles.login]} status="outline" onPress={onLogin}>
             {t('common:login').toString()}
           </Button>

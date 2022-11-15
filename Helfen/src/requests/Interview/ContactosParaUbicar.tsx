@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import ContactosParaUbicarItem from "../components/ContactosParaUbicarItem";
@@ -18,9 +18,47 @@ const ContactosParaUbicar = memo(
     const styles = useStyleSheet(themedStyles);
     console.log("estos son los contactos para publicar")
     console.log(Globales.variableGlobalCuidadoresConfirmados)
+
+    const [seSetearonLosConfirmados, setSeSetearonLosConfirmados] = React.useState(true);
+    const [listaDeConfirmados, setListaDeConfirmados] = React.useState([]);
+
+    const getContactosConfirmados = () => {
+      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relations/' + Globales.variableGlobalId, {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((response) =>  response.json())
+        .then((data) => {
+          console.log("Estos son los Cuidadores Confirmados para pedir los Reviews")
+          console.log(data);
+          if (data.possibleContacts.length > 0) {
+            console.log(data.possibleContacts)
+            setListaDeConfirmados(data.possibleContacts.map(item => item.carer))
+            console.log(setListaDeConfirmados)
+          } else {
+            console.log("no tiene contactos confirmados")
+          }
+        })
+          .catch((error) => {
+            //alert("Hubo un error al obtener eventos del calendario.")
+            console.log("error 249")
+            console.error(error);
+          });
+  }
+    useEffect(() => {
+      if (seSetearonLosConfirmados) {
+        getContactosConfirmados()
+        setSeSetearonLosConfirmados(false)
+        setInterval(getContactosConfirmados, 10000)
+      }
+    }, []);
+
     return (
       <View style={styles.container}>
-        {Globales.variableGlobalCuidadoresConfirmados === (undefined) || Globales.variableGlobalCuidadoresConfirmados == (null) || Globales.variableGlobalCuidadoresConfirmados.length == 0 ? (
+        {listaDeConfirmados === (undefined) || listaDeConfirmados == (null) || listaDeConfirmados == 0 ? (
           <EmptyData
             image={Images.emptyMess}
             title={("No hay Contactos Confirmados para Ubicar.")}
@@ -28,7 +66,7 @@ const ContactosParaUbicar = memo(
           />
         ) : (
           <View>
-            {Globales.variableGlobalCuidadoresConfirmados.map((item, i) => {
+            {listaDeConfirmados.map((item, i) => {
               return <ContactosParaUbicarItem item={item.user} id={item.id} key={1} />;
             })}
           </View>

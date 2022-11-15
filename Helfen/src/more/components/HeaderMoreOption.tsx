@@ -32,14 +32,14 @@ const HeaderMoreOption = memo(
             </Text>
           </View>
         </Flex>
-        <Flex onPress={_onNotification}>
+        {/* <Flex onPress={_onNotification}>
           <NavigationAction
             icon="notification"
             status="facebook"
             onPress={() => null}
             disabled
           />
-        </Flex>
+        </Flex> */}
       </Flex>
     );
   }

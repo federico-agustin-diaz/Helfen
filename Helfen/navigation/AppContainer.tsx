@@ -14,6 +14,7 @@ import Onboarding from 'src/onboarding';
 import SuccessScr from 'src/SuccessScr';
 import HomeAddress from 'src/more/HomeAddress';
 import FAQ from 'src/more/FAQ';
+import About from 'src/more/About';
 
 LogBox.ignoreAllLogs();
 
@@ -36,6 +37,7 @@ const AppContainer = () => {
         <Stack.Screen name="AddMorePayment" component={AddMorePayment} />
         <Stack.Screen name="ChangeJobType" component={ChangeJobType} />
         <Stack.Screen name="FAQ" component={FAQ} />
+        <Stack.Screen name="About" component={About} />
         <Stack.Screen name="SuccessScr" component={SuccessScr} />
       </Stack.Navigator>
     </NavigationContainer>

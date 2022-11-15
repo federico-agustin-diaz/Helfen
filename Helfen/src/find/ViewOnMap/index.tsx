@@ -5,6 +5,7 @@ import {
   StyleService,
   useStyleSheet,
   Modal,
+  Button
 } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
@@ -30,9 +31,10 @@ const ViewOnMap = memo(() => {
   const { height, width } = useLayout();
   const styles = useStyleSheet(themedStyles);
   const { t } = useTranslation(["find", "common"]);
-
+  console.log(Globales.variableGlobalLatitude)
+  console.log( Globales.variableGlobalLongitude)
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const [position, setPosition] = useState({
+  const position = ({
     latitude: Globales.variableGlobalLatitude,
     longitude: Globales.variableGlobalLongitude,
     latitudeDelta:  0.0421,
@@ -46,6 +48,7 @@ const ViewOnMap = memo(() => {
     latitude: Globales.variableGlobalLatitude,
     longitude: Globales.variableGlobalLongitude,
   });
+  const { goBack } = useNavigation();
 
   const setGlobalPosition = () => {
     Globales.set_variableGlobalLatitude(pin.latitude)
@@ -61,7 +64,7 @@ const ViewOnMap = memo(() => {
         title={t("Seleccione su direccion").toString()}
         appearance="primary"
       />
-      <View>
+      <View style={styles.flexazo}>
         <MapView
           ref={refMap}
           provider={PROVIDER_GOOGLE}
@@ -90,6 +93,7 @@ const ViewOnMap = memo(() => {
             }} 
           />
         </MapView>
+        <Button onPress= {goBack} style={styles.button} children={"Aceptar"}/>
       </View>
     </Container>
   );
@@ -99,7 +103,6 @@ export default ViewOnMap;
 
 const themedStyles = StyleService.create({
   container: {
-    flex: 1,
     paddingBottom: 0,
   },
   contentJob: {
@@ -110,8 +113,16 @@ const themedStyles = StyleService.create({
     paddingLeft: 8,
     marginTop: 24,
   },
+    button: {
+    marginBottom: 5,
+    marginHorizontal:20
+  },
+  flexazo: {
+    flex: 1,
+  },
   content: {},
   mapView: {
     zIndex: -10,
+    flex: 1
   },
 });

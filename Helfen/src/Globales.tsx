@@ -2,12 +2,19 @@ class Global {
     private myName:string = ''
     variableGlobalTipo: number = 0;
     variableGlobalId: number = 0;
+    variableGlobalIdUserParaMandarUbicacion: number = 0;
     variableGlobalEmail: string = "";
     variableGlobalPrimerNombre: string = "";
     variableGlobalApellido: string = "";
     variableGlobalLatitude: number = 0;
     variableGlobalLongitude: number = 0;
     variableGlobalCuidadores: any = [];
+    variableGlobalEventStart: any = "";
+    variableGlobalEventFinish: any = "";
+    variableGlobalEventid: any = [];
+    variableGlobalEventName: any = "";
+    variableGlobalEventHoraFinish: any = "";
+    variableGlobalEventHoraStart: any = "";
     variableGlobalFamiliaresPendientes: any = [];
     variableGlobalFamiliaresConfirmados: any = [];
     variableGlobalCuidadoresPendientes: any = [];
@@ -34,6 +41,13 @@ class Global {
     }
     public get_variableGlobalId(){
         return this.variableGlobalId;
+    }
+
+    public set_variableGlobalIdUserParaMandarUbicacion(new_number:number){
+        this.variableGlobalIdUserParaMandarUbicacion = new_number;
+    }
+    public get_variableGlobalIdUserParaMandarUbicacion(){
+        return this.variableGlobalIdUserParaMandarUbicacion;
     }
 
     public set_variableGlobalEmail(new_number:string){
@@ -105,13 +119,43 @@ class Global {
     public get_variableGlobalCuidadoresConfirmados(){
         return this.variableGlobalCuidadoresConfirmados;
     }
+    public get_variableGlobalEventStart(){
+        return this.get_variableGlobalEventStart;
+    }
+    public set_variableGlobalEventStart(new_number:string){
+        this.variableGlobalEventStart = new_number;
+    }
+    public get_variableGlobalEventFinish(){
+        return this.variableGlobalEventFinish;
+    }
+    public set_variableGlobalEventFinish(new_number:string){
+        this.variableGlobalEventFinish = new_number;
+    }
+    public get_variableGlobalEventHoraStart(){
+        return this.get_variableGlobalEventHoraStart;
+    }
+    public set_variableGlobalEventHoraStart(new_number:string){
+        this.variableGlobalEventHoraStart = new_number;
+    }
+    public get_variableGlobalEventHoraFinish(){
+        return this.variableGlobalEventHoraFinish;
+    }
+    public set_variableGlobalEventHoraFinish(new_number:string){
+        this.variableGlobalEventHoraFinish = new_number;
+    }
+    public get_variableGlobalEventid(){
+        return this.variableGlobalEventid;
+    }
+    public set_variableGlobalEventid(new_number:Array<any>){
+        this.variableGlobalEventid = new_number;
+    }
+    public get_variableGlobalEventName(){
+        return this.variableGlobalEventName;
+    }
+    public set_variableGlobalEventName(new_number:string){
+        this.variableGlobalEventName = new_number;
+    }
 
-    public set_variableGlobalEventosCalendario(new_number:Array<any>){
-        this.variableGlobalEventosCalendario = new_number;
-    }
-    public get_variableGlobalEventosCalendario(){
-        return this.variableGlobalEventosCalendario;
-    }
 }
 
 export default new Global()

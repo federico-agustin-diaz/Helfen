@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from "react";
 import { RECOMMEND_DATA } from "constants/Data";
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Image, TouchableOpacity, ImageBackground, Alert } from "react-native";
 import {
   useTheme,
   StyleService,
@@ -118,7 +118,7 @@ const JobDetails = memo(() => {
       }
     })
       .catch((error) => {
-        alert("Hubo un error al crear la relacion.")
+       Alert.alert("Aviso","Hubo un error al crear la relacion.")
         console.log("error")
         console.error(error);
       });
@@ -149,11 +149,11 @@ const JobDetails = memo(() => {
         navigate("MainBottomTab");
     }, 1800);
       } else {
-        alert("Ya estaba creada la relacion.")
+       Alert.alert("Aviso","Error al crear la relacion.")
       }
     })
       .catch((error) => {
-        alert("Hubo un error al crear la relacion.")
+       Alert.alert("Aviso","Hubo un error al crear la relacion.")
         console.log("error")
         console.error(error);
       });

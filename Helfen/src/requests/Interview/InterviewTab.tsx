@@ -3,7 +3,7 @@ import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import RequestInterviewItem from "../components/RequestInterviewItem";
 import RequestInterviewItemConfirmed from "../components/RequestInterviewItemConfirmed";
-
+import Text from "components/Text";
 import { RequestPendientes, Request_Type_Enum } from "constants/Types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { MainBottomTabStackParamList } from "navigation/types";
@@ -18,6 +18,7 @@ const InterviewTab = memo(
   () => {
     const [listaDePendientes, setListaDePendientes] = React.useState([]);
     const [seSetearonLosPendientes, setSeSetearonLosPendientes] = React.useState(true);
+    //esto deberia ser lo que muestre el numero de telefono del Cuidador a Familiar
     const checkRelations = () => {
       if (Globales.variableGlobalTipo == 2) {
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + Globales.variableGlobalId, {
@@ -29,6 +30,7 @@ const InterviewTab = memo(
       })
       .then((response) =>  response.json())
       .then((data) => {
+        console.log("linea 39")
         console.log(data);
         if (data.possibleContacts.length > 0) {
           setListaDePendientes(data.possibleContacts)
@@ -66,7 +68,7 @@ const InterviewTab = memo(
             console.log("Entro al notification Relation")
             if (data.possibleContacts.length > 0) {
               var contactRelationFalseContactTrue = data.possibleContacts.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false)
-              listaDePendientes.push(contactRelationFalseContactTrue)
+              setListaDePendientes(contactRelationFalseContactTrue)
             }
           })
             .catch((error) => {
@@ -93,9 +95,9 @@ const InterviewTab = memo(
           if (data.possibleContacts.length > 0) {
             var posiblesContactosSinFiltrar: any = []
             posiblesContactosSinFiltrar = data.possibleContacts
-            console.log("estos son los posibles sin filtrar")
+            console.log("estos son los posibles sin filtrar de linea 97")
             console.log(posiblesContactosSinFiltrar)
-            const posiblesContactos = posiblesContactosSinFiltrar.filter(item => item.contactConfirmated == true && item.relationConfirmated == false || item.contactConfirmated == false && item.relationConfirmated == false);
+            const posiblesContactos = posiblesContactosSinFiltrar.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false);
             var mapPosiblesContactos = posiblesContactos.map(item => item.carer)
             console.log(mapPosiblesContactos)
             if (mapPosiblesContactos.length > 0) {
@@ -108,7 +110,7 @@ const InterviewTab = memo(
           }
         })
           .catch((error) => {
-            alert("Hubo un error al obtener relaciones.")
+            //alert("Hubo un error al obtener relaciones.")
             console.log("error linea 96")
             console.error(error);
           });
@@ -118,8 +120,8 @@ const InterviewTab = memo(
       if (seSetearonLosPendientes) {
         checkRelations()
         setSeSetearonLosPendientes(false)
+        setInterval(checkRelations, 10000)
       }
-      
     }, []);
     
     
@@ -141,7 +143,8 @@ const InterviewTab = memo(
           <View>
             {listaDePendientes.map((item, i) => {
               if (Globales.variableGlobalTipo == 1) {
-                return <RequestInterviewItem item={item.user} key={i} />;
+                return <RequestInterviewItem item={item.user} key={i} id={item.id} />;
+                
               } else if (Globales.variableGlobalTipo == 2) {
                 return <RequestInterviewItem item={item.familiar.user} key={i} />;
             }

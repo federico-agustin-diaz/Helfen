@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View, ToastAndroid, ActivityIndicator } from "react-native";
+import { View, ToastAndroid, ActivityIndicator, Alert } from "react-native";
 import Snackbar from 'react-native-snackbar';
 import {
   TopNavigation,
@@ -98,7 +98,7 @@ const IntroduceYourself = memo(
     navigate("SuccessScr", {
       successScr: {
         title: "Solo queda un paso mas!",
-        description: t("A continuacion, requerimos que adjunte las siguientes fotos"),
+        description: t("A continuacion, requerimos que saque las siguientes fotos de manera horizontal"),
         children: [
           {
             title: t("Adjuntar Foto DNI"),
@@ -159,7 +159,7 @@ const IntroduceYourself = memo(
           onPress: () => { Snackbar.dismiss; },
         },
       });
-    alert("Se esta realizando el chequeo facial, aguarda un momento.");
+   Alert.alert("Aviso","Se esta realizando el chequeo facial, aguarda un momento.");
     console.log("entrosubirFotelli")
     console.log(form1)
     console.log(form1._parts[0])
@@ -195,7 +195,7 @@ const IntroduceYourself = memo(
     } else {
       Snackbar.dismiss;
       console.log("Por favor realiza las fotos de nuevo")
-      alert("Por favor realiza las fotos de nuevo");
+     Alert.alert("Aviso","Por favor realiza las fotos de nuevo");
       form1 = new FormData();
       console.log(form1)
     }})
@@ -204,14 +204,14 @@ const IntroduceYourself = memo(
       console.log("error")
       console.error(error.response);
       console.error(error);
-      alert("Por favor realiza las fotos de nuevo");
+     Alert.alert("Aviso","Por favor realiza las fotos de nuevo");
       form1 = new FormData();
       console.log(form1)
     });
     } else {
       Snackbar.dismiss;
       console.log("Por favor realiza las fotos de nuevo")
-      alert("Por favor realiza las fotos de nuevo");
+     Alert.alert("Aviso","Por favor realiza las fotos de nuevo");
       form1 = new FormData();
       console.log(form1)
     }
@@ -224,7 +224,7 @@ const IntroduceYourself = memo(
       });
     } else {
       Snackbar.dismiss;
-      alert("Por favor realice todas las fotos");
+     Alert.alert("Aviso","Por favor realice todas las fotos");
     }
   };
 
@@ -244,7 +244,7 @@ const IntroduceYourself = memo(
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+       Alert.alert("Aviso",response.customButton);
       } else {
         form1.append("file", {
          name: dniNumber + "-1.jpg", // Whatever your filename is
@@ -271,7 +271,7 @@ const IntroduceYourself = memo(
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+       Alert.alert("Aviso",response.customButton);
       } else {
         form1.append("file1", {
          name: dniNumber + "-2.jpg", // Whatever your filename is
@@ -298,7 +298,7 @@ const IntroduceYourself = memo(
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+       Alert.alert("Aviso",response.customButton);
       } else {
         form1.append("file2", {
          name: dniNumber + "-3.jpg", // Whatever your filename is
@@ -325,7 +325,7 @@ const IntroduceYourself = memo(
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
+       Alert.alert("Aviso",response.customButton);
       } else {
         form1.append("file3", {
          name: dniNumber + "-4.jpg", // Whatever your filename is
@@ -359,11 +359,11 @@ const IntroduceYourself = memo(
           handleVerifyCompleto()
         } else {
           console.log("error");
-          alert("Hubo un error al asignar Servicios pero el Usuario fue creado");
+         Alert.alert("Aviso","Hubo un error al asignar Servicios pero el Usuario fue creado");
         }
       })
         .catch((error) => {
-          alert("Hubo un error al asignar Servicios pero el Usuario fue creado");
+         Alert.alert("Aviso","Hubo un error al asignar Servicios pero el Usuario fue creado");
           console.log("error")
           console.error(error);
         });
@@ -410,11 +410,11 @@ const IntroduceYourself = memo(
         onCargarServicios();
       } else {
         console.log("error");
-        alert("Hubo un error al crear su usuario");
+       Alert.alert("Aviso","Hubo un error al crear su usuario");
       }
     })
       .catch((error) => {
-        alert("Hubo un error al crear su usuario");
+       Alert.alert("Aviso","Hubo un error al crear su usuario");
         console.log("error")
         console.error(error);
       });
@@ -433,9 +433,9 @@ const IntroduceYourself = memo(
 
   const [experience, setExperience] = React.useState("")
   const [male, female, setMale, setFemale] = React.useState(false);
-  const [cuidador, setcuidador] = useToggle(false);
-  const [acompañante, setacompañante] = useToggle(false);
-  const [both, setboth] =useToggle(false);
+  const [cuidador, setcuidador] = React.useState(false);
+  const [acompañante, setacompañante] = React.useState(false);
+  const [both, setboth] =React.useState(false);
   const [higiene, sethigiene] = useToggle(false);
   const [enfermero, setEnfermero] = useToggle(false);
   const [bañocon, setbañocon] = useToggle(false);
@@ -455,6 +455,23 @@ const IntroduceYourself = memo(
   const onVerify = React.useCallback(() => {
     navigate("Verification");
   }, []);
+  const setCuidadorPosta = () => {
+    setcuidador(true)
+    setacompañante(false)
+    setboth(false)
+  }
+
+  const setacompañantePosta = () => {
+    setcuidador(false)
+    setacompañante(true)
+    setboth(false)
+  }
+
+  const setbothPosta = () => {
+    setcuidador(false)
+    setacompañante(false)
+    setboth(true)
+  }
   return (
     <Container style={styles.container}>
       <TopNavigation accessoryLeft={<NavigationAction />} />
@@ -518,7 +535,7 @@ const IntroduceYourself = memo(
               onTouchStart={handleSubmit(() => {})}
               onTouchEnd={handleSubmit(() => {})}
               onBlur={onBlur}
-              keyboardType="numeric"
+              keyboardType="numbers-and-punctuation"
             />
           )}
         />

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Alert } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -64,13 +64,13 @@ const RatingDetails = memo(() => {
       .then((data) => {
         console.log(data);
         if (data.review != null) {
-          alert("Se ha enviado la valoracion")
+         Alert.alert("Aviso","Se ha enviado la valoracion")
         } else {
           console.log("no puedo realizarse el rating")
         }
       })
         .catch((error) => {
-          alert("Hubo un error al realizar el rating.")
+         Alert.alert("Aviso","Hubo un error al realizar el rating.")
           console.log("error")
           console.error(error);
         });

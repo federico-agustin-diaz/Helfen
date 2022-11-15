@@ -29,7 +29,7 @@ const ForgetPassword = memo(() => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "lehieuds@gmail.com",
+      email: "",
     },
   });
   const onNext = React.useCallback(() => navigate("NewPassword"), []);

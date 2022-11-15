@@ -18,7 +18,8 @@ export type RootStackParamList = {
   SuccessScr: {
     successScr: SuccessScreenType;
   };
-  FAQ:undefined
+  FAQ:undefined;
+  About:undefined;
 };
 export type MainBottomTabStackParamList = {
   Find: undefined;
@@ -91,7 +92,7 @@ export type RequestsStackParamList = {
   ApplicationDetails: { type: Request_Status_Type_Enum };
   RatingDetails: { name: string, id: number}
   ConfirmHour: undefined;
-  ConfirmEventInputs:undefined;
+  ConfirmEventInputs: {id: number};
 };
 export type CalendarStackParamList = {
   CalendarSrc: undefined;
@@ -146,4 +147,8 @@ export type PurchaseBgConfirmNavigationProp = RouteProp<
 export type IntroduceYourselfNavigationProp = RouteProp<
   AuthStackParamList,
   "IntroduceYourself"
+>;
+export type ConfirmEventInputsNavigationProp = RouteProp<
+RequestsStackParamList,
+  "ConfirmEventInputs"
 >;

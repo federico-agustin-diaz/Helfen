@@ -55,7 +55,7 @@ const AbilityItem = ({
                 {item.localAddress} 
                 </Text>
                 <Text category="h8-s" mv={8}>
-                  {item.notes}
+                  {item.notesFamiliar}
                 </Text>
               </View>
             </Layout>

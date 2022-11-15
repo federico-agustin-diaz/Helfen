@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { ImageBackground } from "react-native";
+import { ImageBackground, View } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -9,7 +9,7 @@ import {
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 import { useTranslation } from "react-i18next";
-
+import EmptyData from "src/requests/components/EmptyData";
 import Text from "components/Text";
 import Content from "components/Content";
 import Container from "components/Container";
@@ -42,8 +42,10 @@ const CalendarSrc = memo(() => {
     return ('El dia de hoy es ' + date + ' ' + monthName + ' ' + year).toString()
 }
   const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
-  const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
-  const onPressAddAbility = () => navigate("AvailabilitySrc", { type: "Add" });
+  // const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
+  // const onPressAddAbility = () => navigate("AvailabilitySrc", { type: "Add" });
+  const onPressAbility = () => {};
+  const onPressAddAbility = () => {};
   const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   var arrayCalendarEvents = new Array(); 
   const mapGlobales = () => {
@@ -60,7 +62,7 @@ const CalendarSrc = memo(() => {
           name: element.familiar.user.name + " " + element.familiar.user.lastName,
           localAddress: element.familiar.user.localAddress,
           time: "Horario: Desde " + element.startEvent + " hasta las " + element.endEvent,
-          notes: element.notes != "" ? ("Notas: " + element.notes) : ("No se detallaron Notas")
+          notesFamiliar: element.notes != "" ? ("Notas Familiar: " + element.notes) : ("No se detallaron Notas del Familiar")
         }
         console.log(calendarObject)
         arrayCalendarEvents.push(calendarObject)
@@ -80,25 +82,18 @@ const CalendarSrc = memo(() => {
     <Container style={styles.container}>
       <TopNavigation title={t("title").toString()} />
       <Content padder contentContainerStyle={styles.content}>
-       {/* <ImageBackground
-          source={Images.bgSuggestion}
-          style={[
-            styles.img,
-            {
-              width: width - 48,
-              height: 100 * (height / 812),
-            },
-          ]}
-          imageStyle={{}}
-        >
-          <Text category="h6" mt={20} status="primary" mb={12}>
-            {"Estos son los Eventos que se han Registrado"}
-          </Text>
-        </ImageBackground> */}
         <Text category="h6" mb={24}>
           {(getCurrentDate())}
         </Text>
-        {arrayCalendarEvents.map((item, i) => {
+        {arrayCalendarEvents === (undefined) || arrayCalendarEvents == (null) || arrayCalendarEvents.length == 0 ? (
+          <EmptyData
+            image={Images.noBooking}
+            title={"No tienes Eventos agendados"}
+            description={t(" ")}
+          />
+        ) : (
+          <View>
+            {arrayCalendarEvents.map((item, i) => {
           return (
             <AbilityItem
               item={item}
@@ -109,6 +104,8 @@ const CalendarSrc = memo(() => {
             />
           );
         })}
+          </View>
+        )}
       </Content>
     </Container>
   );
