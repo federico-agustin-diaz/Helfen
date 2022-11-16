@@ -40,7 +40,6 @@ function ModalRequest(
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const { width, height, bottom } = useLayout();
   const themes = useTheme();
-  const [notas, setNotas] = React.useState("")
 
   const confirmarEvento = () => {
     console.log("entro a confirmar evento")
@@ -168,8 +167,6 @@ function ModalRequest(
   }
 
   const onConfirmContactoDeCuidadorAFamiliar = () => {
-    setNotas(notas)
-    console.log(notas)
     modalRef.current?.hide();
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/confirm', {
         method: 'PUT',
@@ -185,7 +182,7 @@ function ModalRequest(
       })
       .then((response) =>  response.json())
       .then((data) => {
-        confirmarEvento();
+        //confirmarEvento();
         if (Globales.variableGlobalTipo == 1) {
        // handleEventInputs();
         }
@@ -384,15 +381,18 @@ function ModalRequest(
                       />
                       {Globales.variableGlobalEventHoraFinish}
                     </Text>
-                <Input
-                  label={t("Ingrese Notas para el evento").toString()}
-                  // value={notas}
-                  style={styles.inputNotas}
-                  keyboardType="email-address"
-                />
+                    <Text category="h7" center>
+                  <Text
+                        category="para-m"
+                        ml={4}
+                        fontFamily="GothamPro-Medium"
+                        children={`Notas del Familiar: `}
+                      />
+                      {Globales.variableGlobalEventNotes}
+                    </Text>
                   <TouchableOpacity
                       activeOpacity={0.54}
-                      onPress={onConfirmContactoDeCuidadorAFamiliar}
+                      onPress={confirmarEvento}
                     >
                       <Text category="h7" status={"link"} center mt={16} mb={20}>
                         Confirmar Evento!

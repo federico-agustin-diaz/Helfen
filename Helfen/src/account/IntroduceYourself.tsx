@@ -89,7 +89,7 @@ const IntroduceYourself = memo(
     let paseosString = paseos ? "Paseos de rutina," : ""
     let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
     let rcpString = rcp ? "Tecnica RCP," : ""
-    let hemString = hem ? "Maniobra de heimlich" : ""
+    let hemString = hem ? "Maniobra de heimlich," : ""
     let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
     arrayServices = stringServices.split(",")
     arrayServices.splice(-1)
@@ -396,8 +396,8 @@ const IntroduceYourself = memo(
         gender: gender,
         specialty: speciality,
         isNurse: enfermero,
-        price: 200
-        //experience: experience
+        price: 200,
+        experience: experience
       })
     })
     .then((response) =>  response.json())
@@ -511,18 +511,18 @@ const IntroduceYourself = memo(
         <Text category="h7" mb={24}>
           {t("A que te dedicas")}
         </Text>
-        <Flex mb={32}>
+        <View style={styles.checks}>
           <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setcuidador} />
           <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañante} />
           <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setboth} />
-        </Flex>
+        </View>
         <Text category="h7" mb={24}>
           {t("Soy Enfermero")}
         </Text>
-        <Flex mb={32}>
+        <View style={styles.checks}>
           <CheckBox children={"Si"} checked={enfermero} onChange={setEnfermero} />
           <CheckBox children={"No"} checked={!enfermero} onChange={setEnfermero} />
-        </Flex>
+        </View>
         <Controller
           control={control}
           name="homeAddress"
@@ -586,6 +586,7 @@ const themedStyles = StyleService.create({
   },
   homeAddress: {
     borderBottomWidth: 2,
+    marginBottom:20
   },
   iconMap: {
     tintColor: "color-primary-100",
@@ -608,5 +609,8 @@ const themedStyles = StyleService.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  checks: {
+    marginBottom: 15,
   }
 });

@@ -3,7 +3,7 @@ export default {
     next: "Siguiente",
     ok: "OK",
     login: "Iniciar Sesion",
-    signup: "Registrarse",
+    signup: "Registrar",
     or: "o",
     of: "de",
     step: "Paso",

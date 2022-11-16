@@ -54,9 +54,6 @@ const AbilityItem = ({
                 <Text category="h8-s" mv={8}>
                 {item.localAddress} 
                 </Text>
-                <Text category="h8-s" mv={8}>
-                  {item.notesFamiliar}
-                </Text>
               </View>
             </Layout>
           </TouchableOpacity>

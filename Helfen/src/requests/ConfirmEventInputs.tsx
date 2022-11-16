@@ -139,7 +139,7 @@ const { bottom } = useLayout();
     .then((data) => {
       console.log(data);
       if (data.event =! null) {
-       Alert.alert("Aviso","Se ha confirmado el Evento.")
+       Alert.alert("Aviso","Se ha enviado el Evento al Profesional. Se aguarda su confirmacion")
         goBack();
       } else {
        Alert.alert("Aviso","Ha habido un error al confirmar contacto.")

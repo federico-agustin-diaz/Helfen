@@ -189,6 +189,7 @@ const MainBottomTab = memo(() => {
             Globales.set_variableGlobalEventid(mapEventosID)
             Globales.set_variableGlobalEventHoraStart(data.events[0].startEvent)
             Globales.set_variableGlobalEventHoraFinish(data.events[0].endEvent)
+            Globales.set_variableGlobalEventNotes(data.events[0].notes)
             //Globales.set_variableGlobalEventName(data.events[0].carer.user.name + " " + data.events[0].carer.user.lastName)
             setFamiliarId(data.events[0].familiar)
             //ATENCION aca deberia aparecer el Modal del evento a aceptar
@@ -241,7 +242,7 @@ const enviarUbicacionCuidador = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: Globales.variableGlobalIdUserParaMandarUbicacion,
+        userId: Globales.variableGlobalIdUserParaMandarUbicacion,
         latitudeCurrent: Globales.variableGlobalLatitude,
         longitudeCurrent: Globales.variableGlobalLongitude
         })

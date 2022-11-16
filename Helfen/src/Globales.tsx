@@ -20,6 +20,7 @@ class Global {
     variableGlobalCuidadoresPendientes: any = [];
     variableGlobalCuidadoresConfirmados: any = [];
     variableGlobalEventosCalendario: any = [];
+    variableGlobalEventNotes: string = "";
     // you can define more variables
     public get_myName(){
         return this.myName;
@@ -155,7 +156,13 @@ class Global {
     public set_variableGlobalEventName(new_number:string){
         this.variableGlobalEventName = new_number;
     }
-
+    public get_variableGlobalEventNotes(){
+        return this.variableGlobalEventNotes;
+    }
+    public set_variableGlobalEventNotes(new_number:string){
+        this.variableGlobalEventNotes = new_number;
+    }
+    
 }
 
 export default new Global()

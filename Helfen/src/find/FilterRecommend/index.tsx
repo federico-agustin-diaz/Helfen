@@ -130,11 +130,12 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       let paseosString = paseos ? "Paseos de rutina," : ""
       let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
       let rcpString = rcp ? "Tecnica RCP," : ""
-      let hemString = hem ? "Maniobra de heimlich" : ""
+      let hemString = hem ? "Maniobra de heimlich," : ""
     let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
     arrayServices = stringServices.split(",")
     arrayServices.splice(-1)
     console.log(stringServices)
+    console.log("este es el array de servicios")
     console.log(arrayServices)
     return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/users', {
       method: 'POST',
