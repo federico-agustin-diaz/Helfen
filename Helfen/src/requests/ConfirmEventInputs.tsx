@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Alert } from "react-native";
 import {
   TopNavigation,
   StyleService,
@@ -138,11 +138,12 @@ const { bottom } = useLayout();
     .then((response) =>  response.json())
     .then((data) => {
       console.log(data);
+      goBack();
       if (data.event =! null) {
-       Alert.alert("Aviso","Se ha enviado el Evento al Profesional. Se aguarda su confirmacion")
-        goBack();
+       Alert.alert("Aviso","Se ha enviado el Evento al Profesional. Aguarde su confirmacion")
+        //goBack();
       } else {
-       Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
+       Alert.alert("Aviso","Ha habido un error al crear contacto.")
       }
     })
       .catch((error) => {

@@ -21,6 +21,7 @@ class Global {
     variableGlobalCuidadoresConfirmados: any = [];
     variableGlobalEventosCalendario: any = [];
     variableGlobalEventNotes: string = "";
+    variableGlobalMostrandoModal: boolean = false;
     // you can define more variables
     public get_myName(){
         return this.myName;
@@ -162,7 +163,12 @@ class Global {
     public set_variableGlobalEventNotes(new_number:string){
         this.variableGlobalEventNotes = new_number;
     }
-    
+    public get_variableGlobalMostrandoModal(){
+        return this.variableGlobalMostrandoModal;
+    }
+    public set_variableGlobalMostrandoModal(new_number:boolean){
+        this.variableGlobalMostrandoModal = new_number;
+    }
 }
 
 export default new Global()

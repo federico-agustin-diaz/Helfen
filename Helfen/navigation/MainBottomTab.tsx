@@ -70,14 +70,22 @@ const MainBottomTab = memo(() => {
         setRelationId(data.possibleContacts[0].id)
         Globales.set_variableGlobalFamiliaresPendientes(data.possibleContacts[0].familiar)
         console.log(Globales.variableGlobalFamiliaresPendientes)
-        console.log(modalRef.current?.state)
-        modalRef.current?.show();
+        console.log("este es el valor del mostrandoModal74")
+        console.log(Globales.variableGlobalMostrandoModal)
+        if (Globales.variableGlobalMostrandoModal == false) {
+          console.log(Globales.variableGlobalMostrandoModal)
+          console.log("este es el valor del mostrandoModal75")
+          setModalConfirmarEvento(false);
+          Globales.set_variableGlobalMostrandoModal(true)
+          console.log(Globales.variableGlobalMostrandoModal)
+          modalRef.current?.show();
+        }
       } else {
         //alert("No tienes nuevas relaciones pendientes.")
       }
     })
       .catch((error) => {
-       Alert.alert("Aviso","Hubo un error al obtener relaciones.")
+      // Alert.alert("Aviso","Hubo un error al obtener relaciones.")
         console.log("error linea 78")
         console.error(error);
       });
@@ -118,7 +126,14 @@ const MainBottomTab = memo(() => {
               setCuidadorTelefono(Globales.variableGlobalCuidadoresPendientes[0].user.phoneNumber)
               setCuidadorId(Globales.variableGlobalCuidadoresPendientes[0].id)
               console.log("llego antes del show")
-              modalRef.current?.show();
+              console.log("este es el valor del mostrandoModal128")
+              console.log(Globales.variableGlobalMostrandoModal)
+              if (Globales.variableGlobalMostrandoModal == false) {
+                console.log("este es el valor del mostrandoModal131")
+                Globales.set_variableGlobalMostrandoModal(true)
+                console.log(Globales.variableGlobalMostrandoModal)
+                modalRef.current?.show();
+              }
             }
           else {
             console.log("No tienes nuevas relaciones pendientes.")
@@ -190,19 +205,21 @@ const MainBottomTab = memo(() => {
             Globales.set_variableGlobalEventHoraStart(data.events[0].startEvent)
             Globales.set_variableGlobalEventHoraFinish(data.events[0].endEvent)
             Globales.set_variableGlobalEventNotes(data.events[0].notes)
-            //Globales.set_variableGlobalEventName(data.events[0].carer.user.name + " " + data.events[0].carer.user.lastName)
             setFamiliarId(data.events[0].familiar)
-            //ATENCION aca deberia aparecer el Modal del evento a aceptar
-            //showModal
-              console.log("estos son los datos para el modal de eventos")
-              console.log(Globales.variableGlobalEventStart)
-              console.log(Globales.variableGlobalEventName)
-              console.log(Globales.variableGlobalEventid)
-              console.log(familiarId)
-              setModalConfirmarEvento(true);
-              setTimeout(() => {
-                modalRef.current?.show();
-            }, 2000);
+            console.log("estos son los datos para el modal de eventos")
+            console.log(Globales.variableGlobalEventStart)
+            console.log(Globales.variableGlobalEventName)
+            console.log(Globales.variableGlobalEventid)
+            console.log(familiarId)
+            console.log("este es el valor del mostrandoModal218")
+            console.log(Globales.variableGlobalMostrandoModal)
+                if (Globales.variableGlobalMostrandoModal == false) {
+                  console.log("este es el valor del mostrandoModal221")
+                  setModalConfirmarEvento(true);
+                  Globales.set_variableGlobalMostrandoModal(true)          
+                  console.log(Globales.variableGlobalMostrandoModal)
+                  modalRef.current?.show();
+                }
             }
           })
           .catch((error) => {
@@ -219,7 +236,7 @@ const MainBottomTab = memo(() => {
       }
     })
       .catch((error) => {
-       Alert.alert("Aviso","Hubo un error al obtener relaciones.")
+       //Alert.alert("Aviso","Hubo un error al obtener relaciones.")
         console.log("error linea 223")
         console.error(error);
       });
@@ -419,7 +436,7 @@ const getCalendarEvents = () => {
           ref={modalRef}
           avatar={Images.avatar3}
           isOnl={true}
-          onDetails={hide}
+          // onDetails={hide}
         />
       </View>
     );
@@ -484,7 +501,7 @@ const getCalendarEvents = () => {
           eventId={eventIdParaAceptar}
           avatar={Images.avatar3}
           isOnl={true}
-          onDetails={hide}
+          // onDetails={hide}
         />
       </View>
     );

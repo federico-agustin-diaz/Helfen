@@ -97,6 +97,7 @@ export type RequestsStackParamList = {
 export type CalendarStackParamList = {
   CalendarSrc: undefined;
   AvailabilitySrc: { type: "Edit" | "Add" };
+  AddNotesSrc: undefined;
 };
 export type MoreStackParamList = {
   MoreSrc: undefined;

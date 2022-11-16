@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity, Alert } from "react-native";
 import {
   StyleService,
   useStyleSheet,

@@ -42,6 +42,8 @@ function ModalRequest(
   const themes = useTheme();
 
   const confirmarEvento = () => {
+    Globales.set_variableGlobalMostrandoModal(false)
+    modalRef.current?.hide()
     console.log("entro a confirmar evento")
     //var eventIdString = Globales.variableGlobalEventid.toString()
     console.log(Globales.variableGlobalEventid)
@@ -56,29 +58,9 @@ function ModalRequest(
         }
       })
       .then((response) =>  {
-        fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + element, {
-        method: 'PATCH',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "id": element,
-          "notes": notas,
-        })
-      })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data)
-      })
-      .catch((error) => {
-        //alert("Hubo un error al confirmar eventos.")
-        console.log("error 75")
-        console.error(error);
-      });
     })
       .catch((error) => {
-        //alert("Hubo un error al confirmar eventos.")
+        alert("Hubo un error al confirmar eventos.")
         console.log("error 81")
         console.error(error);
       });
@@ -96,7 +78,6 @@ function ModalRequest(
         "relationConfirmated": true
       })
     })
-    .then((response) =>  response.json())
     .then((data) => {
       console.log(data);
     })
@@ -110,7 +91,11 @@ function ModalRequest(
   const onCancelarContacto = () => {
     console.log("este es el id que recibio modal")
     console.log(relationId)
+    console.log(Globales.variableGlobalMostrandoModal)
+    console.log("este es el valor del mostrandoModal113 antes tiene que ser true, despues false")
+    Globales.set_variableGlobalMostrandoModal(false)
     modalRef.current?.hide();
+    console.log(Globales.variableGlobalMostrandoModal)
     var idString = relationId.toString()
     console.log(idString)
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + idString, {
@@ -149,17 +134,39 @@ function ModalRequest(
   const onCancelarContactoYEliminarEvento = () => {
     console.log("este es el id que recibio modal")
     console.log(relationId)
-    modalRef.current?.hide();
     var idString = relationId.toString()
     console.log(idString)
-      return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + idString, {
+    Globales.variableGlobalEventid.forEach((element) =>  {
+      console.log("ejecuto crear evento para eventid")
+      console.log(element)
+     fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/event/' + element, {
+        method: 'PATCH',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) =>  {
+    })
+      .catch((error) => {
+        alert("Hubo un error al confirmar eventos.")
+        console.log("error 81")
+        console.error(error);
+      });
+    })
+     return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/' + idString, {
         method: 'DELETE',
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json'
         }
       })
-      .then((response) =>  response.json())
+      .then((response) =>  {    console.log(Globales.variableGlobalMostrandoModal)
+        console.log("este es el valor del mostrandoModal153 antes tiene que ser true, despues false")
+        Globales.set_variableGlobalMostrandoModal(false)
+        console.log(Globales.variableGlobalMostrandoModal)
+        console.log(Globales.variableGlobalMostrandoModal)
+        modalRef.current?.hide();})
       .then((data) => {
       })
         .catch((error) => {
@@ -167,6 +174,9 @@ function ModalRequest(
   }
 
   const onConfirmContactoDeCuidadorAFamiliar = () => {
+    Globales.set_variableGlobalMostrandoModal(false)
+    console.log("mostrandModal tiene que ser false")
+    console.log(Globales.variableGlobalMostrandoModal)
     modalRef.current?.hide();
       return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/contact/confirm', {
         method: 'PUT',
@@ -182,10 +192,10 @@ function ModalRequest(
       })
       .then((response) =>  response.json())
       .then((data) => {
-        //confirmarEvento();
-        if (Globales.variableGlobalTipo == 1) {
-       // handleEventInputs();
-        }
+      //   //confirmarEvento();
+      //   if (Globales.variableGlobalTipo == 1) {
+      //  // handleEventInputs();
+      //   }
         console.log(data);
         if (data.possibleContacts =! null) {
          Alert.alert("Aviso","Se ha confirmado el Contacto. El Familiar se comunicara por telefono.")
@@ -201,7 +211,11 @@ function ModalRequest(
   }
 
   const onConfirmRelacionDeFamiliarACuidador = () => {
+    console.log(Globales.variableGlobalMostrandoModal)
+    console.log("este es el valor del mostrandoModal212 antes tiene que ser true, despues false")
+    Globales.set_variableGlobalMostrandoModal(false)
     modalRef.current?.hide();
+    console.log(Globales.variableGlobalMostrandoModal)
     console.log("el id es");
     console.log(id);
     console.log(Globales.variableGlobalId);
@@ -255,7 +269,7 @@ function ModalRequest(
   return (
     <Modal
       ref={modalRef}
-      onBackdropPress={hide}
+      // onBackdropPress={hide}
       backdropStyle={[styles.container]}
     >
       <Layout style={{ flex: 1, borderRadius: 16 }}>
@@ -314,6 +328,7 @@ function ModalRequest(
             return (
               <Modal
                 ref={modalRef}
+                style={{paddingHorizontal:20}}
                 // onBackdropPress={hide}
                 backdropStyle={[styles.container]}
               >
@@ -393,6 +408,7 @@ function ModalRequest(
                   <TouchableOpacity
                       activeOpacity={0.54}
                       onPress={confirmarEvento}
+                      //onConfirmRelacionDeFamiliarACuidador
                     >
                       <Text category="h7" status={"link"} center mt={16} mb={20}>
                         Confirmar Evento!
@@ -416,7 +432,7 @@ function ModalRequest(
             return (
               <Modal
                 ref={modalRef}
-                onBackdropPress={hide}
+                // onBackdropPress={hide}
                 backdropStyle={[styles.container]}
               >
                 <Layout style={{ flex: 1, borderRadius: 16 }}>

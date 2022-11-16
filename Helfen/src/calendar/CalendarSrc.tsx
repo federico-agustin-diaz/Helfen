@@ -42,9 +42,7 @@ const CalendarSrc = memo(() => {
     return ('El dia de hoy es ' + date + ' ' + monthName + ' ' + year).toString()
 }
   const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
-  // const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
-  // const onPressAddAbility = () => navigate("AvailabilitySrc", { type: "Add" });
-  const onPressAbility = () => {};
+  const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
   const onPressAddAbility = () => {};
   const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   var arrayCalendarEvents = new Array(); 
