@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { ImageBackground, View } from "react-native";
 import {
   TopNavigation,
@@ -42,11 +42,14 @@ const CalendarSrc = memo(() => {
     return ('El dia de hoy es ' + date + ' ' + monthName + ' ' + year).toString()
 }
   const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
-  const onPressAbility = () => navigate("AvailabilitySrc", { type: "Edit" });
-  const onPressAddAbility = () => {};
   const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-  var arrayCalendarEvents = new Array(); 
+  var arrayCalendarEventsVAR = new Array(); 
+  const [arrayCalendarEvents, setarrayCalendarEvents] = React.useState(arrayCalendarEventsVAR);
+  
+  const [seSetearonLosConfirmados, setSeSetearonLosConfirmados] = React.useState(true);
   const mapGlobales = () => {
+    console.log("entro al mapGlobales")
+    console.log(Globales.variableGlobalEventosCalendario)
     Globales.variableGlobalEventosCalendario.forEach((element) =>  {
       element.stringDays.forEach((elementito) =>  {
         var datePart = elementito.match(/\d+/g),
@@ -55,27 +58,42 @@ const CalendarSrc = memo(() => {
         day = datePart[2];
         var dateFormatted = day+' de '+ month +' del '+year;
         var calendarObject = {
+          id: element.id,
           dateParaElOrden: new Date(elementito),
           date: dateFormatted,
           name: element.familiar.user.name + " " + element.familiar.user.lastName,
-          localAddress: element.familiar.user.localAddress,
+          localAddress: element.localAddress,
           time: "Horario: Desde " + element.startEvent + " hasta las " + element.endEvent,
-          notesFamiliar: element.notes != "" ? ("Notas Familiar: " + element.notes) : ("No se detallaron Notas del Familiar")
+          notesFamiliar: element.notes != "" ? (element.notes) : ("No se detallaron Notas")
         }
         console.log(calendarObject)
-        arrayCalendarEvents.push(calendarObject)
+        arrayCalendarEventsVAR.push(calendarObject)
       }
       );
     }
     );
-    arrayCalendarEvents.sort(function(a,b){
+    arrayCalendarEventsVAR.sort(function(a,b){
       return (a.dateParaElOrden) - (b.dateParaElOrden)
     })
+    console.log("este es el array de calendar eventsVAR")
+    console.log(arrayCalendarEventsVAR)
+    if (arrayCalendarEventsVAR.length > 0) {
+      setarrayCalendarEvents(arrayCalendarEventsVAR)
+      arrayCalendarEventsVAR = []
+    }
+    console.log("este es el array de calendar events")
+    console.log(arrayCalendarEvents)
     //falta ordenar segun la fecha
   }
-  console.log("este el evento del calendar")
-  console.log(Globales.variableGlobalEventosCalendario)
-  mapGlobales();
+  React.useEffect(() => {
+    if (seSetearonLosConfirmados) {
+      mapGlobales()
+      setSeSetearonLosConfirmados(false)
+      setInterval(mapGlobales, 10000)
+    }
+  }, []);  
+
+  
   return (
     <Container style={styles.container}>
       <TopNavigation title={t("title").toString()} />
@@ -97,8 +115,6 @@ const CalendarSrc = memo(() => {
               item={item}
               key={i}
               light={i === 0}
-              onPress={onPressAbility}
-              onPressAdd={onPressAddAbility}
             />
           );
         })}

@@ -403,7 +403,7 @@ function ModalRequest(
                         fontFamily="GothamPro-Medium"
                         children={`Notas del Familiar: `}
                       />
-                      {Globales.variableGlobalEventNotes}
+                      {Globales.variableGlobalEventResume}
                     </Text>
                   <TouchableOpacity
                       activeOpacity={0.54}

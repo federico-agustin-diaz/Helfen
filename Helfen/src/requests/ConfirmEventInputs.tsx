@@ -132,7 +132,7 @@ const { bottom } = useLayout();
     "endEvent": horarioFin,
     "localAddress": direccion,
     "expirationDate": (`${fechaFin.getFullYear()}-${fechaFin.getMonth() + 1}-${fechaFin.getDate()}`).toString(),
-    "notes": notas
+    "notes": ""
       })
     })
     .then((response) =>  response.json())
@@ -140,8 +140,31 @@ const { bottom } = useLayout();
       console.log(data);
       goBack();
       if (data.event =! null) {
-       Alert.alert("Aviso","Se ha enviado el Evento al Profesional. Aguarde su confirmacion")
-        //goBack();
+        return fetch('https://urchin-app-vjpuw.ondigitalocean.app/helfenapi/relation', {
+          method: 'POST',
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "carer": carerId,
+            "familiar": Globales.variableGlobalId,
+            "resume": notas
+          })
+        })
+        .then((response) =>  response.json())
+        .then((data) => {
+          goBack();
+          Alert.alert("Aviso","Se ha enviado el Evento al Profesional. Aguarde su confirmacion")
+          if (data.message == "404 Not Found Error. The relation not exist.") {
+           //Alert.alert("Aviso","Ha habido un error, la relacion no existe")
+          }
+        })
+          .catch((error) => {
+           Alert.alert("Aviso","Ha habido un error al confirmar contacto.")
+            console.log("error")
+            console.error(error);
+          });
       } else {
        Alert.alert("Aviso","Ha habido un error al crear contacto.")
       }

@@ -169,6 +169,7 @@ const MainBottomTab = memo(() => {
         var contactRelationFalseContactTrue = data.possibleContacts.filter((item) => item.contactConfirmated == true && item.relationConfirmated == false)
         console.log (contactRelationFalseContactTrue)
         console.log (Globales.variableGlobalId)
+        Globales.set_variableGlobalEventResume(contactRelationFalseContactTrue[0].resume)
         console.log (contactRelationFalseContactTrue[0].familiar.id)
         var familiarID = contactRelationFalseContactTrue[0].familiar.id
         var familiarNombre = contactRelationFalseContactTrue[0].familiar.user.name + contactRelationFalseContactTrue[0].familiar.user.lastName
@@ -204,7 +205,6 @@ const MainBottomTab = memo(() => {
             Globales.set_variableGlobalEventid(mapEventosID)
             Globales.set_variableGlobalEventHoraStart(data.events[0].startEvent)
             Globales.set_variableGlobalEventHoraFinish(data.events[0].endEvent)
-            Globales.set_variableGlobalEventNotes(data.events[0].notes)
             setFamiliarId(data.events[0].familiar)
             console.log("estos son los datos para el modal de eventos")
             console.log(Globales.variableGlobalEventStart)
@@ -215,8 +215,8 @@ const MainBottomTab = memo(() => {
             console.log(Globales.variableGlobalMostrandoModal)
                 if (Globales.variableGlobalMostrandoModal == false) {
                   console.log("este es el valor del mostrandoModal221")
-                  setModalConfirmarEvento(true);
-                  Globales.set_variableGlobalMostrandoModal(true)          
+                  Globales.set_variableGlobalMostrandoModal(true)     
+                  setModalConfirmarEvento(true);     
                   console.log(Globales.variableGlobalMostrandoModal)
                   modalRef.current?.show();
                 }

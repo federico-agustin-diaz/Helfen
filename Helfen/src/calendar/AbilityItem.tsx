@@ -14,25 +14,25 @@ import { globalStyle } from "styles/globalStyle";
 import ButtonFill from "components/ButtonFill";
 import dayjs from "dayjs";
 import useLayout from "hooks/useLayout";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { CalendarStackParamList } from "navigation/types";
 
 interface AbilityItemProps {
   item: CalendarEventito;
   style?: ViewStyle;
-  onPress?(): void;
   light?: boolean;
-  onPressAdd?(): void;
 }
 
 const AbilityItem = ({
   item,
   style,
   light,
-  onPressAdd,
-  onPress,
 }: AbilityItemProps) => {
   const styles = useStyleSheet(themedStyles);
   const { width } = useLayout();
   const theme = useTheme();
+  const onPress = () => navigate("NotesSrc", { id: item.id, notes:item.notesFamiliar });
+  const { navigate } = useNavigation<NavigationProp<CalendarStackParamList>>();
 
   return (
     <View style={[styles.container, style]}>
@@ -40,7 +40,6 @@ const AbilityItem = ({
         {/* <Text category="h9-s" status="placeholder" mb={16}>
           {item.carer.services[0]}
         </Text> */}
-        {item ? (
           <TouchableOpacity activeOpacity={0.54} onPress={onPress}>
             <Layout level={"2"} style={styles.content}>
               <View>
@@ -57,30 +56,7 @@ const AbilityItem = ({
               </View>
             </Layout>
           </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={onPressAdd} activeOpacity={0.54}>
-            <Layout
-              level={"6"}
-              style={[
-                styles.noDataContent,
-                {
-                  backgroundColor: light
-                    ? theme["color-success-300"]
-                    : theme["background-basic-color-3"],
-                  shadowColor: light ? "rgba(29, 30, 44, 0.61)" : undefined,
-                },
-              ]}
-            >
-              <Text
-                category="h7"
-                status={light ? "completed" : "placeholder"}
-                mb={4}
-              >
-                Disponible
-              </Text>
-            </Layout>
-          </TouchableOpacity>
-        )}
+        
       </View>
     </View>
   );

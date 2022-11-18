@@ -163,7 +163,8 @@ export interface CalendarEventito {
           localAddress: string,
           time: string,
           notesCuidador: string,
-          notesFamiliar: string
+          notesFamiliar: string,
+          id: number
 }
 
 export interface CaregiverCardProps {

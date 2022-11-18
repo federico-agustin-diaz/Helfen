@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { memo } from "react";
 import AvailabilitySrc from "src/calendar/AvailabilitySrc";
 import CalendarSrc from "src/calendar/CalendarSrc";
+import NotesSrc from "src/calendar/NotesSrc";
 
 import { CalendarStackParamList } from "./types";
 
@@ -14,6 +15,7 @@ const CalendarNavigator = memo(() => {
     >
       <Stack.Screen name="CalendarSrc" component={CalendarSrc} />
       <Stack.Screen name="AvailabilitySrc" component={AvailabilitySrc} />
+      <Stack.Screen name="NotesSrc" component={NotesSrc} />
     </Stack.Navigator>
   );
 });

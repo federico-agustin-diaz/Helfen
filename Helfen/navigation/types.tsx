@@ -97,7 +97,7 @@ export type RequestsStackParamList = {
 export type CalendarStackParamList = {
   CalendarSrc: undefined;
   AvailabilitySrc: { type: "Edit" | "Add" };
-  AddNotesSrc: undefined;
+  NotesSrc: { id: number, notes: string };
 };
 export type MoreStackParamList = {
   MoreSrc: undefined;
@@ -116,6 +116,10 @@ export type ModalScreenNavigationProp = RouteProp<
 export type AvailabilityPassScreenNavigationProp = RouteProp<
   CalendarStackParamList,
   "AvailabilitySrc"
+>;
+export type NotesScreenNavigationProp = RouteProp<
+  CalendarStackParamList,
+  "NotesSrc"
 >;
 export type RequestsInPassScreenNavigationProp = RouteProp<
   RequestsBottomStackParamList,
