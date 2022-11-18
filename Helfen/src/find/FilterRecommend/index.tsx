@@ -271,7 +271,7 @@ const themedStyles = StyleService.create({
     bottom: 0,
   },
   button: {
-    marginBottom: 0,
+    marginBottom: 10,
     marginHorizontal:10
   },
   email: {

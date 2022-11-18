@@ -191,8 +191,15 @@ const MainBottomTab = memo(() => {
             console.log(data);
             console.log("fijate la info del event")
             const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            console.log(data.events[0].date)
             let dayNameInicio = new Date(data.events[0].date).getDate();
+            console.log(dayNameInicio)
+            dayNameInicio = dayNameInicio + 1;
+            console.log(dayNameInicio)
             let dayNameFin = new Date(data.events[0].expirationDate).getDate();
+            console.log(dayNameFin)
+            dayNameFin = dayNameFin + 1;
+            console.log(dayNameFin)
             let monthNameInicio = months[new Date(data.events[0].date).getMonth()];
             let monthNameFin = months[new Date(data.events[0].expirationDate).getMonth()];
             var yearInicio = new Date(data.events[0].date).getFullYear();

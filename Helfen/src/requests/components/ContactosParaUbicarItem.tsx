@@ -54,10 +54,10 @@ const ContactosParaUbicarItem = ({
             onMap();
         }
         if (data.message == "400 Bad Request Error. Event not found.") {
-            returnAlert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
+            Alert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
           }
         if (data.latitude == null) {
-            returnAlert.alert("Aviso","El cuidador todavia no dio su ubicacion.")
+            Alert.alert("Aviso","El cuidador todavia no dio su ubicacion.")
         }
           console.log("se obtuvo la ubi")
       })

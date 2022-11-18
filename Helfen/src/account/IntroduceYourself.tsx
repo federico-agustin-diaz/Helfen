@@ -512,9 +512,9 @@ const IntroduceYourself = memo(
           {t("A que te dedicas")}
         </Text>
         <View style={styles.checks}>
-          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setcuidador} />
-          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañante} />
-          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setboth} />
+          <CheckBox children={"Cuidador"} checked={cuidador && !acompañante && !both} onChange={setCuidadorPosta} />
+          <CheckBox children={"Acompañante"} checked={!cuidador && acompañante && !both} onChange={setacompañantePosta} />
+          <CheckBox children={"Ambas"} checked={!cuidador && !acompañante && both} onChange={setbothPosta} />
         </View>
         <Text category="h7" mb={24}>
           {t("Soy Enfermero")}
