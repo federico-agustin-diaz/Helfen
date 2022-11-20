@@ -61,7 +61,7 @@ const ViewOnMap = memo(() => {
     <Container style={styles.container} level="2">
       <TopNavigation
         accessoryLeft={<NavigationAction icon="close"/>}
-        title={t("Seleccione su direccion").toString()}
+        title={t("Seleccione su Ubicacion").toString()}
         appearance="primary"
       />
       <View style={styles.flexazo}>

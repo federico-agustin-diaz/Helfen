@@ -55,6 +55,7 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
     },
   });
   let location: Boolean = false;
+  const [enfermero, setEnfermero] = useToggle(false);
   const [mujer, setMujer] = React.useState(false);
   const [hombre, setHombre] = React.useState(true);
   const [bothSexos, setbothSexos] = React.useState(false);
@@ -120,7 +121,7 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       console.log(sexo)
       let higieneString = higiene ? "Higiene y confort," : ""
       let banoString = bañocon ? "Baño con movilidad," : ""
-      let banoSinString = bañosin ? "Baño sin movilidad, " : ""
+      let banoSinString = bañosin ? "Baño sin movilidad," : ""
       let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
       let curacionesString = curaciones ? "Curaciones," : ""
       let sueroString = suero ? "Cambio de suero," : ""
@@ -130,8 +131,9 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
       let paseosString = paseos ? "Paseos de rutina," : ""
       let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
       let rcpString = rcp ? "Tecnica RCP," : ""
+      let auxString = aux ? "Primeros Auxilios," : ""
       let hemString = hem ? "Maniobra de heimlich," : ""
-    let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
+    let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+auxString+hemString
     arrayServices = stringServices.split(",")
     arrayServices.splice(-1)
     console.log(stringServices)
@@ -148,7 +150,8 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
         longitude: Globales.variableGlobalLongitude,
     description: arrayServices,
     specialty: speciality,
-    gender: sexo
+    gender: sexo,
+    isNurse: enfermero
       })
     })
     .then((response) =>  response.json())
@@ -213,6 +216,13 @@ const FilterRecommend = memo(({ onHide, onFilter }: FilterRecommendProps) => {
           <CheckBox children={"Masculino"} checked={hombre && !mujer && !bothSexos} onChange={setHombrePosta} />
           <CheckBox children={"Femenino"} checked={!hombre && mujer && !bothSexos} onChange={setMujerPosta} />
           <CheckBox children={"Indistinto"} checked={!hombre && !mujer && bothSexos} onChange={setbothSexosPosta} />
+        </View>
+        <Text category="h7" mb={15}>
+          {t("¿Es Enfermero?")}
+        </Text>
+        <View style={styles.checks}>
+          <CheckBox children={"Si"} checked={enfermero} onChange={setEnfermero} />
+          <CheckBox children={"No"} checked={!enfermero} onChange={setEnfermero} />
         </View>
         <Text category="h7" mb={15}>
           {t("Servicios Prestados")}

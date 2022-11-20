@@ -41,16 +41,11 @@ const ViewOnMapVivo = memo(() => {
   });
   const refMap = React.useRef<MapView | null>(null);
 
-  const [pin, setPin] = useState({
-    latitude: Globales.variableGlobalLatitude,
-    longitude: Globales.variableGlobalLongitude,
-  });
-
   const { goBack } = useNavigation();
   useEffect(() => {
       setPosition({
-        latitude: Globales.variableGlobalLatitude,
-    longitude: Globales.variableGlobalLongitude,
+        latitude: Globales.variableGlobalLatitudeVivo,
+    longitude: Globales.variableGlobalLongitudeVivo,
         latitudeDelta: 0.0421,
         longitudeDelta: 0.0421,
     })
@@ -61,7 +56,7 @@ const ViewOnMapVivo = memo(() => {
     <Container style={styles.container} level="2">
       <TopNavigation
         accessoryLeft={<NavigationAction icon="close"/>}
-        title={t("Seleccione su direccion").toString()}
+        title={t("Ubicacion").toString()}
         appearance="primary"
       />
       <View style={styles.flexazo}>

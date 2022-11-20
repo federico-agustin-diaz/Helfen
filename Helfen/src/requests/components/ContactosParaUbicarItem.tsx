@@ -45,19 +45,23 @@ const ContactosParaUbicarItem = ({
       })
       .then((response) =>  response.json())
       .then((data) => {
+        console.log("Fijate la ubicacion")
         console.log(data)
         if (data.latitude != null) {
             var latitudeFloat = parseFloat(data.latitude);
             var longitudeFloat = parseFloat(data.longitude);
-            Globales.set_variableGlobalLatitude(latitudeFloat)
-            Globales.set_variableGlobalLongitude(longitudeFloat)
+            Globales.set_variableGlobalLatitudeVivo(latitudeFloat)
+            Globales.set_variableGlobalLongitudeVivo(longitudeFloat)
             onMap();
         }
         if (data.message == "400 Bad Request Error. Event not found.") {
-            Alert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
-          }
+            return Alert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
+        }
+          if (data.message == "400 Bad Request Error. It is not an authorized schedule") {
+            return Alert.alert("Aviso","No hay Eventos registrados a esta hora y dia.")
+          }  
         if (data.latitude == null) {
-            Alert.alert("Aviso","El cuidador todavia no dio su ubicacion.")
+            return Alert.alert("Aviso","El cuidador todavia no dio su ubicacion.")
         }
           console.log("se obtuvo la ubi")
       })

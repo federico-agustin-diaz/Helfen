@@ -8,6 +8,8 @@ class Global {
     variableGlobalApellido: string = "";
     variableGlobalLatitude: number = 0;
     variableGlobalLongitude: number = 0;
+    variableGlobalLatitudeVivo: number = 0;
+    variableGlobalLongitudeVivo: number = 0;
     variableGlobalCuidadores: any = [];
     variableGlobalEventStart: any = "";
     variableGlobalEventFinish: any = "";
@@ -85,6 +87,20 @@ class Global {
     }
     public get_variableGlobalLongitude(){
         return this.variableGlobalLongitude;
+    }
+
+    public set_variableGlobalLatitudeVivo(new_number:number){
+        this.variableGlobalLatitudeVivo = new_number;
+    }
+    public get_variableGlobalLatitudeVivo(){
+        return this.variableGlobalLatitudeVivo;
+    }
+
+    public set_variableGlobalLongitudeVivo(new_number:number){
+        this.variableGlobalLongitudeVivo = new_number;
+    }
+    public get_variableGlobalLongitudeVivo(){
+        return this.variableGlobalLongitudeVivo;
     }
 
     public set_variableGlobalCuidadores(new_number:Array<any>){

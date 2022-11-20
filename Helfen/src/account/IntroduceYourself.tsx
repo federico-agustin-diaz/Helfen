@@ -79,7 +79,7 @@ const IntroduceYourself = memo(
     console.log(speciality)
     let higieneString = higiene ? "Higiene y confort," : ""
     let banoString = bañocon ? "Baño con movilidad," : ""
-    let banoSinString = bañosin ? "Baño sin movilidad, " : ""
+    let banoSinString = bañosin ? "Baño sin movilidad," : ""
     let controlesString = controles ? "Controles (Presión glucosa y temperatura)," : ""
     let curacionesString = curaciones ? "Curaciones," : ""
     let sueroString = suero ? "Cambio de suero," : ""
@@ -89,8 +89,9 @@ const IntroduceYourself = memo(
     let paseosString = paseos ? "Paseos de rutina," : ""
     let acompañamientoString = acompañamiento ? "Acompañamiento en rehabilitación," : ""
     let rcpString = rcp ? "Tecnica RCP," : ""
+    let auxString = aux ? "Primeros Auxilios," : ""
     let hemString = hem ? "Maniobra de heimlich," : ""
-    let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+hemString
+    let stringServices = higieneString+banoString+banoSinString+controlesString+curacionesString+sueroString+aseoString+alimString+asistString+paseosString+acompañamientoString+rcpString+auxString+hemString
     arrayServices = stringServices.split(",")
     arrayServices.splice(-1)
     console.log(stringServices)
@@ -523,22 +524,6 @@ const IntroduceYourself = memo(
           <CheckBox children={"Si"} checked={enfermero} onChange={setEnfermero} />
           <CheckBox children={"No"} checked={!enfermero} onChange={setEnfermero} />
         </View>
-        <Controller
-          control={control}
-          name="homeAddress"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label={t("Rango Edad al que se dedica (separar con -)").toString()}
-              style={styles.homeAddress}
-              value={value}
-              onChangeText={onChange}
-              onTouchStart={handleSubmit(() => {})}
-              onTouchEnd={handleSubmit(() => {})}
-              onBlur={onBlur}
-              keyboardType="numbers-and-punctuation"
-            />
-          )}
-        />
         <Text category="h7" mb={24}>
           {t("Servicios Prestados")}
         </Text>

@@ -58,7 +58,7 @@ const ContactosParaUbicar = memo(
 
     return (
       <View style={styles.container}>
-        {listaDeConfirmados === (undefined) || listaDeConfirmados == (null) || listaDeConfirmados == 0 ? (
+        {listaDeConfirmados === (undefined) || listaDeConfirmados == (null) || listaDeConfirmados.length == 0 ? (
           <EmptyData
             image={Images.emptyMess}
             title={("No hay Contactos Confirmados para Ubicar.")}
